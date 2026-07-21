@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>健保優化提醒｜主管版月度儀表板</title>
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --panel:#ffffff;
+      --ink:#172033;
+      --muted:#5e6a7d;
+      --line:#d9e0ea;
+      --soft:#eef3f9;
+      --primary:#1d4ed8;
+      --primary-dark:#173f9f;
+      --primary-soft:#e8f0ff;
+      --accent:#0f766e;
+      --warn:#b45309;
+      --shadow:0 10px 28px rgba(23,32,51,.08);
+      --radius:22px;
+      --font: "Microsoft JhengHei", "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:linear-gradient(180deg,#f7f9fc 0%,#edf2f8 100%);
+      font-family:var(--font);
+      font-size:19px;
+      line-height:1.55;
+    }
+    .page{
+      max-width:1320px;
+      margin:0 auto;
+      padding:34px 28px 56px;
+    }
+    .topbar{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:22px;
+    }
+    h1{
+      margin:0;
+      font-size:38px;
+      letter-spacing:.03em;
+      line-height:1.18;
+    }
+    .subtitle{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:20px;
+    }
+    .actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+    button{
+      font-family:var(--font);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:11px 18px;
+      font-size:18px;
+      font-weight:700;
+      color:var(--ink);
+      background:#fff;
+      cursor:pointer;
+      box-shadow:0 3px 10px rgba(23,32,51,.04);
+      transition:.15s ease;
+    }
+    button:hover, button:focus-visible{transform:translateY(-1px);border-color:#aebbd0;outline:3px solid rgba(29,78,216,.16)}
+    .primary-btn{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .tabs{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin:18px 0 26px;
+    }
+    .tab{
+      min-width:132px;
+      padding:13px 20px;
+      border-radius:16px;
+      border:2px solid transparent;
+      background:#fff;
+      color:var(--ink);
+      font-size:20px;
+      font-weight:800;
+      text-align:center;
+      box-shadow:0 5px 18px rgba(23,32,51,.06);
+    }
+    .tab.active{
+      color:var(--primary-dark);
+      background:var(--primary-soft);
+      border-color:#8fb1ff;
+    }
+    .detail-selector-wrap{
+      margin:16px 0 18px;
+      padding:16px 18px;
+      border:1px solid #dbe5f2;
+      background:#f8fbff;
+      border-radius:20px;
+    }
+    .detail-selector-title{
+      margin:0 0 10px;
+      color:#26344d;
+      font-size:20px;
+      font-weight:900;
+    }
+    .detail-tabs{
+      margin:0;
+      gap:10px;
+    }
+    .detail-tabs .tab{
+      min-width:128px;
+      padding:12px 18px;
+      box-shadow:none;
+    }
+    .grid{display:grid;grid-template-columns:1fr;gap:22px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card,.panel{
+      background:var(--panel);
+      border:1px solid rgba(217,224,234,.95);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .card{padding:24px 26px}
+    .card-title{font-size:19px;color:var(--muted);font-weight:800;margin:0 0 8px}
+    .card-value{font-size:42px;line-height:1.06;font-weight:900;letter-spacing:.01em;margin:0;color:var(--ink)}
+    .card-foot{font-size:18px;color:var(--muted);margin:12px 0 0;font-weight:650}
+    .rate-up{color:var(--accent)}
+    .rate-down{color:var(--warn)}
+    .panel{padding:26px}
+    .panel-header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:12px}
+    h2{font-size:28px;line-height:1.25;margin:0;color:var(--ink)}
+    .hint{font-size:18px;color:var(--muted);margin:7px 0 0}
+    .chart-wrap{width:100%;overflow-x:auto;padding:4px 0 2px}
+    svg{display:block;max-width:100%;height:auto}
+    .axis text{fill:#536174;font-size:17px;font-weight:700}
+    .axis line,.gridline{stroke:#dce3ee;stroke-width:1}
+    .trend-line{fill:none;stroke:var(--primary);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+    .trend-area{fill:url(#areaGradient)}
+    .point{fill:#fff;stroke:var(--primary);stroke-width:5;cursor:pointer}
+    .point.active{fill:var(--primary)}
+    .point-label{font-size:20px;font-weight:900;fill:var(--primary-dark)}
+    .month-label{font-size:20px;font-weight:900;fill:#26344d}
+    .note{
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:18px;
+      background:#f2f6fc;
+      border:1px solid #dbe5f2;
+      color:#26344d;
+      font-size:20px;
+      font-weight:700;
+    }
+    .data-layout{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+    .summary-box{
+      background:#f8fbff;
+      border:1px solid #dbe5f2;
+      border-radius:20px;
+      padding:20px;
+    }
+    .summary-box h3{font-size:23px;margin:0 0 14px}
+    .summary-row{display:flex;justify-content:space-between;gap:16px;border-top:1px solid #e2e9f3;padding:12px 0;font-size:19px}
+    .summary-row:first-of-type{border-top:0}
+    .summary-row strong{font-size:22px}
+    table{width:100%;border-collapse:separate;border-spacing:0;font-size:19px;overflow:hidden;border-radius:18px;border:1px solid var(--line)}
+    th,td{padding:17px 18px;border-bottom:1px solid var(--line);vertical-align:middle}
+    th{background:#edf3fb;text-align:left;font-size:20px;color:#24304a;font-weight:900;white-space:nowrap}
+    td{background:#fff;font-weight:650}
+    tr:nth-child(even) td{background:#fafcff}
+    tr:last-child td{border-bottom:0}
+    td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:850}
+    .item-name{font-weight:850;color:#1f2937}
+    .rate-pill{display:inline-flex;min-width:86px;justify-content:center;align-items:center;padding:7px 10px;border-radius:999px;background:#edf5ff;color:#19408f;font-weight:900;font-variant-numeric:tabular-nums}
+    .footer-note{margin-top:18px;color:var(--muted);font-size:17px;text-align:right}
+    @media (max-width:900px){
+      body{font-size:18px}
+      .page{padding:24px 16px 42px}
+      .topbar{display:block}
+      h1{font-size:32px}
+      .actions{justify-content:flex-start;margin-top:16px}
+      .cards{grid-template-columns:1fr}
+      .data-layout{grid-template-columns:1fr}
+      .panel{padding:20px}
+      th,td{padding:14px 12px;font-size:18px}
+      th{font-size:18px}
+      .card-value{font-size:36px}
+    }
+    @media print{
+      body{background:#fff;color:#000;font-size:16px}
+      .page{max-width:none;padding:12mm}
+      .actions,.tabs{display:none!important}
+      .card,.panel{box-shadow:none;border:1px solid #b9c2d0;break-inside:avoid}
+      .cards{grid-template-columns:repeat(3,1fr)}
+      .data-layout{grid-template-columns:1fr}
+      .summary-box{display:none}
+      .panel{margin-top:10mm}
+      h1{font-size:28px}
+      h2{font-size:22px}
+      .card-value{font-size:30px}
+      .note{font-size:16px}
+      th,td{font-size:14px;padding:9px 10px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="topbar" aria-labelledby="title">
+      <div>
+        <h1 id="title">健保優化提醒｜主管版月度儀表板</h1>
+        <p class="subtitle">呈現 2026 年 3 月至 6 月：每月詳細數據與整體同意率趨勢。</p>
+      </div>
+      <div class="actions">
+        <button class="primary-btn" onclick="window.print()">列印 / 另存 PDF</button>
+      </div>
+    </section>
+
+    <nav class="tabs" id="monthTabs" aria-label="選擇月份"></nav>
+
+    <section class="cards" aria-label="月度重點指標">
+      <article class="card">
+        <p class="card-title">本月提醒總數</p>
+        <p class="card-value" id="kpiTotal">—</p>
+        <p class="card-foot" id="kpiTotalDelta">—</p>
+      </article>
+      <article class="card">
+        <p class="card-title">本月同意數</p>
+        <p class="card-value" id="kpiAgree">—</p>
+        <p class="card-foot" id="kpiAgreeDelta">—</p>
+      </article>
+      <article class="card">
+        <p class="card-title">本月整體同意率</p>
+        <p class="card-value" id="kpiRate">—</p>
+        <p class="card-foot" id="kpiRateDelta">—</p>
+      </article>
+    </section>
+
+    <div class="grid" style="margin-top:22px">
+      <section class="panel" aria-labelledby="detailTitle">
+        <div class="panel-header">
+          <div>
+            <h2 id="detailTitle">每月詳細數據</h2>
+            <p class="hint">表格一次只看一個月份，避免橫向對照距離過長。</p>
+          </div>
+        </div>
+        <div class="detail-selector-wrap" aria-label="詳細數據月份切換">
+          <p class="detail-selector-title">選擇要查看的月份</p>
+          <nav class="tabs detail-tabs" id="detailMonthTabs" aria-label="選擇每月詳細數據月份"></nav>
+        </div>
+        <div class="data-layout">
+          <div class="table-wrap">
+            <table aria-label="選定月份之各項提醒詳細數據">
+              <thead>
+                <tr>
+                  <th style="width:48%">項目</th>
+                  <th style="width:17%;text-align:right">提醒總數</th>
+                  <th style="width:17%;text-align:right">同意數</th>
+                  <th style="width:18%;text-align:right">同意率</th>
+                </tr>
+              </thead>
+              <tbody id="detailTableBody"></tbody>
+            </table>
+          </div>
+          <aside class="summary-box" aria-label="本月摘要">
+            <h3 id="summaryTitle">本月摘要</h3>
+            <div class="summary-row"><span>最高同意率</span><strong id="bestRate">—</strong></div>
+            <div class="summary-row"><span>提醒量最高</span><strong id="topVolume">—</strong></div>
+            <div class="summary-row"><span>同意數最高</span><strong id="topAgree">—</strong></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="trendTitle">
+        <div class="panel-header">
+          <div>
+            <h2 id="trendTitle">整體同意率趨勢</h2>
+            <p class="hint">只顯示主管最需要的月度趨勢。點選圖上的月份，可同步切換上方明細。</p>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <svg id="trendChart" viewBox="0 0 1160 440" role="img" aria-label="2026年3月至6月整體同意率趨勢圖"></svg>
+        </div>
+        <div class="note" id="trendNote">—</div>
+      </section>
+    </div>
+
+    <p class="footer-note">資料來源：使用者提供之 202603–202606 統計數據。</p>
+  </main>
+
+<script>
+const items = [
+  '是否修改慢箋天數為30天',
+  '健保優化提醒：X光',
+  '健保優化提醒：心超',
+  '健保優化提醒：保險餘額',
+  '健保優化提醒：腹超-BC肝',
+  '健保優化提醒：膽固醇'
+];
+const months = [
+  {key:'202603', label:'2026年3月', short:'3月', reminders:[3796,3589,782,0,11,455], agreed:[377,103,82,0,11,196]},
+  {key:'202604', label:'2026年4月', short:'4月', reminders:[3499,2191,1247,1545,114,748], agreed:[244,191,126,354,114,375]},
+  {key:'202605', label:'2026年5月', short:'5月', reminders:[3317,2326,1458,1742,100,700], agreed:[351,165,107,409,100,323]},
+  {key:'202606', label:'2026年6月', short:'6月', reminders:[2777,2402,1725,1512,104,592], agreed:[201,162,118,324,104,236]}
+];
+months.forEach(m=>{
+  m.total = m.reminders.reduce((a,b)=>a+b,0);
+  m.agreeTotal = m.agreed.reduce((a,b)=>a+b,0);
+  m.rate = m.total ? m.agreeTotal / m.total : 0;
+  m.rows = items.map((name,i)=>({
+    name,
+    reminders:m.reminders[i],
+    agreed:m.agreed[i],
+    rate:m.reminders[i] ? m.agreed[i]/m.reminders[i] : 0
+  }));
+});
+let selectedIndex = months.length - 1;
+const fmt = new Intl.NumberFormat('zh-Hant-TW');
+const pct = v => (v*100).toFixed(1) + '%';
+const pp = v => Math.abs(v*100).toFixed(1) + ' 個百分點';
+function deltaText(curr, prev, type='number'){
+  if(!prev) return '首月資料';
+  const diff = curr - prev;
+  if(type==='rate'){
+    if(Math.abs(diff) < 0.0005) return '較前月持平';
+    return `較前月${diff>0?'增加':'下降'} ${pp(diff)}`;
+  }
+  if(diff === 0) return '較前月持平';
+  return `較前月${diff>0?'增加':'減少'} ${fmt.format(Math.abs(diff))}`;
+}
+function deltaClass(curr, prev, reverse=false){
+  if(!prev || curr === prev) return '';
+  const up = curr > prev;
+  return reverse ? (up?'rate-down':'rate-up') : (up?'rate-up':'rate-down');
+}
+function initTabs(){
+  const tabContainers = [
+    document.getElementById('monthTabs'),
+    document.getElementById('detailMonthTabs')
+  ].filter(Boolean);
+  tabContainers.forEach(tabs=>{
+    tabs.innerHTML = '';
+    months.forEach((m,i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'tab month-tab' + (i===selectedIndex?' active':'');
+      btn.textContent = m.label;
+      btn.dataset.index = String(i);
+      btn.setAttribute('aria-pressed', i===selectedIndex ? 'true' : 'false');
+      btn.addEventListener('click',()=>selectMonth(i));
+      tabs.appendChild(btn);
+    });
+  });
+}
+function updateTabs(){
+  document.querySelectorAll('.month-tab').forEach(el=>{
+    const i = Number(el.dataset.index);
+    el.classList.toggle('active', i===selectedIndex);
+    el.setAttribute('aria-pressed', i===selectedIndex ? 'true' : 'false');
+  });
+}
+function updateKpis(){
+  const m = months[selectedIndex];
+  const p = months[selectedIndex-1];
+  document.getElementById('kpiTotal').textContent = fmt.format(m.total);
+  document.getElementById('kpiAgree').textContent = fmt.format(m.agreeTotal);
+  document.getElementById('kpiRate').textContent = pct(m.rate);
+  const totalDelta = document.getElementById('kpiTotalDelta');
+  const agreeDelta = document.getElementById('kpiAgreeDelta');
+  const rateDelta = document.getElementById('kpiRateDelta');
+  totalDelta.textContent = deltaText(m.total, p?.total);
+  agreeDelta.textContent = deltaText(m.agreeTotal, p?.agreeTotal);
+  rateDelta.textContent = deltaText(m.rate, p?.rate, 'rate');
+  totalDelta.className = 'card-foot ' + deltaClass(m.total, p?.total, true);
+  agreeDelta.className = 'card-foot ' + deltaClass(m.agreeTotal, p?.agreeTotal);
+  rateDelta.className = 'card-foot ' + deltaClass(m.rate, p?.rate);
+}
+function updateTable(){
+  const m = months[selectedIndex];
+  document.getElementById('detailTitle').textContent = `${m.label}詳細數據`;
+  const body = document.getElementById('detailTableBody');
+  body.innerHTML = '';
+  m.rows.forEach(row=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="item-name">${row.name}</td>
+      <td class="num">${fmt.format(row.reminders)}</td>
+      <td class="num">${fmt.format(row.agreed)}</td>
+      <td class="num"><span class="rate-pill">${pct(row.rate)}</span></td>
+    `;
+    body.appendChild(tr);
+  });
+  document.getElementById('summaryTitle').textContent = `${m.label}摘要`;
+  const nonZeroRows = m.rows.filter(r=>r.reminders>0);
+  const best = nonZeroRows.reduce((a,b)=> b.rate>a.rate?b:a, nonZeroRows[0]);
+  const topV = m.rows.reduce((a,b)=> b.reminders>a.reminders?b:a, m.rows[0]);
+  const topA = m.rows.reduce((a,b)=> b.agreed>a.agreed?b:a, m.rows[0]);
+  document.getElementById('bestRate').textContent = `${pct(best.rate)}`;
+  document.getElementById('topVolume').textContent = `${fmt.format(topV.reminders)}`;
+  document.getElementById('topAgree').textContent = `${fmt.format(topA.agreed)}`;
+}
+function renderTrend(){
+  const svg = document.getElementById('trendChart');
+  const W=1160,H=440, L=88, R=42, T=48, B=78;
+  const innerW=W-L-R, innerH=H-T-B;
+  const rates = months.map(m=>m.rate);
+  const maxY = Math.max(.18, Math.ceil(Math.max(...rates)*100/2)*2/100 + .02);
+  const minY = 0;
+  const x = i => L + (innerW/(months.length-1))*i;
+  const y = v => T + innerH - ((v-minY)/(maxY-minY))*innerH;
+  const path = rates.map((v,i)=>(i?'L':'M') + x(i) + ' ' + y(v)).join(' ');
+  const area = `${path} L ${x(months.length-1)} ${T+innerH} L ${x(0)} ${T+innerH} Z`;
+  let html = `
+  <defs>
+    <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#1d4ed8" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="${W}" height="${H}" rx="18" fill="#ffffff"/>`;
+  const ticks = 5;
+  for(let t=0;t<=ticks;t++){
+    const v = minY + (maxY-minY)*t/ticks;
+    const yy = y(v);
+    html += `<line class="gridline" x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}"/>`;
+    html += `<text x="${L-18}" y="${yy+6}" text-anchor="end" class="axis">${pct(v)}</text>`;
+  }
+  months.forEach((m,i)=>{
+    const xx=x(i);
+    html += `<line class="axis" x1="${xx}" y1="${T+innerH}" x2="${xx}" y2="${T+innerH+8}"/>`;
+    html += `<text class="month-label" x="${xx}" y="${T+innerH+42}" text-anchor="middle">${m.short}</text>`;
+  });
+  html += `<path class="trend-area" d="${area}"/>`;
+  html += `<path class="trend-line" d="${path}"/>`;
+  months.forEach((m,i)=>{
+    const xx=x(i), yy=y(m.rate), labelY = yy - 22;
+    html += `<circle class="point ${i===selectedIndex?'active':''}" cx="${xx}" cy="${yy}" r="11" data-index="${i}" tabindex="0" role="button" aria-label="${m.label} 同意率 ${pct(m.rate)}"/>`;
+    html += `<text class="point-label" x="${xx}" y="${labelY}" text-anchor="middle">${pct(m.rate)}</text>`;
+  });
+  html += `<text x="${L}" y="30" fill="#536174" font-size="18" font-weight="700">整體同意率 = 同意數 ÷ 提醒總數</text>`;
+  svg.innerHTML = html;
+  svg.querySelectorAll('.point').forEach(p=>{
+    const i = Number(p.dataset.index);
+    p.addEventListener('click',()=>selectMonth(i));
+    p.addEventListener('keydown',e=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); selectMonth(i); } });
+  });
+}
+function updateNote(){
+  const m = months[selectedIndex];
+  const p = months[selectedIndex-1];
+  let sentence = `${m.label}整體同意率為 ${pct(m.rate)}，提醒總數 ${fmt.format(m.total)}，同意數 ${fmt.format(m.agreeTotal)}。`;
+  if(p){
+    const d = m.rate - p.rate;
+    const direction = Math.abs(d)<0.0005 ? '與前月持平' : `較前月${d>0?'上升':'下降'} ${pp(d)}`;
+    sentence += `同意率${direction}。`;
+  }
+  document.getElementById('trendNote').textContent = sentence;
+}
+function selectMonth(i){
+  selectedIndex = i;
+  updateTabs();
+  updateKpis();
+  updateTable();
+  renderTrend();
+  updateNote();
+}
+initTabs();
+selectMonth(selectedIndex);
+</script>
+</body>
+</html>
