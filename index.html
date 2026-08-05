@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 應用程式使用率統計報告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1f2937; --muted:#6b7280;
+    --border:#e5e7eb; --accent:#2563eb; --accent2:#10b981;
+    --c-er:#6366f1; --c-sheet:#10b981; --c-drug:#f59e0b; --c-quick:#ef4444;
+    --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","Microsoft JhengHei",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
+  header{margin-bottom:28px}
+  h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+  .sub{color:var(--muted);font-size:14px;margin-top:6px}
+  .updated{color:var(--muted);font-size:12px;margin-top:4px}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .kpi .label{font-size:13px;color:var(--muted);font-weight:500}
+  .kpi .val{font-size:28px;font-weight:700;margin-top:6px}
+  .kpi .bar{height:4px;border-radius:2px;margin-top:10px;background:var(--border)}
+  .kpi .bar i{display:block;height:100%;border-radius:2px}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:22px 24px;margin-bottom:24px}
+  .card h2{font-size:17px;font-weight:600;margin-bottom:4px}
+  .card .desc{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .chart-box{position:relative;height:340px}
+  .chart-box.tall{height:420px}
+
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:13px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--border)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:#f9fafb;font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+  tbody tr:hover{background:#f9fafb}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
+
+  .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .tab{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:.15s}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .tab:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+
+  footer{margin-top:32px;color:var(--muted);font-size:12px;text-align:center}
+
+  @media(max-width:780px){
+    .kpi-grid{grid-template-columns:repeat(2,1fr)}
+    .chart-box{height:280px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>AI 應用程式使用率統計報告</h1>
+    <div class="sub">各項 AI 應用服務之每日使用次數統計</div>
+    <div class="updated" id="updated"></div>
+  </header>
+
+  <section class="kpi-grid" id="kpis"></section>
+
+  <div class="card">
+    <h2>各項 AI 服務總使用量比較</h2>
+    <div class="desc">四項 AI 應用程式的累計使用次數</div>
+    <div class="chart-box"><canvas id="chartTotal"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h2>每月使用量趨勢</h2>
+    <div class="desc">依月份彙總各項 AI 服務的使用次數</div>
+    <div class="tabs" id="tabs"></div>
+    <div class="chart-box tall"><canvas id="chartTrend"></canvas></div>
+  </div>
+
+  <div class="card">
+    <h2>明細資料</h2>
+    <div class="desc">各服務每日使用次數一覽</div>
+    <div class="tabs" id="dtabs"></div>
+    <div style="max-height:420px;overflow:auto">
+      <table id="dtbl"><thead><tr><th>日期</th><th style="text-align:right">使用次數</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+
+  <footer>本報告由系統自動產生 · 資料來源：HIS 使用紀錄</footer>
+</div>
+
+<script>
+const SERVICES = [
+  {key:'er',     name:'AI 診斷碼推薦', color:'#6366f1', short:'診斷碼推薦'},
+  {key:'sheet',  name:'AI 生成診斷書', color:'#10b981', short:'生成診斷書'},
+  {key:'drug',   name:'AI 自費藥推薦', color:'#f59e0b', short:'自費藥推薦'},
+  {key:'quick',  name:'AI 門診開藥快審', color:'#ef4444', short:'開藥快審'},
+];
+
+const DATA = {
+  er:[
+    ['2025-09-30',1],['2025-10-05',1],['2025-10-14',1],['2025-10-16',1],['2025-10-19',1],
+    ['2025-10-20',2],['2025-10-23',1],['2025-11-25',1],['2026-01-03',1],['2026-01-26',1],
+    ['2026-02-20',1],['2026-02-24',1],['2026-05-07',1],['2026-05-19',1],['2026-06-22',1],
+    ['2026-06-24',2],['2026-06-25',1],['2026-07-12',2],['2026-07-13',1],
+  ],
+  sheet:[
+    ['2024-12-25',1],['2025-08-18',1],['2025-10-17',2],['2025-10-27',1],['2025-10-28',1],
+    ['2025-11-08',1],['2025-11-11',1],['2025-11-24',2],['2025-11-25',2],['2025-12-08',1],
+    ['2025-12-22',6],['2025-12-23',1],['2026-01-03',1],['2026-01-11',1],['2026-01-12',6],
+    ['2026-01-13',3],['2026-01-14',3],['2026-01-15',6],['2026-01-16',1],['2026-01-20',1],
+    ['2026-01-22',7],['2026-01-23',1],['2026-01-24',1],['2026-01-31',1],['2026-02-02',2],
+    ['2026-02-03',1],['2026-02-07',6],['2026-02-11',1],['2026-02-20',1],['2026-02-24',1],
+    ['2026-02-27',1],['2026-03-02',1],['2026-03-04',1],['2026-03-05',2],['2026-03-13',1],
+    ['2026-03-16',4],['2026-03-20',1],['2026-03-22',1],['2026-03-23',1],['2026-04-01',1],
+    ['2026-04-05',1],['2026-04-07',1],['2026-04-15',1],['2026-04-16',1],['2026-04-24',2],
+    ['2026-05-08',1],['2026-05-11',1],['2026-05-16',1],['2026-05-25',1],['2026-06-04',1],
+    ['2026-06-05',1],['2026-06-06',1],['2026-06-07',1],['2026-06-10',2],['2026-06-15',1],
+    ['2026-06-16',1],['2026-06-17',1],['2026-06-18',1],['2026-06-19',1],['2026-06-20',1],
+    ['2026-06-22',1],['2026-06-26',1],['2026-06-27',1],['2026-07-01',3],['2026-07-02',4],
+    ['2026-07-03',1],['2026-07-07',1],['2026-07-08',7],['2026-07-09',2],['2026-07-10',2],
+    ['2026-07-12',6],['2026-07-13',2],['2026-07-21',1],['2026-07-22',1],['2026-07-24',3],
+    ['2026-07-29',1],['2026-07-30',1],['2026-07-31',3],['2026-08-05',1],
+  ],
+  drug:[
+    ['2025-07-10',5],['2025-07-11',3],['2025-07-14',4],['2025-07-15',1],['2025-07-17',4],
+    ['2025-07-18',1],['2025-07-21',4],['2025-07-22',2],['2025-07-23',3],['2025-07-24',1],
+    ['2025-07-28',1],['2025-07-29',1],['2025-07-30',2],['2025-08-01',2],['2025-08-04',6],
+    ['2025-08-06',2],['2025-08-07',2],['2025-08-08',3],['2025-08-11',2],['2025-08-12',1],
+    ['2025-08-14',3],['2025-08-15',1],['2025-08-18',3],['2025-08-19',1],['2025-08-21',2],
+    ['2025-08-22',2],['2025-08-25',1],['2025-08-26',4],['2025-08-27',2],['2025-08-28',1],
+    ['2025-08-29',1],['2025-09-01',1],['2025-09-03',7],['2025-09-04',5],['2025-09-05',1],
+    ['2025-09-09',1],['2025-09-11',4],['2025-09-12',2],['2025-09-15',11],['2025-09-16',3],
+    ['2025-09-17',1],['2025-09-18',6],['2025-09-19',4],['2025-09-22',2],['2025-09-23',1],
+    ['2025-10-01',1],['2025-10-02',2],['2025-10-04',2],['2025-10-08',1],['2025-10-09',1],
+    ['2025-10-14',2],['2025-10-15',1],['2025-10-17',1],['2025-10-21',2],['2025-10-23',2],
+    ['2025-10-31',2],['2025-11-03',1],['2025-11-04',1],['2025-11-05',1],['2025-11-07',1],
+    ['2025-11-13',2],['2025-11-17',1],['2025-11-24',1],['2025-11-26',1],['2025-11-27',1],
+    ['2025-11-28',1],['2025-12-05',1],['2025-12-10',2],['2025-12-11',1],['2025-12-12',1],
+    ['2025-12-15',2],['2025-12-17',5],['2025-12-18',1],['2025-12-23',1],['2025-12-24',3],
+    ['2025-12-26',1],['2025-12-31',2],['2026-01-05',1],['2026-01-06',3],['2026-01-07',1],
+    ['2026-01-09',2],['2026-01-13',1],['2026-01-16',1],['2026-01-19',1],['2026-01-20',1],
+    ['2026-01-21',1],['2026-01-23',1],['2026-01-26',1],['2026-01-28',1],['2026-01-29',3],
+    ['2026-02-02',1],['2026-02-04',3],['2026-02-11',1],['2026-02-12',1],['2026-02-20',1],
+    ['2026-02-24',1],['2026-02-25',1],['2026-02-27',1],['2026-03-03',1],['2026-03-04',3],
+    ['2026-03-05',1],['2026-03-10',4],['2026-03-11',2],['2026-03-19',2],['2026-03-24',1],
+    ['2026-03-26',2],['2026-04-01',2],['2026-04-08',2],['2026-04-10',1],['2026-04-13',1],
+    ['2026-04-15',1],['2026-04-17',1],['2026-04-20',1],['2026-04-23',1],['2026-04-28',1],
+    ['2026-04-30',3],['2026-05-05',1],['2026-05-11',1],['2026-05-15',1],['2026-05-18',1],
+    ['2026-05-22',2],['2026-05-29',1],['2026-06-09',2],['2026-06-17',1],['2026-06-24',3],
+    ['2026-07-01',2],['2026-07-13',1],['2026-07-29',1],['2026-08-03',1],['2026-08-05',1],
+  ],
+  quick:[
+    ['2025-10-13',1],['2025-11-07',1],['2026-03-24',1],['2026-03-27',35],['2026-03-30',164],
+    ['2026-03-31',219],['2026-04-01',366],['2026-04-02',214],['2026-04-03',198],['2026-04-06',1],
+    ['2026-04-07',172],['2026-04-08',318],['2026-04-09',155],['2026-04-10',180],['2026-04-13',224],
+    ['2026-04-14',195],['2026-04-15',321],['2026-04-16',255],['2026-04-17',234],['2026-04-20',191],
+    ['2026-04-21',167],['2026-04-22',276],['2026-04-23',232],['2026-04-24',143],['2026-04-27',238],
+    ['2026-04-28',191],['2026-04-29',270],['2026-04-30',200],['2026-05-01',178],['2026-05-04',243],
+    ['2026-05-05',218],['2026-05-06',340],['2026-05-07',272],['2026-05-08',211],['2026-05-11',147],
+    ['2026-05-12',109],['2026-05-13',184],['2026-05-14',169],['2026-05-15',144],['2026-05-18',222],
+    ['2026-05-19',185],['2026-05-20',272],['2026-05-21',192],['2026-05-22',233],['2026-05-23',1],
+    ['2026-05-25',182],['2026-06-02',54],['2026-06-03',209],['2026-06-04',141],['2026-06-05',179],
+    ['2026-06-08',220],['2026-06-09',215],['2026-06-10',195],['2026-06-11',143],['2026-06-12',229],
+    ['2026-06-15',181],['2026-06-16',189],['2026-06-17',246],['2026-06-18',161],['2026-06-19',130],
+    ['2026-06-20',1],['2026-06-22',166],['2026-06-23',201],['2026-06-24',293],['2026-06-25',122],
+    ['2026-06-26',139],['2026-06-29',208],['2026-06-30',169],['2026-07-01',309],['2026-07-02',184],
+    ['2026-07-03',189],['2026-07-06',185],['2026-07-07',164],['2026-07-08',316],['2026-07-09',247],
+    ['2026-07-10',221],['2026-07-13',192],['2026-07-14',197],['2026-07-15',250],['2026-07-16',198],
+    ['2026-07-17',212],['2026-07-20',224],['2026-07-21',209],['2026-07-22',184],['2026-07-23',255],
+    ['2026-07-24',610],['2026-07-25',187],['2026-07-27',2461],['2026-07-28',1904],['2026-07-29',2088],
+    ['2026-07-30',1925],['2026-07-31',1842],['2026-08-01',219],['2026-08-03',2333],['2026-08-04',1966],
+    ['2026-08-05',1338],
+  ],
+};
+
+const fmt = n => n.toLocaleString('zh-TW');
+const sum = arr => arr.reduce((s,[,v])=>s+v,0);
+
+// ---- KPI ----
+const totals = SERVICES.map(s => ({...s, total: sum(DATA[s.key])}));
+const grand = totals.reduce((s,t)=>s+t.total,0);
+const kpiBox = document.getElementById('kpis');
+totals.forEach(t=>{
+  const pct = grand ? (t.total/grand*100) : 0;
+  kpiBox.insertAdjacentHTML('beforeend', `
+    <div class="kpi">
+      <div class="label">${t.name}</div>
+      <div class="val" style="color:${t.color}">${fmt(t.total)}</div>
+      <div class="bar"><i style="width:${pct.toFixed(1)}%;background:${t.color}"></i></div>
+    </div>`);
+});
+document.getElementById('updated').textContent = '資料更新日期：2026-08-05';
+
+// ---- Total bar chart ----
+new Chart(document.getElementById('chartTotal'), {
+  type:'bar',
+  data:{
+    labels: totals.map(t=>t.name),
+    datasets:[{
+      data: totals.map(t=>t.total),
+      backgroundColor: totals.map(t=>t.color),
+      borderRadius:6, maxBarThickness:80,
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>fmt(c.raw)+' 次'}}},
+    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}
+  }
+});
+
+// ---- Monthly aggregation ----
+function monthly(arr){
+  const m={};
+  arr.forEach(([d,v])=>{
+    const k=d.slice(0,7); m[k]=(m[k]||0)+v;
+  });
+  return m;
+}
+const allMonths = new Set();
+SERVICES.forEach(s=>Object.keys(monthly(DATA[s.key])).forEach(k=>allMonths.add(k)));
+const months = [...allMonths].sort();
+const monthData = {};
+SERVICES.forEach(s=>{
+  const m = monthly(DATA[s.key]);
+  monthData[s.key] = months.map(mk=>m[mk]||0);
+});
+
+// ---- Trend chart with tabs ----
+let trendChart;
+function renderTrend(filter){
+  let labels = months, sets;
+  if(filter==='all'){
+    sets = SERVICES.map(s=>({
+      label:s.name, data:monthData[s.key], borderColor:s.color,
+      backgroundColor:s.color+'22', fill:true, tension:.3, borderWidth:2, pointRadius:2,
+    }));
+  } else {
+    const s = SERVICES.find(x=>x.key===filter);
+    sets = [{
+      label:s.name, data:monthData[s.key], borderColor:s.color,
+      backgroundColor:s.color+'22', fill:true, tension:.3, borderWidth:2, pointRadius:3,
+    }];
+  }
+  const cfg = {
+    type:'line',
+    data:{labels, datasets:sets},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmt(c.raw)+' 次'}}},
+      scales:{y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}
+    }
+  };
+  if(trendChart) trendChart.destroy();
+  trendChart = new Chart(document.getElementById('chartTrend'), cfg);
+}
+
+const tabsEl = document.getElementById('tabs');
+const tabItems = [{key:'all',name:'全部服務'}, ...SERVICES.map(s=>({key:s.key,name:s.name}))];
+tabItems.forEach((t,i)=>{
+  const b=document.createElement('button');
+  b.className='tab'+(i===0?' active':'');
+  b.textContent=t.name;
+  b.onclick=()=>{
+    [...tabsEl.children].forEach(c=>c.classList.remove('active'));
+    b.classList.add('active');
+    renderTrend(t.key);
+  };
+  tabsEl.appendChild(b);
+});
+renderTrend('all');
+
+// ---- Detail table ----
+const dtabsEl = document.getElementById('dtabs');
+const dtblBody = document.querySelector('#dtbl tbody');
+let dActive = 'quick';
+function renderDetail(key){
+  const s = SERVICES.find(x=>x.key===key);
+  const rows = [...DATA[key]].sort((a,b)=>b[0].localeCompare(a[0]));
+  dtblBody.innerHTML = rows.map(([d,v])=>
+    `<tr><td>${d}</td><td><span class="pill" style="background:${s.color}22;color:${s.color}">${fmt(v)}</span></td></tr>`
+  ).join('');
+}
+SERVICES.forEach(s=>{
+  const b=document.createElement('button');
+  b.className='tab'+(s.key===dActive?' active':'');
+  b.textContent=s.name;
+  b.onclick=()=>{
+    [...dtabsEl.children].forEach(c=>c.classList.remove('active'));
+    b.classList.add('active');
+    renderDetail(s.key);
+  };
+  dtabsEl.appendChild(b);
+});
+renderDetail(dActive);
+</script>
+</body>
+</html>
