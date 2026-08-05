@@ -8,8 +8,7 @@
 <style>
   :root{
     --bg:#f5f7fa; --card:#ffffff; --ink:#1f2937; --muted:#6b7280;
-    --border:#e5e7eb; --accent:#2563eb; --accent2:#10b981;
-    --c-er:#6366f1; --c-sheet:#10b981; --c-drug:#f59e0b; --c-quick:#ef4444;
+    --border:#e5e7eb; --accent:#2563eb;
     --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -20,40 +19,36 @@
   .sub{color:var(--muted);font-size:14px;margin-top:6px}
   .updated{color:var(--muted);font-size:12px;margin-top:4px}
 
-  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
-  .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
-  .kpi .label{font-size:13px;color:var(--muted);font-weight:500}
-  .kpi .val{font-size:28px;font-weight:700;margin-top:6px}
-  .kpi .bar{height:4px;border-radius:2px;margin-top:10px;background:var(--border)}
-  .kpi .bar i{display:block;height:100%;border-radius:2px}
+  .svc-section{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);margin-bottom:24px;overflow:hidden}
+  .svc-header{padding:18px 24px;border-left:5px solid;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .svc-header h2{font-size:18px;font-weight:700}
+  .svc-header .period{font-size:12px;color:var(--muted)}
+  .svc-body{padding:20px 24px}
 
-  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:22px 24px;margin-bottom:24px}
-  .card h2{font-size:17px;font-weight:600;margin-bottom:4px}
-  .card .desc{font-size:13px;color:var(--muted);margin-bottom:18px}
-  .chart-box{position:relative;height:340px}
-  .chart-box.tall{height:420px}
+  .mini-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  .mini-kpi .mk{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px 14px;text-align:center}
+  .mini-kpi .mk .l{font-size:11px;color:var(--muted);font-weight:500}
+  .mini-kpi .mk .v{font-size:20px;font-weight:700;margin-top:4px}
 
-  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:13px}
-  .legend span{display:inline-flex;align-items:center;gap:6px}
-  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .chart-box{position:relative;height:300px;margin-bottom:16px}
 
-  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
-  th,td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--border)}
   th:first-child,td:first-child{text-align:left}
   thead th{background:#f9fafb;font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.4px}
   tbody tr:hover{background:#f9fafb}
   .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
 
-  .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
-  .tab{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:.15s}
-  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .tab:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+  .detail-toggle{cursor:pointer;color:var(--accent);font-size:13px;font-weight:500;margin-top:8px;display:inline-block;user-select:none}
+  .detail-toggle:hover{text-decoration:underline}
+  .detail-wrap{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .detail-wrap.open{max-height:500px;overflow:auto}
 
   footer{margin-top:32px;color:var(--muted);font-size:12px;text-align:center}
 
   @media(max-width:780px){
-    .kpi-grid{grid-template-columns:repeat(2,1fr)}
-    .chart-box{height:280px}
+    .mini-kpi{grid-template-columns:repeat(2,1fr)}
+    .chart-box{height:240px}
   }
 </style>
 </head>
@@ -61,43 +56,19 @@
 <div class="wrap">
   <header>
     <h1>AI 應用程式使用率統計報告</h1>
-    <div class="sub">各項 AI 應用服務之每日使用次數統計</div>
+    <div class="sub">各項 AI 應用服務之每日使用次數統計（各服務獨立分析）</div>
     <div class="updated" id="updated"></div>
   </header>
-
-  <section class="kpi-grid" id="kpis"></section>
-
-  <div class="card">
-    <h2>各項 AI 服務總使用量比較</h2>
-    <div class="desc">四項 AI 應用程式的累計使用次數</div>
-    <div class="chart-box"><canvas id="chartTotal"></canvas></div>
-  </div>
-
-  <div class="card">
-    <h2>每月使用量趨勢</h2>
-    <div class="desc">依月份彙總各項 AI 服務的使用次數</div>
-    <div class="tabs" id="tabs"></div>
-    <div class="chart-box tall"><canvas id="chartTrend"></canvas></div>
-  </div>
-
-  <div class="card">
-    <h2>明細資料</h2>
-    <div class="desc">各服務每日使用次數一覽</div>
-    <div class="tabs" id="dtabs"></div>
-    <div style="max-height:420px;overflow:auto">
-      <table id="dtbl"><thead><tr><th>日期</th><th style="text-align:right">使用次數</th></tr></thead><tbody></tbody></table>
-    </div>
-  </div>
-
+  <div id="sections"></div>
   <footer>本報告由系統自動產生 · 資料來源：HIS 使用紀錄</footer>
 </div>
 
 <script>
 const SERVICES = [
-  {key:'er',     name:'AI 診斷碼推薦', color:'#6366f1', short:'診斷碼推薦'},
-  {key:'sheet',  name:'AI 生成診斷書', color:'#10b981', short:'生成診斷書'},
-  {key:'drug',   name:'AI 自費藥推薦', color:'#f59e0b', short:'自費藥推薦'},
-  {key:'quick',  name:'AI 門診開藥快審', color:'#ef4444', short:'開藥快審'},
+  {key:'er',    name:'AI 診斷碼推薦',  color:'#6366f1', desc:'急診端 AI 輔助診斷碼推薦'},
+  {key:'sheet', name:'AI 生成診斷書',  color:'#10b981', desc:'AI 輔助生成診斷書'},
+  {key:'drug',  name:'AI 自費藥推薦',  color:'#f59e0b', desc:'門診 AI 自費藥品推薦'},
+  {key:'quick', name:'AI 門診開藥快審', color:'#ef4444', desc:'門診開藥快速審查'},
 ];
 
 const DATA = {
@@ -180,123 +151,99 @@ const DATA = {
 const fmt = n => n.toLocaleString('zh-TW');
 const sum = arr => arr.reduce((s,[,v])=>s+v,0);
 
-// ---- KPI ----
-const totals = SERVICES.map(s => ({...s, total: sum(DATA[s.key])}));
-const grand = totals.reduce((s,t)=>s+t.total,0);
-const kpiBox = document.getElementById('kpis');
-totals.forEach(t=>{
-  const pct = grand ? (t.total/grand*100) : 0;
-  kpiBox.insertAdjacentHTML('beforeend', `
-    <div class="kpi">
-      <div class="label">${t.name}</div>
-      <div class="val" style="color:${t.color}">${fmt(t.total)}</div>
-      <div class="bar"><i style="width:${pct.toFixed(1)}%;background:${t.color}"></i></div>
-    </div>`);
-});
-document.getElementById('updated').textContent = '資料更新日期：2026-08-05';
-
-// ---- Total bar chart ----
-new Chart(document.getElementById('chartTotal'), {
-  type:'bar',
-  data:{
-    labels: totals.map(t=>t.name),
-    datasets:[{
-      data: totals.map(t=>t.total),
-      backgroundColor: totals.map(t=>t.color),
-      borderRadius:6, maxBarThickness:80,
-    }]
-  },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>fmt(c.raw)+' 次'}}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}
-  }
-});
-
-// ---- Monthly aggregation ----
 function monthly(arr){
   const m={};
-  arr.forEach(([d,v])=>{
-    const k=d.slice(0,7); m[k]=(m[k]||0)+v;
-  });
+  arr.forEach(([d,v])=>{const k=d.slice(0,7); m[k]=(m[k]||0)+v;});
   return m;
 }
-const allMonths = new Set();
-SERVICES.forEach(s=>Object.keys(monthly(DATA[s.key])).forEach(k=>allMonths.add(k)));
-const months = [...allMonths].sort();
-const monthData = {};
-SERVICES.forEach(s=>{
-  const m = monthly(DATA[s.key]);
-  monthData[s.key] = months.map(mk=>m[mk]||0);
-});
 
-// ---- Trend chart with tabs ----
-let trendChart;
-function renderTrend(filter){
-  let labels = months, sets;
-  if(filter==='all'){
-    sets = SERVICES.map(s=>({
-      label:s.name, data:monthData[s.key], borderColor:s.color,
-      backgroundColor:s.color+'22', fill:true, tension:.3, borderWidth:2, pointRadius:2,
-    }));
-  } else {
-    const s = SERVICES.find(x=>x.key===filter);
-    sets = [{
-      label:s.name, data:monthData[s.key], borderColor:s.color,
-      backgroundColor:s.color+'22', fill:true, tension:.3, borderWidth:2, pointRadius:3,
-    }];
-  }
-  const cfg = {
-    type:'line',
-    data:{labels, datasets:sets},
+function buildSection(svc, idx){
+  const arr = DATA[svc.key];
+  const total = sum(arr);
+  const days = arr.length;
+  const avg = (total/days).toFixed(1);
+  const peakRow = arr.reduce((mx,r)=>r[1]>mx[1]?r:mx, ['',0]);
+  const firstDate = arr[0][0];
+  const lastDate = arr[arr.length-1][0];
+  const m = monthly(arr);
+  const mKeys = Object.keys(m).sort();
+  const mVals = mKeys.map(k=>m[k]);
+  const peakMonth = mKeys.reduce((pk,k)=>m[k]>m[pk]?k:pk, mKeys[0]);
+  const peakMonthVal = m[peakMonth];
+
+  const secId = `sec-${svc.key}`;
+  const chartId = `chart-${svc.key}`;
+  const html = `
+    <div class="svc-section" id="${secId}">
+      <div class="svc-header" style="border-left-color:${svc.color};background:${svc.color}08">
+        <div>
+          <h2 style="color:${svc.color}">${idx+1}. ${svc.name}</h2>
+          <div class="period">${svc.desc}　|　資料區間：${firstDate} ～ ${lastDate}</div>
+        </div>
+      </div>
+      <div class="svc-body">
+        <div class="mini-kpi">
+          <div class="mk"><div class="l">累計使用次數</div><div class="v" style="color:${svc.color}">${fmt(total)}</div></div>
+          <div class="mk"><div class="l">使用天數</div><div class="v">${days}</div></div>
+          <div class="mk"><div class="l">平均每日次數</div><div class="v">${avg}</div></div>
+          <div class="mk"><div class="l">最高單日次數</div><div class="v">${fmt(peakRow[1])}</div></div>
+        </div>
+        <div class="chart-box"><canvas id="${chartId}"></canvas></div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px">
+          最高單日：<b>${peakRow[0]}</b>（${fmt(peakRow[1])} 次）　·　最高單月：<b>${peakMonth}</b>（${fmt(peakMonthVal)} 次）
+        </div>
+        <span class="detail-toggle" onclick="toggleDetail('${svc.key}')">▼ 展開每日明細</span>
+        <div class="detail-wrap" id="detail-${svc.key}">
+          <table style="margin-top:12px"><thead><tr><th>日期</th><th style="text-align:right">使用次數</th></tr></thead><tbody>
+          ${arr.slice().sort((a,b)=>b[0].localeCompare(a[0])).map(([d,v])=>
+            `<tr><td>${d}</td><td><span class="pill" style="background:${svc.color}22;color:${svc.color}">${fmt(v)}</span></td></tr>`
+          ).join('')}
+          </tbody></table>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('sections').insertAdjacentHTML('beforeend', html);
+
+  new Chart(document.getElementById(chartId), {
+    type:'bar',
+    data:{
+      labels:mKeys,
+      datasets:[{
+        label:svc.name,
+        data:mVals,
+        backgroundColor:svc.color,
+        borderRadius:4,
+        maxBarThickness:50,
+      }]
+    },
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmt(c.raw)+' 次'}}},
-      scales:{y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>fmt(c.raw)+' 次'}}
+      },
+      scales:{
+        y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}},
+        x:{ticks:{maxRotation:45,minRotation:45}}
+      }
     }
-  };
-  if(trendChart) trendChart.destroy();
-  trendChart = new Chart(document.getElementById('chartTrend'), cfg);
+  });
 }
 
-const tabsEl = document.getElementById('tabs');
-const tabItems = [{key:'all',name:'全部服務'}, ...SERVICES.map(s=>({key:s.key,name:s.name}))];
-tabItems.forEach((t,i)=>{
-  const b=document.createElement('button');
-  b.className='tab'+(i===0?' active':'');
-  b.textContent=t.name;
-  b.onclick=()=>{
-    [...tabsEl.children].forEach(c=>c.classList.remove('active'));
-    b.classList.add('active');
-    renderTrend(t.key);
-  };
-  tabsEl.appendChild(b);
-});
-renderTrend('all');
-
-// ---- Detail table ----
-const dtabsEl = document.getElementById('dtabs');
-const dtblBody = document.querySelector('#dtbl tbody');
-let dActive = 'quick';
-function renderDetail(key){
-  const s = SERVICES.find(x=>x.key===key);
-  const rows = [...DATA[key]].sort((a,b)=>b[0].localeCompare(a[0]));
-  dtblBody.innerHTML = rows.map(([d,v])=>
-    `<tr><td>${d}</td><td><span class="pill" style="background:${s.color}22;color:${s.color}">${fmt(v)}</span></td></tr>`
-  ).join('');
+function toggleDetail(key){
+  const el = document.getElementById('detail-'+key);
+  const toggle = el.previousElementSibling;
+  if(el.classList.contains('open')){
+    el.classList.remove('open');
+    toggle.textContent = '▼ 展開每日明細';
+  } else {
+    el.classList.add('open');
+    toggle.textContent = '▲ 收合每日明細';
+  }
 }
-SERVICES.forEach(s=>{
-  const b=document.createElement('button');
-  b.className='tab'+(s.key===dActive?' active':'');
-  b.textContent=s.name;
-  b.onclick=()=>{
-    [...dtabsEl.children].forEach(c=>c.classList.remove('active'));
-    b.classList.add('active');
-    renderDetail(s.key);
-  };
-  dtabsEl.appendChild(b);
-});
-renderDetail(dActive);
+
+document.getElementById('updated').textContent = '資料更新日期：2026-08-05';
+SERVICES.forEach((s,i)=>buildSection(s,i));
 </script>
 </body>
 </html>
