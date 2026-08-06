@@ -56,7 +56,7 @@
 <div class="wrap">
   <header>
     <h1>AI 應用程式使用率統計報告</h1>
-    <div class="sub">各項 AI 應用服務之每日使用次數統計（各服務獨立分析）</div>
+    <div class="sub">各項 AI 應用服務之使用次數統計（各服務獨立分析）</div>
     <div class="updated" id="updated"></div>
   </header>
   <div id="sections"></div>
@@ -65,10 +65,16 @@
 
 <script>
 const SERVICES = [
-  {key:'er',    name:'AI 診斷碼推薦',  color:'#6366f1', desc:'急診端 AI 輔助診斷碼推薦'},
-  {key:'sheet', name:'AI 生成診斷書',  color:'#10b981', desc:'AI 輔助生成診斷書'},
-  {key:'drug',  name:'AI 自費藥推薦',  color:'#f59e0b', desc:'門診 AI 自費藥品推薦'},
-  {key:'quick', name:'AI 門診開藥快審', color:'#ef4444', desc:'門診開藥快速審查'},
+  {key:'er',    name:'AI 診斷碼推薦',  color:'#6366f1', desc:'急診端 AI 輔助診斷碼推薦',
+   summary:'累計使用 23 次，分布於 19 個使用日，平均每次使用日僅 1.2 次。使用紀錄零散，2025 年 10 月為早期高峰（6 次），之後每月維持 1～5 次。整體使用量偏低，目前仍處於試用或初期推廣階段，建議後續加強推廣或評估適用情境。'},
+  {key:'sheet', name:'AI 生成診斷書',  color:'#10b981', desc:'AI 輔助生成診斷書',
+   summary:'累計使用 130 次，涵蓋 80 個使用日。2026 年 1 月起使用量明顯增加（單月 32 次），7 月達到單月高峰 35 次，顯示採用率正在上升。最高單日使用 7 次（2026-01-22 及 2026-07-08），整體呈穩定成長趨勢。'},
+  {key:'drug',  name:'AI 自費藥推薦',  color:'#f59e0b', desc:'門診 AI 自費藥品推薦',
+   summary:'自 2025 年 7 月上線以來持續使用，累計 243 次，涵蓋 153 個使用日，為四項服務中使用天數最多者。2025 年 7～9 月為使用高峰期（每月 27～38 次），最高單日 11 次（2025-09-15）。2025 年 10 月後使用量下降至每月 5～20 次，整體使用量穩定但未見顯著成長。'},
+  {key:'quick', name:'AI 門診開藥快審', color:'#ef4444', desc:'門診開藥快速審查',
+   summary:'累計使用 30,948 次，為五項服務中使用量最高者。自 2026 年 3 月底正式上線後使用量快速攀升，4 月起每日使用量穩定維持在 100～340 次。7 月 27 日起出現大幅增長，單日最高達 2,461 次（2026-07-27），7 月單月累計 13,958 次。顯示該服務已廣泛融入門診日常作業流程，為目前本院 AI 應用的核心服務。'},
+  {key:'nursing', name:'AI 護理交班',  color:'#ec4899', desc:'AI 輔助護理交班',
+   summary:'累計使用 5,407 筆，涵蓋 13 個護理站。4 月為單月高峰（1,294 筆），其中 SI 護理站累計 4,623 筆，佔整體 85.5%，為主要使用單位。其餘護理站使用量較低，建議加強推廣至其他護理站以提升整體採用率。'},
 ];
 
 const DATA = {
@@ -146,7 +152,28 @@ const DATA = {
     ['2026-07-30',1925],['2026-07-31',1842],['2026-08-01',219],['2026-08-03',2333],['2026-08-04',1966],
     ['2026-08-05',1338],
   ],
+  nursing:[
+    ['2026-01',186],['2026-02',40],['2026-03',1251],['2026-04',1294],
+    ['2026-05',1074],['2026-06',870],['2026-07',692],
+  ],
 };
+
+const NURSING_STATIONS = [
+  ['2B',28,0,0,0,0,0,0,28],
+  ['2C',1,0,46,10,5,5,2,69],
+  ['3D',55,14,11,0,0,0,0,80],
+  ['5A',19,0,20,40,19,13,6,117],
+  ['5B',36,0,14,58,16,84,8,216],
+  ['5C',2,24,69,5,3,10,1,114],
+  ['6A',18,0,11,46,2,9,6,92],
+  ['6C',13,0,1,12,1,0,3,30],
+  ['ER',3,0,2,0,0,0,0,5],
+  ['MI',11,0,2,0,3,9,2,27],
+  ['NI',0,0,0,3,2,0,0,5],
+  ['PI',0,0,0,0,1,0,0,1],
+  ['SI',0,2,1075,1120,1022,740,664,4623],
+  ['總',186,40,1251,1294,1074,870,692,5407],
+];
 
 const fmt = n => n.toLocaleString('zh-TW');
 const sum = arr => arr.reduce((s,[,v])=>s+v,0);
@@ -173,6 +200,49 @@ function buildSection(svc, idx){
 
   const secId = `sec-${svc.key}`;
   const chartId = `chart-${svc.key}`;
+
+  // AI 護理交班使用特殊渲染（護理站表格 + 折線圖）
+  const isNursing = svc.key === 'nursing';
+
+  // KPI 區塊
+  const kpiLabels = isNursing
+    ? ['累計使用筆數','使用護理站數','平均每月次數','最高單月次數']
+    : ['累計使用次數','使用天數','平均每日次數','最高單日次數'];
+  const kpiValues = isNursing
+    ? [fmt(total), 13, (total/days).toFixed(1), fmt(peakMonthVal)]
+    : [fmt(total), days, avg, fmt(peakRow[1])];
+
+  // 護理站表格（僅 AI 護理交班）
+  const stationTable = isNursing ? `
+        <h3 style="font-size:15px;font-weight:600;margin:20px 0 10px;color:var(--ink)">各護理站各月筆數統計</h3>
+        <div style="overflow-x:auto;margin-bottom:16px">
+        <table style="min-width:600px"><thead><tr>
+          <th>護理站</th><th>1月</th><th>2月</th><th>3月</th><th>4月</th><th>5月</th><th>6月</th><th>7月</th><th>累計</th>
+        </tr></thead><tbody>
+        ${NURSING_STATIONS.map(row=>{
+          const isTotal = row[0]==='總';
+          const style = isTotal ? 'font-weight:700;background:#f3f4f6' : '';
+          return `<tr style="${style}"><td>${row[0]}</td>${row.slice(1).map(v=>`<td>${typeof v==='number'?fmt(v):v}</td>`).join('')}</tr>`;
+        }).join('')}
+        </tbody></table>
+        </div>` : '';
+
+  // 高峰資訊
+  const peakInfo = isNursing
+    ? `最高單月：<b>${peakMonth}</b>（${fmt(peakMonthVal)} 次）`
+    : `最高單日：<b>${peakRow[0]}</b>（${fmt(peakRow[1])} 次）　·　最高單月：<b>${peakMonth}</b>（${fmt(peakMonthVal)} 次）`;
+
+  // 每日明細（非護理交班才有）
+  const detailSection = isNursing ? '' : `
+        <span class="detail-toggle" onclick="toggleDetail('${svc.key}')">▼ 展開每日明細</span>
+        <div class="detail-wrap" id="detail-${svc.key}">
+          <table style="margin-top:12px"><thead><tr><th>日期</th><th style="text-align:right">使用次數</th></tr></thead><tbody>
+          ${arr.slice().sort((a,b)=>b[0].localeCompare(a[0])).map(([d,v])=>
+            `<tr><td>${d}</td><td><span class="pill" style="background:${svc.color}22;color:${svc.color}">${fmt(v)}</span></td></tr>`
+          ).join('')}
+          </tbody></table>
+        </div>`;
+
   const html = `
     <div class="svc-section" id="${secId}">
       <div class="svc-header" style="border-left-color:${svc.color};background:${svc.color}08">
@@ -183,35 +253,38 @@ function buildSection(svc, idx){
       </div>
       <div class="svc-body">
         <div class="mini-kpi">
-          <div class="mk"><div class="l">累計使用次數</div><div class="v" style="color:${svc.color}">${fmt(total)}</div></div>
-          <div class="mk"><div class="l">使用天數</div><div class="v">${days}</div></div>
-          <div class="mk"><div class="l">平均每日次數</div><div class="v">${avg}</div></div>
-          <div class="mk"><div class="l">最高單日次數</div><div class="v">${fmt(peakRow[1])}</div></div>
+          <div class="mk"><div class="l">${kpiLabels[0]}</div><div class="v" style="color:${svc.color}">${kpiValues[0]}</div></div>
+          <div class="mk"><div class="l">${kpiLabels[1]}</div><div class="v">${kpiValues[1]}</div></div>
+          <div class="mk"><div class="l">${kpiLabels[2]}</div><div class="v">${kpiValues[2]}</div></div>
+          <div class="mk"><div class="l">${kpiLabels[3]}</div><div class="v">${kpiValues[3]}</div></div>
         </div>
         <div class="chart-box"><canvas id="${chartId}"></canvas></div>
         <div style="font-size:13px;color:var(--muted);margin-bottom:12px">
-          最高單日：<b>${peakRow[0]}</b>（${fmt(peakRow[1])} 次）　·　最高單月：<b>${peakMonth}</b>（${fmt(peakMonthVal)} 次）
+          ${peakInfo}
         </div>
-        <span class="detail-toggle" onclick="toggleDetail('${svc.key}')">▼ 展開每日明細</span>
-        <div class="detail-wrap" id="detail-${svc.key}">
-          <table style="margin-top:12px"><thead><tr><th>日期</th><th style="text-align:right">使用次數</th></tr></thead><tbody>
-          ${arr.slice().sort((a,b)=>b[0].localeCompare(a[0])).map(([d,v])=>
-            `<tr><td>${d}</td><td><span class="pill" style="background:${svc.color}22;color:${svc.color}">${fmt(v)}</span></td></tr>`
-          ).join('')}
-          </tbody></table>
+        ${stationTable}
+        <div class="summary-box" style="background:${svc.color}08;border-left:4px solid ${svc.color};border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0">
+          <div style="font-size:12px;font-weight:600;color:${svc.color};margin-bottom:4px">重點觀察</div>
+          <div style="font-size:14px;line-height:1.7;color:var(--ink)">${svc.summary}</div>
         </div>
+        ${detailSection}
       </div>
     </div>`;
   document.getElementById('sections').insertAdjacentHTML('beforeend', html);
 
+  // 護理交班用折線圖，其他用柱狀圖
   new Chart(document.getElementById(chartId), {
-    type:'bar',
+    type: isNursing ? 'line' : 'bar',
     data:{
       labels:mKeys,
       datasets:[{
         label:svc.name,
         data:mVals,
-        backgroundColor:svc.color,
+        backgroundColor: isNursing ? svc.color+'33' : svc.color,
+        borderColor: isNursing ? svc.color : undefined,
+        borderWidth: isNursing ? 2 : undefined,
+        fill: isNursing,
+        tension: isNursing ? 0.3 : undefined,
         borderRadius:4,
         maxBarThickness:50,
       }]
@@ -242,7 +315,7 @@ function toggleDetail(key){
   }
 }
 
-document.getElementById('updated').textContent = '資料更新日期：2026-08-05';
+document.getElementById('updated').textContent = '資料更新日期：2026-08-06';
 SERVICES.forEach((s,i)=>buildSection(s,i));
 </script>
 </body>
