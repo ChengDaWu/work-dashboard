@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>住院 Weekly Summary 自動產生作業｜資料來源範圍與 AI 提示詞說明</title>
+<style>
+*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.inset-x-0{left:0;right:0}.top-0{top:0}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1\.5{margin-bottom:.375rem}.mb-10{margin-bottom:2.5rem}.mb-14{margin-bottom:3.5rem}.mb-3{margin-bottom:.75rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:.25rem}.mt-10{margin-top:2.5rem}.mt-14{margin-top:3.5rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-14{height:3.5rem}.h-2{height:.5rem}.h-2\.5{height:.625rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.w-10{width:2.5rem}.w-2{width:.5rem}.w-2\.5{width:.625rem}.w-32{width:8rem}.w-40{width:10rem}.w-48{width:12rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.min-w-full{min-width:100%}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-6xl{max-width:72rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.list-inside{list-style-position:inside}.list-decimal{list-style-type:decimal}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.space-y-8>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-slate-700>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(51 65 85/var(--tw-divide-opacity,1))}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-100{--tw-border-opacity:1;border-color:rgb(254 243 199/var(--tw-border-opacity,1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138/var(--tw-border-opacity,1))}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-teal-100{--tw-border-opacity:1;border-color:rgb(204 251 241/var(--tw-border-opacity,1))}.border-teal-200{--tw-border-opacity:1;border-color:rgb(153 246 228/var(--tw-border-opacity,1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199/var(--tw-bg-opacity,1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11/var(--tw-bg-opacity,1))}.bg-indigo-100{--tw-bg-opacity:1;background-color:rgb(224 231 255/var(--tw-bg-opacity,1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255/var(--tw-bg-opacity,1))}.bg-indigo-500{--tw-bg-opacity:1;background-color:rgb(99 102 241/var(--tw-bg-opacity,1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-800\/60{background-color:rgba(30,41,59,.6)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-teal-100{--tw-bg-opacity:1;background-color:rgb(204 251 241/var(--tw-bg-opacity,1))}.bg-teal-50{--tw-bg-opacity:1;background-color:rgb(240 253 250/var(--tw-bg-opacity,1))}.bg-teal-500{--tw-bg-opacity:1;background-color:rgb(20 184 166/var(--tw-bg-opacity,1))}.bg-teal-600{--tw-bg-opacity:1;background-color:rgb(13 148 136/var(--tw-bg-opacity,1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\/90{background-color:hsla(0,0%,100%,.9)}.bg-gradient-to-b{background-image:linear-gradient(to bottom,var(--tw-gradient-stops))}.from-teal-50{--tw-gradient-from:#f0fdfa var(--tw-gradient-from-position);--tw-gradient-to:rgba(240,253,250,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-white{--tw-gradient-to:hsla(0,0%,100%,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#fff var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-white{--tw-gradient-to:#fff var(--tw-gradient-to-position)}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-0{padding-top:0;padding-bottom:0}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-20{padding-bottom:5rem}.pb-4{padding-bottom:1rem}.pl-4{padding-left:1rem}.pt-32{padding-top:8rem}.text-left{text-align:left}.text-center{text-align:center}.align-top{vertical-align:top}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77/var(--tw-text-opacity,1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9/var(--tw-text-opacity,1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14/var(--tw-text-opacity,1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229/var(--tw-text-opacity,1))}.text-indigo-800{--tw-text-opacity:1;color:rgb(55 48 163/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212/var(--tw-text-opacity,1))}.text-teal-400{--tw-text-opacity:1;color:rgb(45 212 191/var(--tw-text-opacity,1))}.text-teal-600{--tw-text-opacity:1;color:rgb(13 148 136/var(--tw-text-opacity,1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110/var(--tw-text-opacity,1))}.text-teal-800{--tw-text-opacity:1;color:rgb(17 94 89/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.hover\:text-teal-600:hover{--tw-text-opacity:1;color:rgb(13 148 136/var(--tw-text-opacity,1))}@media (min-width:640px){.sm\:hidden{display:none}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:p-10{padding:2.5rem}.sm\:px-8{padding-left:2rem;padding-right:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width:768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-\[minmax\(0\2c 1fr\)_auto_minmax\(0\2c 1\.3fr\)\]{grid-template-columns:minmax(0,1fr) auto minmax(0,1.3fr)}.md\:gap-3{gap:.75rem}}@media (min-width:1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  html { scroll-behavior: smooth; }
+  .num-badge { font-family: 'Noto Sans TC', sans-serif; }
+  table { border-collapse: separate; border-spacing: 0; }
+  ::-webkit-scrollbar { height: 6px; width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  .fade-card { transition: transform .2s ease, box-shadow .2s ease; }
+  .fade-card:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -10px rgba(15,23,42,0.15); }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+<!-- ============ NAV ============ -->
+<nav class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 font-bold text-slate-800 text-sm sm:text-base tracking-tight">
+      <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+      住院 Weekly Summary 自動產生作業
+    </a>
+    <div class="hidden md:flex items-center gap-6 text-sm text-slate-500">
+      <a href="#scope" class="hover:text-teal-600 transition">分析範圍</a>
+      <a href="#ai-rules" class="hover:text-teal-600 transition">AI 服務與規則</a>
+      <a href="#calls" class="hover:text-teal-600 transition">三次 AI 呼叫</a>
+      <a href="#sample" class="hover:text-teal-600 transition">輸出結果範例</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header id="top" class="pt-32 pb-20 px-5 sm:px-8 bg-gradient-to-b from-teal-50 via-white to-white border-b border-slate-100">
+  <div class="max-w-4xl mx-auto text-center">
+    <h1 class="text-3xl sm:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+      住院 Weekly Summary<br class="sm:hidden"> 自動產生作業
+    </h1>
+    <p class="mt-4 text-base sm:text-xl text-slate-500 font-medium">
+      資料來源範圍與 AI 提示詞說明
+    </p>
+
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+      <div class="rounded-xl border border-slate-200 bg-white p-4">
+        <p class="text-xs font-semibold text-teal-600 uppercase tracking-wide">適用程式</p>
+        <p class="mt-1 text-sm text-slate-700 font-mono">opd0110px.exe　/　ParamStr(10)=weekly</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-4">
+        <p class="text-xs font-semibold text-teal-600 uppercase tracking-wide">對應程式碼</p>
+        <p class="mt-1 text-sm text-slate-700 font-mono">UViewquery.pas、UOrderipd.pas、UWeeklyReport.pas</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-4">
+        <p class="text-xs font-semibold text-teal-600 uppercase tracking-wide">相關文件</p>
+        <p class="mt-1 text-sm text-slate-700">住院週報自動產生作業說明書.md（技術與維護細節）</p>
+      </div>
+      <div class="rounded-xl border border-slate-200 bg-white p-4">
+        <p class="text-xs font-semibold text-teal-600 uppercase tracking-wide">製作日期</p>
+        <p class="mt-1 text-sm text-slate-700">2026-08-13</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 一、分析範圍：對象與期間 ============ -->
+<section id="scope" class="py-20 px-5 sm:px-8 border-t border-slate-100">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="num-badge w-9 h-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm">一</span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">分析範圍：對象與期間</h2>
+    </div>
+    <p class="text-slate-500 text-sm max-w-3xl">在送進任何提示詞之前，程式先決定「要分析誰」與「分析哪一段期間」，這兩項條件會固定套用在後續三次 AI 呼叫上。</p>
+
+    <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <!-- 病患母體 -->
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-800 flex items-center gap-2"><span class="w-6 h-6 rounded bg-teal-100 text-teal-700 text-xs font-bold flex items-center justify-center">誰</span> 病患母體</h3>
+        <div class="mt-4 space-y-2.5 text-sm">
+          <p><span class="text-slate-400">來源資料表：</span><span class="font-mono text-slate-700">ming.bed_file</span>（住院床位檔）</p>
+          <p><span class="text-slate-400">篩選條件：</span><span class="text-slate-700">病歷號不為空、排除測試號 <span class="font-mono text-teal-700">012345</span>、出院日期為空或大於等於今日（目前住院中）</span></p>
+          <p><span class="text-slate-400">排序：</span><span class="font-mono text-slate-700">依床號 bed_no</span></p>
+          <p><span class="text-slate-400">批次分流：</span><span class="text-slate-700">由 <span class="font-mono">ParamStr(13)</span> 指定護理站，例 <span class="font-mono text-teal-700">in(2,3,4)</span>／<span class="font-mono text-teal-700">not(2,3,4,5,6)</span>；建議三支排程錯峰執行</span></p>
+          <p><span class="text-slate-400">單一病患模式：</span><span class="text-slate-700"><span class="font-mono">ParamStr(11)</span> 填 6 碼病歷號時，只分析該病患、忽略護理站條件</span></p>
+          <p class="rounded-lg bg-rose-50 border border-rose-100 px-3 py-2 text-rose-700 font-medium">安全設計：護理站條件格式錯誤時直接中止該批次，不會 fallback 查全院。</p>
+        </div>
+        <p class="mt-3 text-xs text-slate-400">程式位置：UViewquery.pas 的 RunWeeklyReport；UWeeklyReport.pas 的 ParseStationFilter、BuildStationWhereClause。</p>
+      </div>
+
+      <!-- 資料時間區間 -->
+      <div class="rounded-xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-800 flex items-center gap-2"><span class="w-6 h-6 rounded bg-teal-100 text-teal-700 text-xs font-bold flex items-center justify-center">期</span> 資料時間區間</h3>
+        <div class="mt-4 space-y-2.5 text-sm">
+          <p><span class="text-slate-400">規則：</span><span class="text-slate-700">執行日往前 7 天 ～ 執行日（滾動 7 日區間）</span></p>
+          <p><span class="text-slate-400">格式：</span><span class="font-mono text-slate-700">yyyy/mm/dd</span></p>
+          <p><span class="text-slate-400">套用方式：</span><span class="text-slate-700">此區間會寫入每一段 AI 提示詞，明確要求「只整理區間內資料，區間外忽略」</span></p>
+        </div>
+        <div class="mt-4 rounded-lg bg-teal-50 border border-teal-100 px-3 py-2 text-sm text-teal-800">
+          下方三次 AI 呼叫的提示詞，皆會帶入這個滾動 7 日區間作為時間邊界。
+        </div>
+        <p class="mt-3 text-xs text-slate-400">程式位置：UWeeklyReport.pas 的 CalcWeeklyDateRange。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 二、AI 服務環境與共通規則 ============ -->
+<section id="ai-rules" class="py-20 px-5 sm:px-8 bg-slate-900 text-slate-100">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="num-badge w-9 h-9 rounded-lg bg-white text-slate-900 flex items-center justify-center font-bold text-sm">二</span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white">AI 服務環境與共通規則</h2>
+    </div>
+    <p class="text-slate-400 text-sm max-w-3xl">以下設定與規則<span class="text-teal-300 font-medium">三次呼叫皆適用</span>，不會在下一段的每次呼叫中重複列出。</p>
+
+    <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <!-- 服務環境 -->
+      <div>
+        <p class="text-xs font-semibold text-teal-400 uppercase tracking-wide mb-3">AI 服務環境</p>
+        <div class="overflow-x-auto rounded-xl border border-slate-700">
+          <table class="min-w-full text-sm">
+            <tbody class="divide-y divide-slate-700">
+              <tr><td class="px-4 py-3 font-semibold text-slate-400 w-32 whitespace-nowrap align-top">服務型態</td><td class="px-4 py-3 text-slate-100 font-medium">院內自建 vLLM 推論服務（資料不出院）</td></tr>
+              <tr><td class="px-4 py-3 font-semibold text-slate-400 w-32 whitespace-nowrap align-top">端點</td><td class="px-4 py-3 text-slate-300">院內主機 :8000/v1/chat/completions（對外簡報請遮蔽 IP）</td></tr>
+              <tr><td class="px-4 py-3 font-semibold text-slate-400 w-32 whitespace-nowrap align-top">模型</td><td class="px-4 py-3 text-slate-300 font-mono">google/gemma-4-31B-it</td></tr>
+              <tr><td class="px-4 py-3 font-semibold text-slate-400 w-32 whitespace-nowrap align-top">Temperature</td><td class="px-4 py-3 text-slate-300 font-mono">0.1（低隨機性）</td></tr>
+              <tr><td class="px-4 py-3 font-semibold text-slate-400 w-32 whitespace-nowrap align-top">max_tokens</td><td class="px-4 py-3 text-slate-300 font-mono">1024</td></tr>
+              <tr><td class="px-4 py-3 font-semibold text-slate-400 w-32 whitespace-nowrap align-top">逾時</td><td class="px-4 py-3 text-slate-300">連線 30 秒／回應 180 秒</td></tr>
+              <tr><td class="px-4 py-3 font-semibold text-slate-400 w-32 whitespace-nowrap align-top">API Key</td><td class="px-4 py-3 text-amber-300">目前未啟用</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-xs text-slate-500">程式位置：UViewquery.pas 的 CallGemma4。</p>
+      </div>
+
+      <!-- 系統提示詞 + 共通限制 -->
+      <div>
+        <p class="text-xs font-semibold text-teal-400 uppercase tracking-wide mb-3">系統提示詞（System Prompt，每次呼叫皆帶）</p>
+        <blockquote class="rounded-xl border border-slate-700 bg-slate-800/60 px-5 py-4 text-sm leading-relaxed text-slate-200 italic">
+          你是醫療與一般資料分析輔助系統。請一律使用繁體中文回答。若問題涉及醫療，請整理重點、指出可能風險與需由醫師確認的事項，不得宣稱可取代醫師診斷或治療。
+        </blockquote>
+
+        <p class="text-xs font-semibold text-teal-400 uppercase tracking-wide mt-5 mb-3">所有 Prompt 的共通限制</p>
+        <ul class="space-y-2 text-sm text-slate-300">
+          <li class="flex gap-2"><span class="text-teal-400">✓</span>一律使用<span class="text-white font-medium">繁體中文</span>。</li>
+          <li class="flex gap-2"><span class="text-teal-400">✓</span><span class="text-white font-medium">純文字輸出</span>，不得使用 Markdown 符號（#、*、**、###、--- 等）。</li>
+          <li class="flex gap-2"><span class="text-teal-400">✓</span><span class="text-white font-medium">不可自行推測或新增資料</span>，只能依提供內容整理。</li>
+          <li class="flex gap-2"><span class="text-teal-400">✓</span>一律標明目標區間，區間外資料忽略。</li>
+          <li class="flex gap-2"><span class="text-teal-400">✓</span>存檔前另以程式 <span class="font-mono text-teal-300">StripMarkdown</span> 二次清除格式符號（雙重保險）。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 三、三次 AI 呼叫：資料來源與提示詞 ============ -->
+<section id="calls" class="py-20 px-5 sm:px-8 bg-white border-t border-slate-100">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="num-badge w-9 h-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm">三</span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">三次 AI 呼叫：資料來源與提示詞</h2>
+    </div>
+    <p class="text-slate-500 text-sm max-w-3xl">每位病患<span class="font-semibold text-slate-700">最多呼叫 3 次</span>院內自建 AI。OrderSheet 與護理記錄資料量最大，若與其他段落一次送出容易超過模型 context window，故先分段濃縮，再與其餘段落彙整送第 3 次呼叫產出最終週報。</p>
+
+    <div class="mt-10 space-y-8">
+
+      <!-- 呼叫 1 -->
+      <div class="rounded-2xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center gap-3 px-5 py-4 bg-indigo-50 border-b border-indigo-100">
+          <span class="w-9 h-9 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center flex-shrink-0">1</span>
+          <div>
+            <p class="text-xs font-semibold text-indigo-600 uppercase tracking-wide">第 1 次 AI 呼叫 · 1 / 3</p>
+            <h3 class="font-bold text-slate-900">OrderSheet 醫囑濃縮</h3>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.3fr)] gap-4 md:gap-3 p-5 items-center">
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-4 h-full">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">資料來源 · 步驟 6</p>
+            <p class="mt-1 font-bold text-slate-800">OrderSheet（醫囑）</p>
+            <div class="mt-3 space-y-1.5 text-sm text-slate-600">
+              <p><span class="text-slate-400">來源頁籤：</span><span class="font-mono text-xs">TabSheet10 / RE_ordersheet</span></p>
+              <p><span class="text-slate-400">前處理：</span>依日期區間切出區間內醫囑</p>
+            </div>
+          </div>
+          <div class="hidden md:flex items-center justify-center text-slate-300 text-2xl px-1">→</div>
+          <div class="flex md:hidden items-center justify-center text-slate-300 text-xl">↓</div>
+          <div class="rounded-xl bg-slate-900 border border-slate-700 p-4 h-full">
+            <p class="text-xs font-semibold text-teal-400 uppercase tracking-wide">提示詞內容</p>
+            <ol class="mt-2 text-sm text-slate-300 space-y-1.5 leading-relaxed list-decimal list-inside">
+              <li>請找出目標區間(起～迄)的報告</li>
+              <li>請整理出是否有<span class="text-teal-300 font-medium">抗生素</span>的起服日落於區間內的記錄。</li>
+              <li>請整理出目標區間內是否有頻率為 <span class="text-teal-300 font-medium">ST（臨時醫囑）</span>的藥物或針劑的記錄。</li>
+              <li>請整理出目標區間內是否有<span class="text-teal-300 font-medium">新增的常規藥物</span>。</li>
+              <li>請整理出目標區間內是否有<span class="text-teal-300 font-medium">轉出或轉入加護病房</span>的記錄。</li>
+              <li>請整理出專業、精簡、濃縮、提供 weekly summary 使用的內容。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- 呼叫 2 -->
+      <div class="rounded-2xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center gap-3 px-5 py-4 bg-indigo-50 border-b border-indigo-100">
+          <span class="w-9 h-9 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center flex-shrink-0">2</span>
+          <div>
+            <p class="text-xs font-semibold text-indigo-600 uppercase tracking-wide">第 2 次 AI 呼叫 · 2 / 3</p>
+            <h3 class="font-bold text-slate-900">護理交班＋護理記錄濃縮</h3>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.3fr)] gap-4 md:gap-3 p-5 items-center">
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-4 h-full">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">資料來源 · 步驟 7</p>
+            <p class="mt-1 font-bold text-slate-800">護理交班＋護理記錄</p>
+            <div class="mt-3 space-y-1.5 text-sm text-slate-600">
+              <p><span class="text-slate-400">來源頁籤：</span><span class="font-mono text-xs">TabSheet20 + TabSheet12</span></p>
+              <p><span class="text-slate-400">前處理：</span>以記錄標頭日期切 block，僅保留區間內</p>
+            </div>
+          </div>
+          <div class="hidden md:flex items-center justify-center text-slate-300 text-2xl px-1">→</div>
+          <div class="flex md:hidden items-center justify-center text-slate-300 text-xl">↓</div>
+          <div class="rounded-xl bg-slate-900 border border-slate-700 p-4 h-full">
+            <p class="text-xs font-semibold text-teal-400 uppercase tracking-wide">提示詞內容</p>
+            <div class="mt-2 text-sm text-slate-300 space-y-2 leading-relaxed">
+              <p>請整理該患者的 weekly summary 報告</p>
+              <p>要注意內容有沒有<span class="text-teal-300 font-medium">家屬相關的特殊情況</span></p>
+              <p>請整理出專業、精簡、濃縮、提供 weekly summary 使用的內容。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 呼叫 3 -->
+      <div class="rounded-2xl border border-teal-200 overflow-hidden">
+        <div class="flex items-center gap-3 px-5 py-4 bg-teal-50 border-b border-teal-100">
+          <span class="w-9 h-9 rounded-full bg-teal-600 text-white font-bold flex items-center justify-center flex-shrink-0">3</span>
+          <div>
+            <p class="text-xs font-semibold text-teal-700 uppercase tracking-wide">第 3 次 AI 呼叫 · 3 / 3（最終）</p>
+            <h3 class="font-bold text-slate-900">最終住院週報</h3>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.3fr)] gap-4 md:gap-3 p-5 items-start">
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-4 h-full">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">資料來源 · 步驟 0～7 彙整（WeeklyBuffer）</p>
+            <ul class="mt-3 space-y-1.5 text-sm text-slate-600">
+              <li class="flex gap-2"><span class="text-slate-400 font-mono">0</span> 基本資料（查詢畫面欄位）</li>
+              <li class="flex gap-2"><span class="text-rose-500 font-mono font-medium">1</span> 檢驗（僅列第一碼為 * 的異常項，不單獨送 AI）</li>
+              <li class="flex gap-2"><span class="text-slate-400 font-mono">2</span> 檢查／X光（原文）</li>
+              <li class="flex gap-2"><span class="text-slate-400 font-mono">3</span> 微生物（原文）</li>
+              <li class="flex gap-2"><span class="text-slate-400 font-mono">4</span> 手術（原文）</li>
+              <li class="flex gap-2"><span class="text-slate-400 font-mono">5</span> 會診（原文）</li>
+              <li class="flex gap-2 text-indigo-600 font-medium">+ 第 1 次呼叫結果（OrderSheet 濃縮摘要）</li>
+              <li class="flex gap-2 text-indigo-600 font-medium">+ 第 2 次呼叫結果（護理記錄濃縮摘要）</li>
+            </ul>
+          </div>
+          <div class="hidden md:flex items-center justify-center text-slate-300 text-2xl px-1 self-center">→</div>
+          <div class="flex md:hidden items-center justify-center text-slate-300 text-xl">↓</div>
+          <div class="rounded-xl bg-slate-900 border border-slate-700 p-4 h-full">
+            <p class="text-xs font-semibold text-teal-400 uppercase tracking-wide">提示詞內容</p>
+            <p class="mt-2 text-sm text-slate-300 leading-relaxed">請根據以下各段原始資料，產出一份住院週報。目標區間：起～迄。請以目標區間為準，只整理區間內的資料，區間外的資料請忽略。</p>
+            <div class="mt-3 space-y-1 text-sm text-slate-300">
+              <p><span class="font-semibold text-white">原則：</span>專業、精簡、濃縮但不失真。</p>
+              <p><span class="font-semibold text-white">限制：</span>不可自行推測或新增資料，只能根據提供的內容整理。</p>
+              <p><span class="font-semibold text-white">輸出格式：</span>純文字，不可使用 Markdown 格式，以段落與縮排呈現層次，段落間空一行。</p>
+              <p><span class="font-semibold text-white">長度限制：</span>報告控制在 1000 字以內，不可超過。</p>
+            </div>
+            <p class="mt-3 text-xs font-semibold text-slate-400 uppercase tracking-wide">輸出四段結構</p>
+            <ol class="text-sm text-slate-300 mt-1 space-y-1 list-decimal list-inside">
+              <li>本週重要摘要</li>
+              <li>本週主要處置與治療</li>
+              <li>下週建議與注意事項</li>
+              <li>資料限制或需再確認事項</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mt-6 text-xs text-slate-400">程式位置：UWeeklyReport.pas 的 BuildSectionPrompt、BuildFinalPrompt。</p>
+  </div>
+</section>
+
+<!-- ============ 四、輸出結果範例 ============ -->
+<section id="sample" class="py-20 px-5 sm:px-8 bg-slate-50 border-t border-slate-100">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="num-badge w-9 h-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm">四</span>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">輸出結果範例</h2>
+    </div>
+    <p class="text-slate-500 text-sm max-w-3xl">以下為第 3 次呼叫（最終住院週報）產出格式的示意範例，用於說明報告的段落結構與詳細程度。</p>
+
+    <div class="mt-8 rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-10">
+      <div class="pb-4 border-b border-slate-100 mb-6">
+        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide">住院 Weekly Summary（示意範例）</p>
+      </div>
+
+      <div class="space-y-6 text-sm text-slate-700 leading-relaxed">
+        <div>
+          <p class="font-bold text-slate-900 mb-1.5">一、本週重要摘要</p>
+          <p>患者因甲狀腺亢進且停藥後出現頸部腫大與結節入院。於 2026/07/07 接受雙側甲狀腺全葉切除術（全身麻醉）。術後意識清醒，曾主訴無法深呼吸，給予氧氣鼻導管 2L/min 後改善，血氧維持在 96% 至 98%。目前傷口乾淨，置入 J-P 引流管一條，引流量中且顏色為紅。</p>
+        </div>
+        <div>
+          <p class="font-bold text-slate-900 mb-1.5">二、本週主要處置與治療</p>
+          <p>手術治療：2026/07/07 執行雙側甲狀腺全葉切除術。</p>
+          <p class="mt-3">藥物治療：</p>
+          <p class="pl-4 mt-1">術前：使用 Cefazolin 預防性抗生素及 N/S 點滴。</p>
+          <p class="pl-4 mt-1">術後：使用 Morphine 控制疼痛，新增 Pacxib (iv bid)、Panadol (PC QID) 及 5%G/W 0.9% Saline 點滴 (80ml/hr)。</p>
+          <p class="pl-4 mt-1">備用藥物：開立 Vitacal 2% IVD PRN 用於麻痺或痙攣時。</p>
+          <p class="mt-3">術後照護：每日傷口換藥與冰敷，監測生命徵象，原定 07/08 凌晨兩點後開始冷流質飲食。</p>
+          <p class="mt-3">檢驗異常（07/06）：</p>
+          <p class="pl-4 mt-1">血液生化：Glucose 127 mg/dL（偏高）。</p>
+          <p class="pl-4 mt-1">血液常項：RBC 6.54 10⁶/uL（偏高）、MCV 67.0 fL（偏低）、MCH 20.4 pg（偏低）、MCHC 30.5 g/dL（偏低）。</p>
+          <p class="pl-4 mt-1">影像檢查：胸部 X 光顯示右心後脊椎旁軟組織陰影增加。</p>
+        </div>
+        <div>
+          <p class="font-bold text-slate-900 mb-1.5">三、下週建議與注意事項</p>
+          <p>血液監測：預計 07/08 早晨抽血追蹤血鈣（Ca）濃度，以評估副甲狀腺功能及低血鈣風險。</p>
+          <p class="mt-3">術後監控：密切觀察呼吸狀況、傷口滲液及 J-P 引流量。</p>
+          <p class="mt-3">安全管理：因大量點滴滴注及術後步態不穩，跌倒風險由低升至中度，需加強床欄使用及下床協助。</p>
+        </div>
+        <div>
+          <p class="font-bold text-slate-900 mb-1.5">四、資料限制或需再確認事項</p>
+          <p>需由醫師確認 07/08 血鈣濃度檢驗結果。</p>
+          <p class="mt-3">需由醫師確認胸部 X 光報告中右心後脊椎旁軟組織陰影之臨床意義。</p>
+          <p class="mt-3 text-slate-500 italic">本報告僅為資料整理，非醫療診斷，所有治療計畫請務必由主治醫師確認。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 rounded-lg bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-800">
+      <span class="font-bold">提醒：</span>本頁以字重與間距輔助排版分段，實際 AI 輸出僅為純文字段落（不含 Markdown 或粗體標記）；本範例不含真實病患個資，僅供說明報告格式與詳細程度。
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="py-10 px-5 sm:px-8 bg-slate-900 text-slate-400 text-center text-xs">
+  <p>住院 Weekly Summary 自動產生作業 — 資料來源範圍與 AI 提示詞說明　｜　製作日期：2026-08-13</p>
+  <p class="mt-1 text-slate-500">本文件僅供院內主管單位簡報說明用途，內容涉及之技術細節請參照《住院週報自動產生作業說明書.md》。</p>
+</footer>
+
+</body>
+</html>
