@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>前端遊戲式互動 UI 資源索引</title>
+<style>
+:root {
+  --bg:#0b0d12; --panel:#121722; --panel2:#171e2b; --text:#f4f7fb;
+  --muted:#9ba8b8; --line:#273244; --accent:#8be9fd; --accent2:#c4b5fd;
+  --ok:#9be15d; --shadow:0 12px 35px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:
+radial-gradient(circle at 15% -10%,rgba(139,233,253,.09),transparent 28rem),
+radial-gradient(circle at 90% 5%,rgba(196,181,253,.08),transparent 25rem),
+var(--bg);color:var(--text);line-height:1.65}
+a{color:inherit}
+.wrap{max-width:1180px;margin:auto;padding:0 22px 70px}
+header{padding:62px 0 26px}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:800}
+h1{font-size:clamp(34px,6vw,68px);line-height:1.05;margin:.35em 0 .25em;letter-spacing:-.04em}
+.lead{max-width:850px;color:var(--muted);font-size:18px}
+.controls{position:sticky;top:0;z-index:20;padding:12px 0;background:linear-gradient(var(--bg) 70%,transparent)}
+.controlbar{display:flex;gap:10px;flex-wrap:wrap;background:rgba(18,23,34,.88);border:1px solid var(--line);backdrop-filter:blur(12px);padding:12px;border-radius:16px;box-shadow:var(--shadow)}
+input{flex:1;min-width:220px;background:#0d121b;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 13px;font:inherit}
+button{background:#172131;color:var(--text);border:1px solid var(--line);padding:9px 13px;border-radius:10px;cursor:pointer}
+button.active{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}
+section{margin-top:48px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
+h2{font-size:27px;margin:0}
+.sub{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:310px;transition:.18s transform,.18s border-color}
+.card:hover{transform:translateY(-3px);border-color:#40516e}
+.card-top{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.badge{font-weight:900;font-size:12px;border:1px solid var(--accent);color:var(--accent);border-radius:999px;padding:2px 8px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:10px;color:#b7c3d2;background:#0f1520;border:1px solid #273244;border-radius:999px;padding:2px 6px}
+.card h3{font-size:19px;line-height:1.3;margin:14px 0 8px}
+.what{color:#dce5ef;margin-top:0}
+dl{margin:auto 0 16px}
+dl>div{margin-top:8px}
+dt{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}
+dd{margin:2px 0 0;color:#c9d3de;font-size:13px}
+code{color:#d8ccff;white-space:normal}
+.open{display:inline-flex;align-self:flex-start;text-decoration:none;font-weight:800;color:#091014;background:linear-gradient(90deg,var(--accent),#b8f6d0);padding:9px 12px;border-radius:10px}
+.featured .card{min-height:275px;border-color:#3a4860}
+.note{background:#101621;border:1px solid var(--line);border-radius:18px;padding:18px;color:#cbd5e1}
+.count{color:var(--muted);font-size:13px}
+footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.hidden{display:none!important}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.grid{grid-template-columns:1fr} header{padding-top:36px} .controlbar{border-radius:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Game-like Web Interaction Atlas</div>
+  <h1>前端「遊戲式互動」<br>UI 資源索引</h1>
+  <p class="lead">重點不是一般 landing page 動效，而是偏向遊戲的操作介面、輸入方式、物理互動、選取／拖曳、粒子、shader、角色控制與遊戲內機制。每一張卡都能直接開 Demo。</p>
+</header>
+
+<div class="controls">
+  <div class="controlbar">
+    <input id="q" placeholder="搜尋 joystick、drag、raycast、particle、shader、physics、wall jump…">
+    <button data-filter="all" class="active">全部</button>
+    <button data-filter="A">A 操作介面</button>
+    <button data-filter="B">B 遊戲內元素</button>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<section class="featured">
+  <div class="section-head">
+    <div>
+      <h2>先逛這 8 個</h2>
+      <div class="sub">最快建立「原來網頁還能這樣玩」的感覺。</div>
+    </div>
+  </div>
+  <div class="grid">
+    
+    <article class="card" data-cat="B" data-search="matter.js 官方 demo gallery 大量 2d 物理案例：布料、吊橋、彈弓、車、ragdoll、感測器、軟體等。 matter.js / rigid body physics 2d physics, constraints, ragdoll, soft body, sensor">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Matter.js</span><span class="tag">rigid body physics</span></div>
+      </div>
+      <h3>Matter.js 官方 Demo Gallery</h3>
+      <p class="what">大量 2D 物理案例：布料、吊橋、彈弓、車、ragdoll、感測器、軟體等。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Matter.js / rigid body physics</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>2D physics, constraints, ragdoll, soft body, sensor</code></dd></div>
+      </dl>
+      <a class="open" href="https://brm.io/matter-js/demo/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="three.js pointerlockcontrols fps 式操作：wasd 移動、space 跳躍、滑鼠控制視角。 three.js / pointer lock api / first-person controls pointer lock, fps controls, mouse look, wasd">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Three.js</span><span class="tag">Pointer Lock API</span><span class="tag">first-person controls</span></div>
+      </div>
+      <h3>Three.js PointerLockControls</h3>
+      <p class="what">FPS 式操作：WASD 移動、Space 跳躍、滑鼠控制視角。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / Pointer Lock API / first-person controls</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>pointer lock, FPS controls, mouse look, WASD</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/misc_controls_pointerlock.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="gsap draggable hittest 拖曳物件並做碰撞判定，適合背包格、卡牌槽、拼圖、裝備欄。 gsap draggable / hittest drag drop, droppable, hittest, inventory ui">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">GSAP Draggable</span><span class="tag">hitTest</span></div>
+      </div>
+      <h3>GSAP Draggable hitTest</h3>
+      <p class="what">拖曳物件並做碰撞判定，適合背包格、卡牌槽、拼圖、裝備欄。</p>
+      <dl>
+        <div><dt>技術</dt><dd>GSAP Draggable / hitTest</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>drag drop, droppable, hitTest, inventory UI</code></dd></div>
+      </dl>
+      <a class="open" href="https://codepen.io/GreenSock/pen/ZOayGO?editors=0010" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="nipplejs virtual joystick 觸控虛擬搖桿，包含雙搖桿玩法，直接感受行動遊戲操作。 javascript / touch / virtual joystick virtual joystick, twin stick, mobile game controls">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">JavaScript</span><span class="tag">touch</span><span class="tag">virtual joystick</span></div>
+      </div>
+      <h3>NippleJS Virtual Joystick</h3>
+      <p class="what">觸控虛擬搖桿，包含雙搖桿玩法，直接感受行動遊戲操作。</p>
+      <dl>
+        <div><dt>技術</dt><dd>JavaScript / touch / virtual joystick</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>virtual joystick, twin stick, mobile game controls</code></dd></div>
+      </dl>
+      <a class="open" href="https://yoannmoi.net/nipplejs/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js voxel painter 點擊新增方塊、shift+點擊移除；像 minecraft 建造或遊戲內編輯模式。 three.js / raycasting / voxel interaction voxel editor, block placement, raycasting">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">raycasting</span><span class="tag">voxel interaction</span></div>
+      </div>
+      <h3>Three.js Voxel Painter</h3>
+      <p class="what">點擊新增方塊、Shift+點擊移除；像 Minecraft 建造或遊戲內編輯模式。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / raycasting / voxel interaction</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>voxel editor, block placement, raycasting</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_interactive_voxelpainter.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js gpgpu birds 大量鳥群 flocking，滑鼠可擾動群體；適合敵群、魚群、粒子 ai。 three.js / gpgpu / flocking flocking, boids, gpu particles, crowd movement">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">GPGPU</span><span class="tag">flocking</span></div>
+      </div>
+      <h3>Three.js GPGPU Birds</h3>
+      <p class="what">大量鳥群 flocking，滑鼠可擾動群體；適合敵群、魚群、粒子 AI。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / GPGPU / flocking</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>flocking, boids, GPU particles, crowd movement</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_gpgpu_birds.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="pixijs mouse trail 游標拖出有質感的 trail，可改成劍氣、魔法軌跡、瞄準尾跡。 pixijs / mesh / trail mouse trail, sword trail, ribbon mesh">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">PixiJS</span><span class="tag">mesh</span><span class="tag">trail</span></div>
+      </div>
+      <h3>PixiJS Mouse Trail</h3>
+      <p class="what">游標拖出有質感的 trail，可改成劍氣、魔法軌跡、瞄準尾跡。</p>
+      <dl>
+        <div><dt>技術</dt><dd>PixiJS / mesh / trail</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>mouse trail, sword trail, ribbon mesh</code></dd></div>
+      </dl>
+      <a class="open" href="https://pixijs.com/examples/advanced/mouse-trail/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="phaser 官方 examples 動畫、輸入、攝影機、物理、粒子、遊戲範例的總入口。 phaser phaser examples, html5 game mechanics">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Phaser</span></div>
+      </div>
+      <h3>Phaser 官方 Examples</h3>
+      <p class="what">動畫、輸入、攝影機、物理、粒子、遊戲範例的總入口。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Phaser</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>Phaser examples, HTML5 game mechanics</code></dd></div>
+      </dl>
+      <a class="open" href="https://phaser.io/examples" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <div>
+      <h2>A. 操作介面 / Input Mechanics</h2>
+      <div class="sub">玩家怎麼控制、選取、拖曳、瞄準、旋轉與操作介面。</div>
+    </div>
+  </div>
+  <div class="grid resource-grid">
+    
+    <article class="card" data-cat="A" data-search="three.js pointerlockcontrols fps 式操作：wasd 移動、space 跳躍、滑鼠控制視角。 three.js / pointer lock api / first-person controls pointer lock, fps controls, mouse look, wasd">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Three.js</span><span class="tag">Pointer Lock API</span><span class="tag">first-person controls</span></div>
+      </div>
+      <h3>Three.js PointerLockControls</h3>
+      <p class="what">FPS 式操作：WASD 移動、Space 跳躍、滑鼠控制視角。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / Pointer Lock API / first-person controls</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>pointer lock, FPS controls, mouse look, WASD</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/misc_controls_pointerlock.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="three.js flycontrols 像飛行遊戲一樣自由移動、翻滾、俯仰與偏航。 three.js / camera controls fly controls, pitch yaw roll, 3d camera">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Three.js</span><span class="tag">camera controls</span></div>
+      </div>
+      <h3>Three.js FlyControls</h3>
+      <p class="what">像飛行遊戲一樣自由移動、翻滾、俯仰與偏航。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / camera controls</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>fly controls, pitch yaw roll, 3D camera</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/misc_controls_fly.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="three.js dragcontrols 直接拖曳 3d 物件，可延伸成佈置、道具搬移、關卡編輯。 three.js / raycasting / drag interaction 3d drag controls, object dragging, raycast drag">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Three.js</span><span class="tag">raycasting</span><span class="tag">drag interaction</span></div>
+      </div>
+      <h3>Three.js DragControls</h3>
+      <p class="what">直接拖曳 3D 物件，可延伸成佈置、道具搬移、關卡編輯。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / raycasting / drag interaction</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>3D drag controls, object dragging, raycast drag</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/misc_controls_drag.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="three.js transformcontrols 遊戲編輯器式的移動、旋轉、縮放、snap。 three.js / gizmo / transform transform gizmo, translate rotate scale, snapping">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Three.js</span><span class="tag">gizmo</span><span class="tag">transform</span></div>
+      </div>
+      <h3>Three.js TransformControls</h3>
+      <p class="what">遊戲編輯器式的移動、旋轉、縮放、snap。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / gizmo / transform</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>transform gizmo, translate rotate scale, snapping</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/misc_controls_transform.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="three.js orbitcontrols 常見 3d 角色展示、裝備預覽、模型檢視操作。 three.js / orbit camera orbit controls, 3d preview, model viewer">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Three.js</span><span class="tag">orbit camera</span></div>
+      </div>
+      <h3>Three.js OrbitControls</h3>
+      <p class="what">常見 3D 角色展示、裝備預覽、模型檢視操作。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / orbit camera</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>orbit controls, 3D preview, model viewer</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/misc_controls_orbit.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="gsap draggable hittest 拖曳物件並做碰撞判定，適合背包格、卡牌槽、拼圖、裝備欄。 gsap draggable / hittest drag drop, droppable, hittest, inventory ui">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">GSAP Draggable</span><span class="tag">hitTest</span></div>
+      </div>
+      <h3>GSAP Draggable hitTest</h3>
+      <p class="what">拖曳物件並做碰撞判定，適合背包格、卡牌槽、拼圖、裝備欄。</p>
+      <dl>
+        <div><dt>技術</dt><dd>GSAP Draggable / hitTest</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>drag drop, droppable, hitTest, inventory UI</code></dd></div>
+      </dl>
+      <a class="open" href="https://codepen.io/GreenSock/pen/ZOayGO?editors=0010" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="gsap draggable + inertia 拖曳放手後帶慣性與邊界反彈，很像遊戲轉盤、滑動選單。 gsap / draggable / inertiaplugin drag inertia, momentum ui, flick gesture">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">GSAP</span><span class="tag">Draggable</span><span class="tag">InertiaPlugin</span></div>
+      </div>
+      <h3>GSAP Draggable + Inertia</h3>
+      <p class="what">拖曳放手後帶慣性與邊界反彈，很像遊戲轉盤、滑動選單。</p>
+      <dl>
+        <div><dt>技術</dt><dd>GSAP / Draggable / InertiaPlugin</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>drag inertia, momentum UI, flick gesture</code></dd></div>
+      </dl>
+      <a class="open" href="https://codepen.io/GreenSock/pen/ZEaaNLy" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="gsap circular carousel 可拖曳旋轉的圓形輪盤；可改成技能輪、武器輪、角色選擇。 gsap / motionpath / draggable radial menu, weapon wheel, skill wheel, circular carousel">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">GSAP</span><span class="tag">MotionPath</span><span class="tag">Draggable</span></div>
+      </div>
+      <h3>GSAP Circular Carousel</h3>
+      <p class="what">可拖曳旋轉的圓形輪盤；可改成技能輪、武器輪、角色選擇。</p>
+      <dl>
+        <div><dt>技術</dt><dd>GSAP / MotionPath / Draggable</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>radial menu, weapon wheel, skill wheel, circular carousel</code></dd></div>
+      </dl>
+      <a class="open" href="https://codepen.io/GreenSock/pen/zxoWwgG" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="gsap sortable grid 拖曳重排格子，適合物品欄、牌組編輯、快捷列。 gsap / flip / draggable sortable inventory, draggable grid, reorder ui">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">GSAP</span><span class="tag">Flip</span><span class="tag">Draggable</span></div>
+      </div>
+      <h3>GSAP Sortable Grid</h3>
+      <p class="what">拖曳重排格子，適合物品欄、牌組編輯、快捷列。</p>
+      <dl>
+        <div><dt>技術</dt><dd>GSAP / Flip / Draggable</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>sortable inventory, draggable grid, reorder UI</code></dd></div>
+      </dl>
+      <a class="open" href="https://codepen.io/GreenSock/pen/QwjONgb" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="nipplejs virtual joystick 觸控虛擬搖桿，包含雙搖桿玩法，直接感受行動遊戲操作。 javascript / touch / virtual joystick virtual joystick, twin stick, mobile game controls">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">JavaScript</span><span class="tag">touch</span><span class="tag">virtual joystick</span></div>
+      </div>
+      <h3>NippleJS Virtual Joystick</h3>
+      <p class="what">觸控虛擬搖桿，包含雙搖桿玩法，直接感受行動遊戲操作。</p>
+      <dl>
+        <div><dt>技術</dt><dd>JavaScript / touch / virtual joystick</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>virtual joystick, twin stick, mobile game controls</code></dd></div>
+      </dl>
+      <a class="open" href="https://yoannmoi.net/nipplejs/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="mdn pointer lock demo 滑鼠鎖定後以相對位移控制畫面中的物件，典型 fps 滑鼠操控。 pointer lock api pointer lock api, relative mouse movement">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Pointer Lock API</span></div>
+      </div>
+      <h3>MDN Pointer Lock Demo</h3>
+      <p class="what">滑鼠鎖定後以相對位移控制畫面中的物件，典型 FPS 滑鼠操控。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Pointer Lock API</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>Pointer Lock API, relative mouse movement</code></dd></div>
+      </dl>
+      <a class="open" href="https://mdn.github.io/dom-examples/pointer-lock/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="A" data-search="gamepad api buttons demo 接上手把後可直接測按鈕與軸輸入。 gamepad api gamepad api, controller input, joystick axes">
+      <div class="card-top">
+        <span class="badge">A</span>
+        <div class="tags"><span class="tag">操作介面</span><span class="tag">Gamepad API</span></div>
+      </div>
+      <h3>Gamepad API Buttons Demo</h3>
+      <p class="what">接上手把後可直接測按鈕與軸輸入。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Gamepad API</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>gamepad API, controller input, joystick axes</code></dd></div>
+      </dl>
+      <a class="open" href="https://chrisdavidmills.github.io/gamepad-buttons/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <div>
+      <h2>B. 遊戲中的互動元素</h2>
+      <div class="sub">物理、技能 VFX、粒子、projectile、raycast、角色控制、遊戲世界互動。</div>
+    </div>
+  </div>
+  <div class="grid resource-grid">
+    
+    <article class="card" data-cat="B" data-search="matter.js 官方 demo gallery 大量 2d 物理案例：布料、吊橋、彈弓、車、ragdoll、感測器、軟體等。 matter.js / rigid body physics 2d physics, constraints, ragdoll, soft body, sensor">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Matter.js</span><span class="tag">rigid body physics</span></div>
+      </div>
+      <h3>Matter.js 官方 Demo Gallery</h3>
+      <p class="what">大量 2D 物理案例：布料、吊橋、彈弓、車、ragdoll、感測器、軟體等。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Matter.js / rigid body physics</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>2D physics, constraints, ragdoll, soft body, sensor</code></dd></div>
+      </dl>
+      <a class="open" href="https://brm.io/matter-js/demo/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="matter.js raycasting / sensors / slingshot 同一個官方 demo 站裡可切換 raycasting、sensors、slingshot 等，非常適合拆成瞄準、觸發區、蓄力投射。 matter.js / raycast / sensors / constraints raycasting, trigger zone, slingshot mechanic">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Matter.js</span><span class="tag">raycast</span><span class="tag">sensors</span><span class="tag">constraints</span></div>
+      </div>
+      <h3>Matter.js Raycasting / Sensors / Slingshot</h3>
+      <p class="what">同一個官方 demo 站裡可切換 Raycasting、Sensors、Slingshot 等，非常適合拆成瞄準、觸發區、蓄力投射。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Matter.js / raycast / sensors / constraints</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>raycasting, trigger zone, slingshot mechanic</code></dd></div>
+      </dl>
+      <a class="open" href="https://brm.io/matter-js/demo/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js voxel painter 點擊新增方塊、shift+點擊移除；像 minecraft 建造或遊戲內編輯模式。 three.js / raycasting / voxel interaction voxel editor, block placement, raycasting">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">raycasting</span><span class="tag">voxel interaction</span></div>
+      </div>
+      <h3>Three.js Voxel Painter</h3>
+      <p class="what">點擊新增方塊、Shift+點擊移除；像 Minecraft 建造或遊戲內編輯模式。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / raycasting / voxel interaction</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>voxel editor, block placement, raycasting</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_interactive_voxelpainter.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js interactive cubes 游標指向 3d 方塊即有互動回饋，可延伸選取、鎖定、hover 高亮。 three.js / picking / raycasting 3d picking, hover highlight, object selection">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">picking</span><span class="tag">raycasting</span></div>
+      </div>
+      <h3>Three.js Interactive Cubes</h3>
+      <p class="what">游標指向 3D 方塊即有互動回饋，可延伸選取、鎖定、hover 高亮。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / picking / raycasting</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>3D picking, hover highlight, object selection</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_interactive_cubes.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js terrain raycast 在 3d 地形上做 raycast 命中，可用於 rts 落點、技能範圍、地面標記。 three.js / terrain / raycasting terrain raycast, ground targeting, rts cursor">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">terrain</span><span class="tag">raycasting</span></div>
+      </div>
+      <h3>Three.js Terrain Raycast</h3>
+      <p class="what">在 3D 地形上做 raycast 命中，可用於 RTS 落點、技能範圍、地面標記。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / terrain / raycasting</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>terrain raycast, ground targeting, RTS cursor</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_geometry_terrain_raycast.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js gpgpu birds 大量鳥群 flocking，滑鼠可擾動群體；適合敵群、魚群、粒子 ai。 three.js / gpgpu / flocking flocking, boids, gpu particles, crowd movement">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">GPGPU</span><span class="tag">flocking</span></div>
+      </div>
+      <h3>Three.js GPGPU Birds</h3>
+      <p class="what">大量鳥群 flocking，滑鼠可擾動群體；適合敵群、魚群、粒子 AI。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / GPGPU / flocking</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>flocking, boids, GPU particles, crowd movement</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_gpgpu_birds.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js particle sprites 大量 sprite 粒子；適合技能、魔法、雪、火花、掉落物氣氛。 three.js / particles / sprites particle system, sprite particles, vfx">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">particles</span><span class="tag">sprites</span></div>
+      </div>
+      <h3>Three.js Particle Sprites</h3>
+      <p class="what">大量 sprite 粒子；適合技能、魔法、雪、火花、掉落物氣氛。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / particles / sprites</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>particle system, sprite particles, VFX</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_points_sprites.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js lava shader 熔岩式動態 shader，可拿來做技能材質、魔法面板、能量核心。 three.js / glsl / shadermaterial lava shader, glsl, animated material, game vfx">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">GLSL</span><span class="tag">ShaderMaterial</span></div>
+      </div>
+      <h3>Three.js Lava Shader</h3>
+      <p class="what">熔岩式動態 shader，可拿來做技能材質、魔法面板、能量核心。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / GLSL / ShaderMaterial</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>lava shader, GLSL, animated material, game VFX</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_shader_lava.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="three.js digital glitch 畫面 glitch 後處理；適合受傷、駭入、異常狀態、轉場。 three.js / postprocessing glitch effect, postprocessing, screen damage effect">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Three.js</span><span class="tag">postprocessing</span></div>
+      </div>
+      <h3>Three.js Digital Glitch</h3>
+      <p class="what">畫面 glitch 後處理；適合受傷、駭入、異常狀態、轉場。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Three.js / postprocessing</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>glitch effect, postprocessing, screen damage effect</code></dd></div>
+      </dl>
+      <a class="open" href="https://threejs.org/examples/webgl_postprocessing_glitch.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="pixijs mouse trail 游標拖出有質感的 trail，可改成劍氣、魔法軌跡、瞄準尾跡。 pixijs / mesh / trail mouse trail, sword trail, ribbon mesh">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">PixiJS</span><span class="tag">mesh</span><span class="tag">trail</span></div>
+      </div>
+      <h3>PixiJS Mouse Trail</h3>
+      <p class="what">游標拖出有質感的 trail，可改成劍氣、魔法軌跡、瞄準尾跡。</p>
+      <dl>
+        <div><dt>技術</dt><dd>PixiJS / mesh / trail</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>mouse trail, sword trail, ribbon mesh</code></dd></div>
+      </dl>
+      <a class="open" href="https://pixijs.com/examples/advanced/mouse-trail/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="pixijs displacement filter 扭曲、液化、波動式濾鏡；適合傳送門、受擊、腐蝕、魔法界面。 pixijs / displacement filter displacement filter, distortion, portal effect">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">PixiJS</span><span class="tag">displacement filter</span></div>
+      </div>
+      <h3>PixiJS Displacement Filter</h3>
+      <p class="what">扭曲、液化、波動式濾鏡；適合傳送門、受擊、腐蝕、魔法界面。</p>
+      <dl>
+        <div><dt>技術</dt><dd>PixiJS / displacement filter</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>displacement filter, distortion, portal effect</code></dd></div>
+      </dl>
+      <a class="open" href="https://pixijs.com/examples/filters-basic/displacement-map-crawlies/" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="pixijs examples gallery filters、mesh、particles、text、rendering 等大量即時案例。 pixijs / webgl / canvas pixijs examples, game ui effects, 2d webgl">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">PixiJS</span><span class="tag">WebGL</span><span class="tag">Canvas</span></div>
+      </div>
+      <h3>PixiJS Examples Gallery</h3>
+      <p class="what">filters、mesh、particles、text、rendering 等大量即時案例。</p>
+      <dl>
+        <div><dt>技術</dt><dd>PixiJS / WebGL / Canvas</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>PixiJS examples, game UI effects, 2D WebGL</code></dd></div>
+      </dl>
+      <a class="open" href="https://pixijs.com/8.x/examples" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="phaser 官方 examples 動畫、輸入、攝影機、物理、粒子、遊戲範例的總入口。 phaser phaser examples, html5 game mechanics">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Phaser</span></div>
+      </div>
+      <h3>Phaser 官方 Examples</h3>
+      <p class="what">動畫、輸入、攝影機、物理、粒子、遊戲範例的總入口。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Phaser</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>Phaser examples, HTML5 game mechanics</code></dd></div>
+      </dl>
+      <a class="open" href="https://phaser.io/examples" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="phaser 3.86 labs 可以直接依 input、physics、games、particles、tilemap 等分類亂逛。 phaser 3 phaser labs, input, physics, particles">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Phaser 3</span></div>
+      </div>
+      <h3>Phaser 3.86 Labs</h3>
+      <p class="what">可以直接依 input、physics、games、particles、tilemap 等分類亂逛。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Phaser 3</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>Phaser labs, input, physics, particles</code></dd></div>
+      </dl>
+      <a class="open" href="https://labs.phaser.io/3.86/index.html" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="phaser bullets group 直接看大量 projectile／子彈生成與回收。 phaser / arcade physics / object pooling projectile, bullets, object pool, arcade physics">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Phaser</span><span class="tag">Arcade Physics</span><span class="tag">object pooling</span></div>
+      </div>
+      <h3>Phaser Bullets Group</h3>
+      <p class="what">直接看大量 projectile／子彈生成與回收。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Phaser / Arcade Physics / object pooling</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>projectile, bullets, object pool, arcade physics</code></dd></div>
+      </dl>
+      <a class="open" href="https://labs.phaser.io/view.html?src=src%2Fphysics%5Carcade%5Cbullets+group.js&amp;v=3.21.0" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="phaser matter platformer + wall jump 平台動作、碰牆、wall jump 的完整互動感。 phaser / matter physics wall jump, platformer physics, character controller">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Phaser</span><span class="tag">Matter Physics</span></div>
+      </div>
+      <h3>Phaser Matter Platformer + Wall Jump</h3>
+      <p class="what">平台動作、碰牆、wall jump 的完整互動感。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Phaser / Matter Physics</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>wall jump, platformer physics, character controller</code></dd></div>
+      </dl>
+      <a class="open" href="https://labs.phaser.io/view.html?src=src%5Cgame+objects%5Ctilemap%5Ccollision%5Cmatter+platformer+with+wall+jumping.js&amp;v=3.21.0" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="phaser breakout 經典打磚塊，滑鼠移動 paddle；很適合看輸入與碰撞如何組成遊戲感。 phaser / pointer input / collision breakout, pointermove, paddle control">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Phaser</span><span class="tag">pointer input</span><span class="tag">collision</span></div>
+      </div>
+      <h3>Phaser Breakout</h3>
+      <p class="what">經典打磚塊，滑鼠移動 paddle；很適合看輸入與碰撞如何組成遊戲感。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Phaser / pointer input / collision</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>breakout, pointermove, paddle control</code></dd></div>
+      </dl>
+      <a class="open" href="https://labs.phaser.io/edit.html?src=src%2Fgames%2Fbreakout%2Fbreakout.js&amp;v=3.22.0" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+    <article class="card" data-cat="B" data-search="phaser drag distance threshold 拖曳不是一按就啟動，而是超過距離閾值後才進入 drag；很適合遊戲化 ui。 phaser / drag threshold drag threshold, gesture intent, game ui drag">
+      <div class="card-top">
+        <span class="badge">B</span>
+        <div class="tags"><span class="tag">遊戲內元素</span><span class="tag">Phaser</span><span class="tag">drag threshold</span></div>
+      </div>
+      <h3>Phaser Drag Distance Threshold</h3>
+      <p class="what">拖曳不是一按就啟動，而是超過距離閾值後才進入 drag；很適合遊戲化 UI。</p>
+      <dl>
+        <div><dt>技術</dt><dd>Phaser / drag threshold</dd></div>
+        <div><dt>搜尋詞</dt><dd><code>drag threshold, gesture intent, game UI drag</code></dd></div>
+      </dl>
+      <a class="open" href="https://labs.phaser.io/edit.html?src=src%2Finput%2Fdragging%2Fdrag+distance+threshold.js&amp;v=3.54.0" target="_blank" rel="noopener noreferrer">直接看 Demo ↗</a>
+    </article>
+    
+  </div>
+</section>
+
+<section>
+  <div class="note">
+    <strong>使用方式：</strong>
+    不用照順序學。先點一個你覺得有趣的 Demo，記下你第一次遇到的英文名詞，再用該卡片的「搜尋詞」往外擴散。這份檔案本身可以離線開啟；只有點 Demo 時需要網路。
+  </div>
+</section>
+
+<footer>
+  建立日期：2026-08-20 · 單一 HTML 檔 · UTF-8 · 所有外部 Demo 皆以新分頁開啟
+</footer>
+</div>
+
+<script>
+const q = document.getElementById('q');
+const buttons = [...document.querySelectorAll('button[data-filter]')];
+const cards = [...document.querySelectorAll('.resource-grid .card')];
+const count = document.getElementById('count');
+let filter = 'all';
+
+function apply() {
+  const term = q.value.trim().toLowerCase();
+  let n = 0;
+  cards.forEach(card => {
+    const catOk = filter === 'all' || card.dataset.cat === filter;
+    const textOk = !term || card.dataset.search.includes(term);
+    const show = catOk && textOk;
+    card.classList.toggle('hidden', !show);
+    if(show) n++;
+  });
+  count.textContent = `顯示 ${n} / ${cards.length}`;
+}
+q.addEventListener('input', apply);
+buttons.forEach(btn => btn.addEventListener('click', () => {
+  filter = btn.dataset.filter;
+  buttons.forEach(b => b.classList.toggle('active', b === btn));
+  apply();
+}));
+apply();
+</script>
+</body>
+</html>
