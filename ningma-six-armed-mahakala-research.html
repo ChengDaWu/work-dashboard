@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="寧瑪派六臂瑪哈嘎拉傳承研究：文獻、譜系、儀軌與當代實踐。">
+<title>寧瑪派「六臂瑪哈嘎拉」傳承研究</title>
+<style>
+:root {
+  --bg:#f6f2ea; --surface:#fffdf8; --surface-2:#f0eadf; --text:#24211d; --muted:#6c655c;
+  --line:#ded5c7; --accent:#7b2d32; --accent-2:#b47942; --accent-soft:#f3e2df;
+  --shadow:0 14px 40px rgba(52,40,27,.08); --radius:18px; --article-size:18px;
+  --serif:"Noto Serif TC","Source Han Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+html[data-theme="dark"] {
+  --bg:#171513; --surface:#201d1a; --surface-2:#2a2521; --text:#eee8df; --muted:#b7aa9d;
+  --line:#3d352e; --accent:#df8f91; --accent-2:#d3a266; --accent-soft:#412b2b; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.78;transition:background .2s,color .2s}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+button,input{font:inherit}
+.progress{position:fixed;inset:0 0 auto 0;height:3px;background:transparent;z-index:100}
+.progress>span{display:block;height:100%;width:0;background:var(--accent)}
+.topbar{position:fixed;right:18px;top:16px;z-index:80;display:flex;gap:8px}
+.icon-btn{border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);color:var(--text);border-radius:999px;min-width:42px;height:42px;padding:0 13px;cursor:pointer;backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.icon-btn:hover{border-color:var(--accent)}
+.hero{padding:86px 24px 46px;border-bottom:1px solid var(--line);background:radial-gradient(circle at 82% 16%, color-mix(in srgb,var(--accent-soft) 78%,transparent), transparent 31%),var(--surface)}
+.hero-inner{max-width:1180px;margin:auto}
+.kicker{font-size:13px;letter-spacing:.15em;color:var(--accent);font-weight:800;text-transform:uppercase}
+h1{font-family:var(--serif);font-size:clamp(34px,5vw,62px);line-height:1.14;letter-spacing:-.025em;max-width:980px;margin:14px 0 18px}
+.subtitle{font-size:clamp(18px,2vw,23px);max-width:840px;color:var(--muted);margin:0 0 30px}
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px}
+.hero-card{border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,var(--accent-soft));border-radius:16px;padding:18px 20px}
+.hero-card b{display:block;font-family:var(--serif);font-size:18px;margin-bottom:4px} .hero-card span{color:var(--muted);font-size:14px;line-height:1.55}
+.layout{display:grid;grid-template-columns:280px minmax(0,840px);gap:58px;max-width:1220px;margin:0 auto;padding:48px 24px 90px;align-items:start}
+.sidebar{position:sticky;top:70px;max-height:calc(100vh - 90px);overflow:auto;padding:2px 4px 20px}
+.sidebar-title{font-weight:800;font-size:13px;letter-spacing:.12em;color:var(--muted);margin-bottom:12px}
+.search-wrap{position:relative;margin-bottom:18px} .search-wrap input{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:11px 13px;outline:none}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent)}
+.search-count{font-size:12px;color:var(--muted);margin-top:7px;min-height:18px}
+#toc{display:flex;flex-direction:column;gap:3px}
+#toc a{text-decoration:none;color:var(--muted);padding:8px 10px;border-radius:9px;font-size:14px;line-height:1.4;border-left:2px solid transparent}
+#toc a:hover,#toc a.active{color:var(--text);background:var(--surface-2);border-left-color:var(--accent)}
+.reader-note{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px;line-height:1.6}
+.article{min-width:0;font-family:var(--serif);font-size:var(--article-size)}
+.article>h2{font-family:var(--sans);font-size:30px;line-height:1.28;letter-spacing:-.015em;margin:72px 0 24px;padding-top:10px;scroll-margin-top:70px}
+.article>h2:first-child{margin-top:0}
+.article h3{font-family:var(--sans);font-size:22px;line-height:1.35;margin:38px 0 16px;scroll-margin-top:70px}
+.article p{margin:0 0 1.22em} .article strong{font-weight:800;color:color-mix(in srgb,var(--text) 90%,var(--accent))}
+.article em{font-family:var(--serif)}
+.article blockquote{margin:28px 0;padding:20px 24px;border-left:4px solid var(--accent);background:var(--surface);border-radius:0 14px 14px 0;box-shadow:var(--shadow)}
+.article blockquote p{margin:.3em 0}
+.article ul{padding-left:1.3em} .article li{margin:.55em 0}
+.table-scroll{overflow:auto;margin:26px 0 34px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-family:var(--sans);font-size:14px;line-height:1.58}
+th,td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left} th{position:sticky;top:0;background:var(--surface-2);font-weight:800;z-index:1} tr:last-child td{border-bottom:0} tbody tr:hover{background:color-mix(in srgb,var(--accent-soft) 35%,transparent)}
+.citation{display:inline-flex;vertical-align:baseline;border:0;background:transparent;color:var(--accent);font-family:var(--sans);font-size:.66em;font-weight:800;padding:0 .18em;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.diagram{font-family:var(--sans);margin:34px 0;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.diagram-head{display:flex;gap:24px;align-items:end;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--surface-2),var(--surface))}
+.diagram-head h3{margin:4px 0 0;font-size:21px} .diagram-head p{max-width:430px;margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.eyebrow{font-size:11px;letter-spacing:.12em;color:var(--accent);font-weight:800}
+.lineage-lanes{padding:18px} .lane{display:flex;align-items:center;gap:9px;padding:16px 0;border-bottom:1px dashed var(--line);overflow:auto} .lane:last-child{border-bottom:0}
+.lane-label{min-width:125px;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line);padding-right:14px} .lane-label span{font-size:11px;color:var(--muted)} .lane-label strong{font-size:13px}
+.node{min-width:150px;max-width:190px;padding:11px 13px;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;font-size:13px;line-height:1.45} .node small{color:var(--muted)} .node.emphasized{border-color:var(--accent);background:var(--accent-soft)} .arrow{color:var(--accent);font-weight:900}
+.decision-tree{padding:24px} .decision-root,.decision-question{width:max-content;max-width:100%;margin:0 auto;padding:12px 18px;border-radius:999px;background:var(--accent);color:white;font-weight:800;text-align:center} .decision-question{margin-top:20px;background:var(--surface-2);color:var(--text);border:1px solid var(--line)}
+.decision-columns{display:grid;grid-template-columns:1fr 2fr;gap:22px;margin-top:24px;position:relative} .decision-branch{border-top:2px solid var(--line);padding-top:18px} .branch-tag{font-weight:800;color:var(--accent);margin-bottom:10px;text-align:center}
+.decision-card{border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:15px;text-align:center;font-size:13px;line-height:1.55} .decision-card strong{display:block;margin-top:7px;font-size:14px} .decision-card small,.decision-card span{display:block;color:var(--muted)} .decision-card.warning{border-style:dashed}
+.branch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px} .decision-question.sub{font-size:13px;padding:8px 14px;margin-top:0}
+.search-hit{outline:2px solid color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:5px;border-radius:5px;background:color-mix(in srgb,var(--accent-soft) 30%,transparent)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;max-width:min(640px,calc(100vw - 32px));padding:12px 16px;border-radius:12px;background:#111;color:#fff;font:13px/1.5 var(--sans);box-shadow:0 10px 30px rgba(0,0,0,.24);transition:.2s;z-index:120} .toast.show{opacity:1;transform:translate(-50%,0)}
+.mobile-menu{display:none}
+.backtop{position:fixed;right:18px;bottom:20px;opacity:0;pointer-events:none;transition:.2s} .backtop.show{opacity:1;pointer-events:auto}
+@media(max-width:920px){
+  .hero-grid{grid-template-columns:1fr} .layout{display:block;padding-top:28px} .sidebar{display:none;position:fixed;z-index:95;left:12px;right:12px;top:66px;max-height:calc(100vh - 84px);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.18)} .sidebar.open{display:block} .mobile-menu{display:inline-block} .topbar{left:14px;right:auto} .backtop{right:14px} .article>h2{font-size:27px;margin-top:58px} .diagram-head{display:block} .diagram-head p{margin-top:8px} .decision-columns{grid-template-columns:1fr} .branch-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){.hero{padding:78px 18px 34px} .layout{padding:28px 16px 72px} .article{font-size:17px} .topbar .font-controls{display:none} .lineage-lanes{padding:10px} .lane{align-items:stretch} .lane-label{min-width:105px}}
+@media print{.topbar,.progress,.sidebar,.backtop,.toast{display:none!important} .hero{padding:24px 0;background:none} .hero-grid{display:none} .layout{display:block;max-width:none;padding:0} .article{font-size:11pt} .article h2{break-after:avoid} .table-scroll{overflow:visible;box-shadow:none} table{min-width:0;font-size:8.5pt} .diagram{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+<div class="topbar" aria-label="閱讀工具">
+  <button class="icon-btn mobile-menu" id="menuBtn" aria-label="開啟目錄">☰</button>
+  <span class="font-controls">
+    <button class="icon-btn" id="fontDown" aria-label="縮小字體">A−</button>
+    <button class="icon-btn" id="fontUp" aria-label="放大字體">A＋</button>
+  </span>
+  <button class="icon-btn" id="themeBtn" aria-label="切換深淺色">◐</button>
+</div>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Research Reader · Nyingma / Mahākāla</div>
+    <h1>寧瑪派「六臂瑪哈嘎拉」傳承研究</h1>
+    <p class="subtitle">文獻、譜系、儀軌與當代實踐——以「先分流、再比較」為核心，釐清北伏藏、秋吉林巴新伏藏與香巴六臂系統。</p>
+    <div class="hero-grid" aria-label="三條主要脈絡">
+      <div class="hero-card"><b>北伏藏 Jangter</b><span>較早的寧瑪伏藏系；關鍵辨識為三面六臂，並有十六世紀實修與多吉札法統脈絡。</span></div>
+      <div class="hero-card"><b>秋吉林巴 Chokling Tersar</b><span>十九世紀獨立伏藏線；通常一面六臂，根本題名明確定位為「大悲尊事業化現」。</span></div>
+      <div class="hero-card"><b>香巴六臂（比較組）</b><span>最著名的一面六臂「速疾智慧怙主」系；由瓊波南覺主線廣泛跨派傳播，不宜自動視為寧瑪傳承。</span></div>
+    </div>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">閱讀目錄</div>
+    <div class="search-wrap">
+      <input id="searchInput" type="search" placeholder="搜尋研究內容…" autocomplete="off" aria-label="搜尋研究內容">
+      <div class="search-count" id="searchCount">按 / 可快速搜尋</div>
+    </div>
+    <nav id="toc" aria-label="文章目錄"></nav>
+    <div class="reader-note">此頁依原研究內容重排。原文的線上引用標記以「來源」按鈕保留其來源代碼；未臆造原檔未提供的網址。</div>
+  </aside>
+  <main class="article" id="article">
+    <h2 id="執行摘要">執行摘要</h2>
+<p>本研究最重要的結論，是必須先修正一個常見但會使整個傳承史失真的前提：<strong>「六臂瑪哈嘎拉」（藏：མགོན་པོ་ཕྱག་དྲུག་པ་，<em>mgon po phyag drug pa</em>）並不存在一條可以直接稱為「寧瑪派六臂大黑天總傳承」的單一譜系。</strong> 現存文獻至少顯示三種需要嚴格區分的脈絡：</p>
+<p>第一，也是西藏最著名的六臂瑪哈嘎拉，是<strong>香巴噶舉（Shangpa Kagyu）「速疾智慧怙主」</strong>系統，由印度大成就者系統傳至瓊波南覺（Khyungpo Naljor），後廣泛進入噶舉、格魯等傳統。香巴傳承自身明確稱六臂怙主為其特殊護法，並稱秋吉林巴（Chokgyur Lingpa）的伏藏六臂法是著名六臂系統中的「例外」，不源自瓊波南覺的香巴線。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2、turn24search0" type="button">來源</button></p>
+<p>第二，寧瑪派十九世紀的<strong>秋吉林巴新伏藏（Chokling Tersar）</strong>確實存在一套獨立的「智慧怙主六臂瑪哈嘎拉」法類。《仁欽德佐》（<em>Rin chen gter mdzod</em>，《大寶伏藏》）至少保存四件核心文本：六臂瑪哈嘎拉成就法、付囑／加持法、外修供讚酬懺法、朵瑪加持／灌頂法。其中根本成就法的題名直接稱此尊為<strong>「大悲尊之事業化現六臂瑪哈嘎拉」</strong>，而且歸入秋吉林巴「大悲尊蓮花幻網」法系，因此其教義結構與觀世音、大悲事業有直接關係。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3、turn21search0、turn21search6、turn21search2" type="button">來源</button></p>
+<p>第三，學術文獻與《大寶伏藏》又證明：在更早的<strong>北伏藏（Byang gter / Jangter）</strong>中，也有六臂瑪哈嘎拉，而且不能簡單等同於秋吉林巴或香巴形態。十六世紀第二世多吉札仁增勒丹多傑曾在曲沃日（Chu bo ri）修持 <em>bsTan srung yongs rdzogs</em>「圓滿教法護法」儀軌；最新的北伏藏研究明確指出，此儀軌隸屬《八教自生自現》（<em>bKa’ brgyad rang byung rang shar</em>），<strong>壇城中央正是一種特殊的六臂瑪哈嘎拉</strong>。圖像學資料又指出，北伏藏六臂為<strong>三面六臂</strong>，而秋吉林巴與香巴常見型為<strong>一面六臂</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2、turn22search1" type="button">來源</button></p>
+<p>因此，香巴文獻「除秋吉林巴外皆追溯瓊波南覺」與北伏藏證據表面衝突，實際上很可能是<strong>分類範圍不同</strong>：香巴說法主要針對「速疾智慧怙主」之一面六臂傳承家族；而北伏藏保存的是另一套三面六臂護法壇城。把所有「六隻手的 Mahākāla」視為同一尊、同一密續、同一傳承，是目前網路資料最常見的錯誤之一。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2、turn22search1、turn27view2" type="button">來源</button></p>
+<p>就寧瑪派內部而言，六臂瑪哈嘎拉應理解為<strong>特定伏藏法系的智慧護法（ye shes mgon po）／教法護法（bka’ srung）</strong>，而不是全寧瑪派唯一或統一的「首席護法」。秋吉林巴系與北伏藏系，是目前能以原典、傳承目錄及歷史資料獨立證明的兩條重要寧瑪六臂系統。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search8、turn21search3、turn27view2" type="button">來源</button></p>
+<h2 id="定義-教義地位與跨宗派辨析">定義、教義地位與跨宗派辨析</h2>
+<p><strong>名稱。</strong> Mahākāla 梵語意為「大黑／大時」，藏譯常作 ནག་པོ་ཆེན་པོ་ <em>nag po chen po</em>，而在護法語境中又常稱 མགོན་པོ་ <em>mgon po</em>，「怙主／護主」。「六臂」是 ཕྱག་དྲུག་པ་ <em>phyag drug pa</em>。故「六臂瑪哈嘎拉」、「六臂大黑天」、「六臂怙主」在中文資料中常指相關形態，但<strong>不能僅憑中文名稱判定它屬哪一傳承</strong>。Himalayan Art 的跨傳統分類至少區分五種以上六臂型，並明確區分《五十章瑪哈嘎拉續》型、北伏藏型、香巴型、Dorje Shanglon 型及秋吉林巴型。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search1" type="button">來源</button></p>
+<p>在更早的佛教密續層面，瑪哈嘎拉並非寧瑪派專屬。《丹珠爾／甘珠爾》傳統保存多種 Mahākāla 經續：例如 Toh 667 <em>The Tantra of Glorious Mahākāla</em> 被 84000 歸在事續（Action Tantra），Toh 440 <em>The Glorious Sovereign Tantra of Mahākāla</em> 則收於無上瑜伽密續部分；此外還有 Toh 668《吉祥瑪哈嘎拉陀羅尼》等。這些是理解西藏各派 Mahākāla 的經典背景，但不能把它們直接稱為「秋吉林巴六臂法」或「北伏藏六臂法」。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search0、turn20search1、turn20search6" type="button">來源</button></p>
+<p>在秋吉林巴系中，最關鍵的教義定位來自根本成就法題名：</p>
+<blockquote>
+<p>ཐུགས་རྗེ་ཆེན་པོའི་ཕྲིན་ལས་ཀྱི་སྤྲུལ་པ་མ་ཧཱ་ཀཱ་ལ་ཕྱག་དྲུག་པའི་སྒྲུབ་ཐབས<br/>
+<em>thugs rje chen po’i phrin las kyi sprul pa ma hA kA la phyag drug pa’i sgrub thabs</em></p>
+</blockquote>
+<p>可意譯為<strong>《大悲尊事業化現六臂瑪哈嘎拉成就法》</strong>。「大悲尊」在此法系即觀世音系統，因此這不是單純把一位世俗神祇降伏後拿來護法，而是以「覺性／智慧護法」及大悲事業化現來理解。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3" type="button">來源</button></p>
+<p>跨宗派比較可簡化如下：</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>傳統</th>
+<th>六臂瑪哈嘎拉的典型地位</th>
+<th>最重要辨識點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>寧瑪・秋吉林巴新伏藏</strong></td>
+<td>特定伏藏法系的智慧護法；隸屬「大悲尊蓮花幻網」及「九種甚深護法」相關儀軌</td>
+<td>通常一面六臂；文本明稱「大悲尊事業化現」；<strong>寧瑪特有伏藏線</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3、turn21search6、turn22search1" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>寧瑪・北伏藏</strong></td>
+<td>《八教自生自現》護法壇城中心之一種特殊六臂怙主</td>
+<td><strong>三面六臂</strong>；十六世紀已有實際修持紀錄；<strong>寧瑪特有伏藏線</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2、turn22search1" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>香巴噶舉</strong></td>
+<td>「速疾智慧怙主」，為香巴最具代表性的主要護法之一</td>
+<td>一面六臂；印度大成就者→瓊波南覺；黑、白、黃、紅、綠等支系甚多。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2、turn26search11" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>格魯</strong></td>
+<td>從香巴傳入後成為重要護法系統之一</td>
+<td>傳承經宗喀巴等吸收；二〇二四年達賴喇嘛仍公開授予相關隨許。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2、turn26search6" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>噶舉其他支派</strong></td>
+<td>六臂法可因香巴跨傳承而存在；不能因此視為所有噶舉支派的唯一主護法</td>
+<td>六臂最具身份性的來源仍是香巴；其他噶舉另有自身 Mahākāla 傳統。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>薩迦</strong></td>
+<td>可保存六臂等跨系統法，但薩迦最具代表性的 Mahākāla 圖像／修法是帳幕怙主 Pañjaranātha 等</td>
+<td>不宜把「六臂＝薩迦主要大黑天」；其密續與壇城架構不同。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn7search0" type="button">來源</button></td>
+</tr>
+</tbody>
+</table></div>
+<p>香巴六臂著名的一面六臂像，常見虎皮裙、蛇飾、彎刀、念珠或骷髏鬘、手鼓等忿怒相；二〇二四年達賴喇嘛授予六臂瑪哈嘎拉隨許時的官方記錄亦描述其足踏 Vināyaka、虎皮裙及六臂持物。<strong>這套圖像細節不能不經考證地移植到三面六臂的北伏藏尊形。</strong> <button aria-label="查看原研究來源代碼" class="citation" data-cite="turn26search6、turn22search1" type="button">來源</button></p>
+<h2 id="經典-伏藏與文本史">經典、伏藏與文本史</h2>
+<p>就「寧瑪六臂」而言，文獻必須分成「印度—藏譯密續背景」與「寧瑪伏藏專屬儀軌」兩層。後者才是重建寧瑪實際傳承的核心。《大寶伏藏》由蔣貢康楚羅卓泰耶（Jamgön Kongtrul Lodrö Tayé, 1813–1899）彙集寧瑪伏藏，Tsadra Foundation 的數位目錄目前可檢索七十二冊，並提供藏文 Unicode、Shechen Edition PDF、壇城及 tsakli 儀軌圖卡，是研究此問題最重要的公開數位底本之一。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search8" type="button">來源</button></p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>文獻</th>
+<th>藏文／Wylie</th>
+<th>作者、來源與年代</th>
+<th>性質與版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>《吉祥瑪哈嘎拉續》</strong> <em>The Tantra of Glorious Mahākāla</em>，Toh 667</td>
+<td>དཔལ་ནག་པོ་ཆེན་པོའི་རྒྱུད། <em>dpal nag po chen po’i rgyud</em>；梵 <em>Śrīmahākālatantra</em></td>
+<td>藏譯傳統涉及 Amoghavajra、Phurbu Ö；現代英譯由 84000 出版</td>
+<td>甘珠爾事續；提供 Mahākāla 早期經典背景，<strong>不等於寧瑪秋吉林巴六臂儀軌</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search0、turn20search6" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《吉祥瑪哈嘎拉王續》／《五十章瑪哈嘎拉續》</strong>，Toh 440</td>
+<td>常見 Wylie：<em>nag po chen po mgon po mngon par ’byung ba zhes bya ba’i rgyud kyi rgyal po</em></td>
+<td>印度密續；藏譯大藏經</td>
+<td>84000 英譯題為 <em>The Glorious Sovereign Tantra of Mahākāla</em>；其中某些六臂型為三面六臂，圖像上需與北伏藏及秋吉林巴分辨。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search1、turn22search1" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《吉祥瑪哈嘎拉陀羅尼》</strong>，Toh 668</td>
+<td>Mahākāla dhāraṇī</td>
+<td>藏譯大藏經</td>
+<td>84000 已出版英譯；一般 Mahākāla 背景文獻。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search6" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《大悲尊事業化現六臂瑪哈嘎拉成就法》</strong></td>
+<td><em>thugs rje chen po’i phrin las kyi sprul pa ma hA kA la phyag drug pa’i sgrub thabs</em></td>
+<td><strong>秋吉林巴（1829–1870）</strong></td>
+<td>《大寶伏藏》卷 37，頁 611–622；Shechen Publications 2007–2016 版。這是秋吉林巴六臂系最重要根本成就法。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3、turn22search0" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《大悲尊蓮花幻網・六臂智慧怙主付囑加持鐵鉤》</strong></td>
+<td><em>thugs rje chen po pad+ma sgyu ’phrul drwa ba las ye shes mgon po phyag drug pa’i bka’ gtad byin rlabs lcags kyu</em></td>
+<td>蔣貢康楚編／撰儀軌；伏藏源秋吉林巴</td>
+<td>《大寶伏藏》卷 37，頁 623–628；是 <strong>bka’ gtad（付囑、委託護法）／加持</strong>文本。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search0" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《九種甚深護法・六臂智慧怙主外修供養酬補懺悔》</strong></td>
+<td><em>chos skyong zab mo skor dgu las ye shes mgon po phyag drug pa’i phyi sgrub gsol mchod skong bshags bcas</em></td>
+<td>秋吉林巴</td>
+<td>《大寶伏藏》卷 37，頁 629–642；明列外修、供養、酬補與懺悔功能。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search6、turn21search5" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《六臂智慧怙主外修朵瑪加持成就明點》</strong></td>
+<td><em>…ye shes mgon po phyag drug pa phyi sgrub gtor ma’i byin rlabs dngos grub thig le</em></td>
+<td>蔣貢康楚；伏藏源秋吉林巴</td>
+<td>《大寶伏藏》卷 37，頁 643–652；屬朵瑪加持／灌頂相關法。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search2" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《北伏藏圓滿教法護法灌頂儀軌・甚深義明》</strong></td>
+<td><em>byang gter mgon po bstan srung yongs rdzogs kyi dbang chog zab don snang ba</em></td>
+<td>第四世多吉札仁增 <strong>貝瑪欽列／Pema Trinle（1641–1717）</strong>；伏藏源仁增郭登</td>
+<td>《大寶伏藏》卷 38，頁 75–98；北伏藏六臂護法系的重要灌頂手冊。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search19、turn23search5" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>《圓滿教法護法》</strong></td>
+<td><em>bsTan srung yongs rdzogs</em></td>
+<td>北伏藏；仁增郭登（1337–1409）法藏系</td>
+<td>屬 <em>bKa’ brgyad rang byung rang shar</em>；學術考證證實其壇城中央為特殊六臂瑪哈嘎拉。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2、turn23search5" type="button">來源</button></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>漢譯與英譯狀況。</strong> 84000 已提供 Toh 667、Toh 440、Toh 668 等大藏經類 Mahākāla 文獻的正式英譯。相較之下，本次檢索截至 <strong>2026 年 8 月</strong>，未發現上述四件秋吉林巴六臂核心儀軌及北伏藏 <em>bsTan srung yongs rdzogs</em> 有由 Tsadra、Shechen、84000 或主要寧瑪傳承機構正式公開發行的<strong>完整漢譯本</strong>；公開英文資料主要仍是目錄標題、摘要與傳承說明，而非可代替灌頂文本的完整修法譯本。因此網路上標為「六臂大黑天儀軌中文版」的資料，不能只憑題名就判斷是 Chokling Tersar、Jangter 還是香巴本。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search8、turn21search4、turn20search0" type="button">來源</button></p>
+<p>文本／實物來源方面，有數項特別值得標記。Tsadra 的《大寶伏藏》數位本所依 Shechen Publications 新德里版為目前最方便的校勘本；另有 Dzongsar 寺院 Lodro Phuntsok 所製《大寶伏藏》壇城圖，曾供 Dzongsar Khyentse Rinpoche 二〇一六年在不丹傳授《大寶伏藏》時使用。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search18、turn20search8" type="button">來源</button> 北伏藏研究又記載第四世多吉札仁增 Pema Trinle 於一六六九年抵曲沃日時，看到當地保存北伏藏舍利、佛像及壁畫，說明這套護法並非僅存在紙本文獻。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2" type="button">來源</button></p>
+<p>秋吉林巴傳記另有一段重要但應標為<strong>傳承聖傳而非現代可獨立驗證的考古事實</strong>：記載蔣貢康楚非常敬信六臂瑪哈嘎拉，秋吉林巴將一件伏藏交給他，其中含一尊傳稱由龍樹以寒林黑石所造的瑪哈嘎拉像，傳記稱其後留於德格。這一記錄證明十九世紀秋吉林巴—康楚圈子對六臂法的特殊重視，但像的製作年代與今日確切收藏處仍需實物學研究。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn19view0" type="button">來源</button></p>
+<h2 id="傳承譜系與歷史地理">傳承譜系與歷史地理</h2>
+<p>需要特別注意：「伏藏譜系」不等於普通的 A 親授 B、B 親授 C。它可以同時包含<strong>伏藏揭示關係、轉世制度、經典傳承、灌頂傳承與寺院制度承續</strong>。以下因此在「師承關係」欄明確標出其性質，避免製造不存在的直接師徒鏈。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2、turn23search5" type="button">來源</button></p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>分支／人物</th>
+<th style="text-align:right">年代</th>
+<th>主要地點</th>
+<th>關係</th>
+<th>六臂傳承事件</th>
+<th>寧瑪特有？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>仁增郭登欽波 Rigdzin Godemchen</strong></td>
+<td style="text-align:right">1337–1409</td>
+<td>西藏北部、後與藏中北伏藏制度相連</td>
+<td>北伏藏主要伏藏師、後追認為多吉札仁增第一世</td>
+<td>揭示 Jangter 北伏藏；<em>bsTan srung yongs rdzogs</em> 隸屬其法藏系。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn23search5、turn27view2" type="button">來源</button></td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong>勒丹多傑 Lekden Dorje</strong>，多吉札仁增第二世</td>
+<td style="text-align:right">1488/89–1565</td>
+<td>曲沃日、藏中等</td>
+<td>被認定為郭登欽波轉世；北伏藏持有者</td>
+<td>十六世紀於曲沃日實修 <em>mgon po bstan srung yongs rdzogs</em>，其後出現新舊派護法之觀見記錄；另有六臂成就法藏相關記載。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn23search1、turn27view2" type="button">來源</button></td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong>多吉札仁增傳承／Dorje Drak</strong></td>
+<td style="text-align:right">十六世紀後</td>
+<td>多吉札寺、藏中</td>
+<td>轉世＋寺院法統</td>
+<td>多吉札成為北伏藏核心制度載體；此轉世系以郭登欽波為第一世追溯源頭。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn23search5、turn23search19" type="button">來源</button></td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong>Pema Trinle</strong>，第四世多吉札仁增</td>
+<td style="text-align:right">1641–1717</td>
+<td>多吉札、曲沃日</td>
+<td>多吉札轉世法統</td>
+<td>撰 <em>byang gter mgon po bstan srung yongs rdzogs kyi dbang chog zab don snang ba</em>；一六六九年仍親訪曲沃日北伏藏遺存。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search19、turn27view2" type="button">來源</button></td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong>秋吉林巴 Chokgyur Lingpa</strong></td>
+<td style="text-align:right">1829–1870</td>
+<td>康區、德格等</td>
+<td>大伏藏師；同時與寧瑪、噶舉大師交流</td>
+<td>揭示獨立六臂法；根本成就法定位為「大悲尊事業化現」；形成 Chokling Tersar 六臂系。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search0、turn21search3" type="button">來源</button></td>
+<td><strong>是</strong></td>
+</tr>
+<tr>
+<td><strong>蔣貢康楚羅卓泰耶</strong></td>
+<td style="text-align:right">1813–1899</td>
+<td>八蚌、宗薩／康區</td>
+<td>秋吉林巴之師友兼弟子、接受者與編纂者</td>
+<td>撰六臂 <em>bka’ gtad</em> 與朵瑪加持法，並收入《大寶伏藏》；傳記稱秋吉林巴把六臂伏藏聖物授予康楚。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search6、turn21search0、turn21search2、turn19view0" type="button">來源</button></td>
+<td>法源是寧瑪伏藏；康楚本人具跨派背景</td>
+</tr>
+<tr>
+<td><strong>Neten Chokling／Tsikey Chokling 轉世系</strong></td>
+<td style="text-align:right">十九世紀後</td>
+<td>康區、尼泊爾等</td>
+<td>秋吉林巴的兩個主要轉世系統</td>
+<td>Treasury of Lives 將兩系均列為秋吉林巴後續轉世線，成為 Chokling Tersar 延續的重要制度載體。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search0、turn22search8、turn22search9" type="button">來源</button></td>
+<td><strong>是／跨派傳播</strong></td>
+</tr>
+<tr>
+<td><strong>Tulku Urgyen</strong></td>
+<td style="text-align:right">二十世紀，卒 1996</td>
+<td>西藏、錫金、尼泊爾</td>
+<td>家族與法脈持有者</td>
+<td>傳記記載其自兩位舅父受 Chokling Tersar，後將整套 Tersar 傳予第十六世噶瑪巴；並長期修持相關大法會。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn19view1" type="button">來源</button></td>
+<td>法源是寧瑪；傳播高度利美</td>
+</tr>
+<tr>
+<td><strong>Ka‑Nying Shedrub Ling／Asura retreat network</strong></td>
+<td style="text-align:right">二十世紀後半</td>
+<td>尼泊爾博達、阿蘇拉洞</td>
+<td>Tulku Urgyen 建立／恢復之傳承中心</td>
+<td>傳記記載建立 Chokling Tersar 閉關中心，並由頂果欽哲等傳授完整 Tersar；寺僧持續舉行 Chokling 系 drubchen。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn19view2" type="button">來源</button></td>
+<td><strong>寧瑪—噶舉利美型</strong></td>
+</tr>
+<tr>
+<td><strong>Orgyen Dorje Den《大寶伏藏》傳授</strong></td>
+<td style="text-align:right">2009、2010–11 有文件紀錄</td>
+<td>美國加州</td>
+<td>《大寶伏藏》完整灌頂／傳承活動</td>
+<td>傳授紀錄明列「Chogyur Lingpa’s Six-Armed Mahakala」的 <em>bka’ gtad</em> 與六臂朵瑪灌頂。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search2、turn25search4" type="button">來源</button></td>
+<td>秋吉林巴六臂法的現代延續</td>
+</tr>
+</tbody>
+</table></div>
+<p>作為比較，香巴的主線則是印度大成就者 Shavaripa、Maitripa、Rahula 等→<strong>瓊波南覺</strong>→香巴各支；後來透過不同傳承支系進入噶舉、格魯及其他系統。香巴傳承資料將秋吉林巴六臂視為不經此主鏈的「例外」。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></p>
+<p>但北伏藏資料要求我們把這句「唯一例外」進一步限定：北伏藏的三面六臂在十六世紀已明確出現在自身護法壇城，且有獨立的北伏藏文本脈絡。因此，更準確的歷史模型如下。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2、turn22search1" type="button">來源</button></p>
+<div aria-label="三條六臂瑪哈嘎拉傳承脈絡示意圖" class="diagram lineage-diagram" role="figure">
+<div class="diagram-head">
+<div><span class="eyebrow">譜系視圖</span><h3 id="三條脈絡-先分流再比較">三條脈絡，先分流再比較</h3></div>
+<p>共同的「六臂」圖像特徵，不等於共同的文本祖型或單一傳承。</p>
+</div>
+<div class="lineage-lanes">
+<section class="lane lane-shangpa">
+<div class="lane-label"><span>比較組</span><strong>香巴六臂系</strong></div>
+<div class="node">印度 Mahākāla 密續背景<br/><small>Toh 667 / Toh 440 等</small></div><span class="arrow">→</span>
+<div class="node">Shavaripa / Maitripa / Rahula</div><span class="arrow">→</span>
+<div class="node">瓊波南覺<br/><small>Khyungpo Naljor</small></div><span class="arrow">→</span>
+<div class="node">香巴噶舉</div><span class="arrow">→</span>
+<div class="node">噶舉、格魯等跨派傳播</div>
+</section>
+<section class="lane lane-jangter">
+<div class="lane-label"><span>寧瑪伏藏</span><strong>北伏藏 Jangter</strong></div>
+<div class="node">仁增郭登<br/><small>1337–1409</small></div><span class="arrow">→</span>
+<div class="node emphasized">bsTan srung yongs rdzogs<br/><small>三面六臂護法壇城</small></div><span class="arrow">→</span>
+<div class="node">勒丹多傑<br/><small>1488/89–1565・曲沃日實修</small></div><span class="arrow">→</span>
+<div class="node">多吉札仁增法統</div><span class="arrow">→</span>
+<div class="node">Pema Trinle<br/><small>1641–1717・灌頂手冊</small></div>
+</section>
+<section class="lane lane-chokling">
+<div class="lane-label"><span>寧瑪伏藏</span><strong>秋吉林巴 Chokling Tersar</strong></div>
+<div class="node">秋吉林巴<br/><small>1829–1870</small></div><span class="arrow">→</span>
+<div class="node emphasized">大悲尊蓮花幻網<br/><small>一面六臂智慧怙主</small></div><span class="arrow">→</span>
+<div class="node">蔣貢康楚<br/><small>付囑、朵瑪法、收入《大寶伏藏》</small></div><span class="arrow">→</span>
+<div class="node">Chokling Tersar<br/><small>Neten / Tsikey Chokling</small></div><span class="arrow">→</span>
+<div class="node">Tulku Urgyen 等現代傳承網絡</div>
+</section>
+</div>
+</div>
+<p>此圖最值得記住的並不是人物最多的一條線，而是：<strong>「北伏藏六臂」「秋吉林巴六臂」「香巴六臂」在研究上必須先分流，再談它們之間的歷史交流。</strong></p>
+<h2 id="儀軌-壇城與修持差異">儀軌、壇城與修持差異</h2>
+<p>公開原典目錄能夠可靠比較的是「儀軌結構」；至於完整密咒音節、特定手印的逐步操作、內修細節與護法命令法，本研究不把不同傳承網路流通的片段拼成一個所謂「通用六臂修法」，因為現代《大寶伏藏》傳授紀錄本身即顯示某些六臂灌頂具有傳承資格限制。二〇〇九年的傳授紀錄例如明記，在相關階段，未完成前行的在家眾被要求離場。這表示把密咒或手印脫離灌頂文本比較，不只是宗教禮儀問題，也會造成文獻學上的錯配。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search2" type="button">來源</button></p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>秋吉林巴 Chokling Tersar</th>
+<th>北伏藏 Jangter</th>
+<th>香巴六臂（比較組）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>尊形</strong></td>
+<td>通常<strong>一面六臂</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search1" type="button">來源</button></td>
+<td><strong>三面六臂</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search1、turn27view2" type="button">來源</button></td>
+<td>主要黑／青黑尊一面六臂；另有白、黃、紅、綠等支系。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>教義來源</strong></td>
+<td>《大悲尊蓮花幻網》；題名明說是「大悲尊事業化現」。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3" type="button">來源</button></td>
+<td>《八教自生自現》之護法體系；壇城中心特殊六臂。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2" type="button">來源</button></td>
+<td>速疾智慧怙主；傳統解釋為大悲觀世音的忿怒化現。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>修持層次</strong></td>
+<td>現存文本至少有 <em>sgrub thabs</em> 成就法、<em>phyi sgrub</em> 外修、<em>bka’ gtad</em> 付囑、供養、<em>skong</em> 酬補、<em>bshags</em> 懺悔、朵瑪加持／灌頂。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3、turn21search0、turn21search6、turn21search2" type="button">來源</button></td>
+<td>有完整護法壇城及 <em>dbang chog</em> 灌頂手冊；文本關係依北伏藏《八教》架構。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search19、turn27view2" type="button">來源</button></td>
+<td>有黑、白等多種支系及「十三護法灌頂」等系統，文本體系遠大於單一日課。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2、turn26search11" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>觀想核心</strong></td>
+<td>六臂尊不應抽離「大悲尊—事業化現」脈絡；壇城及眷屬以該伏藏文本為準。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3" type="button">來源</button></td>
+<td>中央六臂尊是整體寧瑪護法壇城的一部分；三面結構已顯示不能照搬香巴觀想。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2、turn22search1" type="button">來源</button></td>
+<td>最常見為一面六臂忿怒尊及眷屬；文獻又保存多色、多配置支系。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn26search11" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>朵瑪／供品</strong></td>
+<td>有專門 <em>gtor ma’i byin rlabs</em> 及 <em>gsol mchod / skong / bshags</em> 文本，顯示朵瑪、供養、酬補是法系核心部分而非附加儀式。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search6、turn21search2" type="button">來源</button></td>
+<td>灌頂及壇城護法供儀依 <em>bsTan srung yongs rdzogs</em> 系統；不能以 Chokling 朵瑪本替代。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search19、turn27view2" type="button">來源</button></td>
+<td>香巴有大量朵瑪、護法酬供與不同顏色六臂的支系儀軌。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2、turn26search11" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>咒語</strong></td>
+<td>應以秋吉林巴原儀軌及所得口傳版本為準；不能僅因同名「六臂」採用香巴咒式。現代灌頂紀錄證明此法有獨立傳授條目。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search4" type="button">來源</button></td>
+<td>同理，屬北伏藏壇城系，不宜預設與一面六臂的主咒完全相同。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2" type="button">來源</button></td>
+<td>有自身著名主咒及不同支系；其傳承來自瓊波南覺系。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>手印</strong></td>
+<td>公開 RTZ 目錄能確認儀軌種類，但不足以建立一套可信的「網路通用手印表」；需對照法本及教授。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search8" type="button">來源</button></td>
+<td>尤需按北伏藏灌頂手冊及壇城本操作。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search19" type="button">來源</button></td>
+<td>香巴自身亦有完整儀軌教授，不宜回填到寧瑪版本。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></td>
+</tr>
+<tr>
+<td><strong>資格／禁忌</strong></td>
+<td>至少部分《大寶伏藏》現代傳授對未完成前行者有限制；這是有文件證據的特定傳授規則，不宜擴大成「所有寺院永遠如此」。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search2" type="button">來源</button></td>
+<td>灌頂法存在本身即表示其完整修持有傳承授權層面；各寺實際規定需逐寺考證。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search19" type="button">來源</button></td>
+<td>現代有公開隨許場合，但「公開參加灌頂」不等於所有內修文本皆無資格條件。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn26search6" type="button">來源</button></td>
+</tr>
+</tbody>
+</table></div>
+<p>造成這些差異的主要原因，不是「哪一派畫錯了」，而是<strong>文本祖型不同</strong>。六隻手只是圖像學的一項共同特徵；在藏傳佛教中，同名護法可能由不同密續、不同伏藏、不同灌頂傳承形成完全不同的壇城家族。北伏藏三面六臂與秋吉林巴一面六臂，正是最有力的例子。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search1、turn27view2" type="button">來源</button></p>
+<p>秋吉林巴系還有一個容易被忽略的結構：它同時出現在「大悲尊蓮花幻網」與「九種甚深護法」的相關文本中。也就是說，六臂尊既可由「大悲尊事業化現」理解，又有獨立外修、供養、酬補、懺悔與朵瑪法。這比只說「六臂象徵六波羅蜜」更能反映原始寧瑪文本真正呈現的修法結構。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3、turn21search6、turn21search2" type="button">來源</button></p>
+<h2 id="現代口傳-寺院實踐與圖像材料">現代口傳、寺院實踐與圖像材料</h2>
+<p>秋吉林巴六臂傳承在二十、二十一世紀並未只停留於古籍。Orgyen Tobgyal 所述秋吉林巴傳承史記載，Tulku Urgyen 從兩位舅父接受 Chokling Tersar，後又把完整 Tersar 傳授給第十六世噶瑪巴；他多次完成長期閉關，並經常修 Chokling Tersar 大法會。其後在尼泊爾建立／恢復 Ka‑Nying Shedrub Ling 與阿蘇拉洞附近的 Tersar 閉關中心，頂果欽哲仁波切也曾在該處傳授 Chokling Tersar。這說明其延續從一開始便具有典型「利美」跨寧瑪—噶舉網絡的性格。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn19view1、turn19view2" type="button">來源</button></p>
+<p>更直接的六臂證據來自美國 Orgyen Dorje Den 的《大寶伏藏》傳授記錄。公開的 2010–2011 empowerment record 將秋吉林巴六臂清楚列成兩個獨立項目：<strong>50.7 “Chogyur Lingpa’s Six-Armed Mahakala”</strong>，即《大悲尊蓮花幻網》的六臂智慧怙主 <em>bka’ gtad</em>；以及 <strong>50.8 “Chogyur Lingpa’s Six-Armed Mahakala Torma Empowerment”</strong>，即《九種甚深護法》的六臂外修朵瑪加持。這是證明二十一世紀仍有實際傳授該寧瑪六臂法，而非僅保存古籍的最佳公開資料之一。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search4" type="button">來源</button></p>
+<p>另一份二〇〇九年前後《大寶伏藏》傳授紀錄還記載相關護法階段的資格限制，包含「未完成 ngöndro 前行的在家眾離場」等分級。這對田野研究很重要：<strong>公開活動紀錄可以證明法仍被傳授，卻不代表完整護法法本在傳統內被視為完全公開的自學文本。</strong> <button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search2" type="button">來源</button></p>
+<p>一九九六年在尼泊爾斯瓦揚布一帶，Tenga Rinpoche 的傳承資料亦記載由 Tsikey Chokling Rinpoche 傳授「完整 Chokling Tersar」；這不是專門以六臂法為題的紀錄，但可作為整體 Tersar 傳承在尼泊爾延續的旁證。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search14" type="button">來源</button></p>
+<p>作為跨宗派比較，二〇二四年五月十八日，達賴喇嘛在印度達蘭薩拉應 Kalu Rinpoche 之請授予六臂瑪哈嘎拉隨許，官方報導估計約 8,500 人參加。這場法會主要反映香巴—格魯的現代六臂傳承，而不是秋吉林巴或北伏藏版，但恰好說明今日「六臂 Mahākāla」一詞仍必須先問<strong>哪個 lineage</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search0、turn26search6" type="button">來源</button></p>
+<p>北伏藏方面，現代學術研究提供了少見的寺院—文本交叉證據。Jean‑Luc Achard 等北伏藏研究脈絡中的近年研究指出，十六世紀勒丹多傑在曲沃日修 <em>bsTan srung yongs rdzogs</em> 後，傳記記載其見到新舊派多位護法；研究者查對儀軌後確認這是一套「所有寧瑪護法」的儀式，而中央正是特殊六臂 Mahākāla。第四世多吉札仁增於一六六九年的旅行記又記錄現場仍有北伏藏舍利、像與壁畫。這使北伏藏六臂成為目前最有歷史地理脈絡的寧瑪六臂證據之一。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2" type="button">來源</button></p>
+<p>圖像研究可先用以下方式辨別，避免把搜尋引擎找到的任何「六臂大黑天」唐卡都誤認為寧瑪版：</p>
+<div aria-label="六臂瑪哈嘎拉圖像初步辨識流程" class="diagram decision-diagram" role="figure">
+<div class="diagram-head">
+<div><span class="eyebrow">圖像辨識</span><h3 id="先看-面數-再查題記與傳承來源">先看「面數」，再查題記與傳承來源</h3></div>
+<p>這只是一層篩選；不能僅靠一面／三面就最終判定傳承。</p>
+</div>
+<div class="decision-tree">
+<div class="decision-root">看到「六臂 Mahākāla」圖像</div>
+<div class="decision-question">有幾個面？</div>
+<div class="decision-columns">
+<div class="decision-branch">
+<div class="branch-tag">三面六臂</div>
+<div class="decision-card">優先比對<br/><strong>北伏藏 Jangter</strong><br/>或《五十章 Mahākāla Tantra》系</div>
+</div>
+<div class="decision-branch">
+<div class="branch-tag">一面六臂</div>
+<div class="decision-question sub">有來源／題記嗎？</div>
+<div class="branch-grid">
+<div class="decision-card"><small>Chokgyur / Chokling Tersar<br/>Pema Magical Net</small><strong>秋吉林巴寧瑪伏藏系</strong></div>
+<div class="decision-card"><small>Shangpa / Khyungpo Naljor<br/>Swift-Acting Protector</small><strong>香巴六臂系</strong></div>
+<div class="decision-card warning"><small>無題記</small><strong>持物不足以安全判定</strong><span>應查背題、壇城眷屬與傳承來源</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>這一辨識法以 Himalayan Art 對六臂不同圖像家族的分類及北伏藏原典研究為基礎；其中北伏藏與《五十章續》皆有三面六臂型，而香巴與秋吉林巴常見型都是一面六臂，因此「一面／三面」只能做第一層篩選，不能單獨證明傳承。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search1、turn27view2" type="button">來源</button></p>
+<p>可公開查看的寧瑪圖像材料，以 Tsadra 的《大寶伏藏》壇城、tsakli 及 Dzongsar Mandala Collection 最有研究價值。Tsadra 說明其資料庫包含《大寶伏藏》全文 PDF、插圖、壇城與 tsakli；Dzongsar 壇城圖是由 Lodro Phuntsok 製作並曾於二〇一六年不丹《大寶伏藏》傳授中使用。<strong>公開可瀏覽不等於公共領域</strong>；本次所查頁面沒有足以把相關 RTZ 圖檔一概判定為 CC0／public domain 的授權聲明，因此正式出版重製前仍應向 Tsadra／權利人確認。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search8、turn20search18" type="button">來源</button> 香巴 Foundation 的相關頁面則明列 Creative Commons Attribution‑NonCommercial‑ShareAlike 3.0 授權，但那主要適合用作<strong>香巴比較材料</strong>，不能拿來冒充寧瑪六臂圖。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></p>
+<h2 id="結論-主要線上來源與進一步研究">結論、主要線上來源與進一步研究</h2>
+<p>綜合原典、伏藏目錄、傳記、寺院史與近年學術研究，可以得到一個比「六臂大黑天屬於哪一派？」更精確的答案：</p>
+<p><strong>寧瑪派確有真正獨立的六臂瑪哈嘎拉傳承，而且至少有兩個可文獻化的主要系統。</strong> 一是十四世紀北伏藏法藏中的<strong>三面六臂</strong>護法，後由勒丹多傑、多吉札仁增系統及 Pema Trinle 的灌頂儀軌承續；另一是十九世紀秋吉林巴 Chokling Tersar 的<strong>一面六臂智慧怙主</strong>，以「大悲尊事業化現」為明確教義定位，由秋吉林巴、蔣貢康楚及後來的 Chokling Tersar 網絡傳承至尼泊爾、印度、西方。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2、turn20search19、turn21search3、turn21search0" type="button">來源</button></p>
+<p><strong>最常見的一面黑色六臂 Mahākāla 則不能自動稱為「紅教六臂」。</strong> 它在歷史上最具代表性的傳承是香巴噶舉的速疾六臂智慧怙主；香巴資料甚至特別把秋吉林巴伏藏標為不經瓊波南覺系的例外。北伏藏三面六臂的存在，又提醒研究者：應把「六臂」看作一個跨文本的形態類別，而不是一尊具有唯一譜系的固定本尊。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2、turn22search1、turn27view2" type="button">來源</button></p>
+<p><strong>原典優先順序</strong>方面，若研究的是寧瑪傳承，應先查《大寶伏藏》卷 37 的四件秋吉林巴六臂文本，以及卷 38 的北伏藏 <em>byang gter mgon po bstan srung yongs rdzogs kyi dbang chog zab don snang ba</em>；其次才用 Toh 667、Toh 440 等大藏經密續研究印度—藏譯背景，再以香巴材料做跨派比較。這樣最能避免將後期香巴／格魯儀軌逆投射為「寧瑪原傳」。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3、turn21search0、turn21search6、turn21search2、turn20search19、turn20search0、turn20search1" type="button">來源</button></p>
+<p><strong>主要可點擊線上來源：</strong></p>
+<ul>
+<li><strong>Tsadra Foundation — Rinchen Terdzö《大寶伏藏》總資料庫</strong>：七十二冊藏文、Shechen Edition PDF、壇城、tsakli；研究寧瑪伏藏六臂最重要的第一站。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search8" type="button">來源</button></li>
+<li><strong>秋吉林巴六臂根本成就法，RTZ Vol. 37, Text 20</strong>：<em>thugs rje chen po’i phrin las kyi sprul pa ma hA kA la phyag drug pa’i sgrub thabs</em>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search3" type="button">來源</button></li>
+<li><strong>六臂智慧怙主付囑《加持鐵鉤》，RTZ Vol. 37, Text 21</strong>：蔣貢康楚撰、秋吉林巴伏藏源。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search0" type="button">來源</button></li>
+<li><strong>六臂外修供養、酬補、懺悔，RTZ Vol. 37, Text 22</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search6" type="button">來源</button></li>
+<li><strong>六臂外修朵瑪加持《成就明點》，RTZ Vol. 37, Text 23</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn21search2" type="button">來源</button></li>
+<li><strong>北伏藏六臂灌頂手冊，RTZ Vol. 38</strong>：Pema Trinle，<em>byang gter mgon po bstan srung yongs rdzogs kyi dbang chog zab don snang ba</em>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search19" type="button">來源</button></li>
+<li><strong>Revue d’Études Tibétaines 北伏藏研究</strong>：提供勒丹多傑在曲沃日修六臂護法、壇城中央為特殊六臂 Mahākāla 的關鍵學術證據。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn27view2" type="button">來源</button></li>
+<li><strong>84000 — Toh 667《吉祥瑪哈嘎拉續》</strong>：正式英譯及大藏經背景。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search0" type="button">來源</button></li>
+<li><strong>84000 — Toh 440《吉祥瑪哈嘎拉王續》</strong>：研究《五十章續》Mahākāla 系的重要原典。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search1" type="button">來源</button></li>
+<li><strong>Treasury of Lives — 秋吉林巴傳記</strong>：1829–1870、生平、師承、Neten／Tsikey Chokling 轉世系與文獻書目。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search0" type="button">來源</button></li>
+<li><strong>Treasury of Lives — 多吉札仁增轉世系</strong>：郭登欽波→勒丹多傑→Pema Trinle 等北伏藏制度史。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn23search5、turn23search1" type="button">來源</button></li>
+<li><strong>Himalayan Art Resources — Six-Armed Mahakala, All Traditions</strong>：最有用的跨傳統圖像類型比較，尤其是一面／三面六臂辨識。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn22search1" type="button">來源</button></li>
+<li><strong>Shangpa Foundation — Views &amp; Practices</strong>：理解香巴六臂主線以及其如何區別秋吉林巴伏藏的核心傳承資料。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn24search2" type="button">來源</button></li>
+<li><strong>Orgyen Dorje Den《大寶伏藏》灌頂記錄</strong>：具體列出秋吉林巴六臂 <em>bka’ gtad</em> 與朵瑪灌頂，是現代實際傳承的重要文件。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn25search4、turn25search2" type="button">來源</button></li>
+<li><strong>達賴喇嘛官方網站，2024 六臂瑪哈嘎拉隨許</strong>：適合研究香巴／格魯現代六臂傳承與公開圖像敘述。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn26search6" type="button">來源</button></li>
+</ul>
+<p>下一階段最值得做的研究，不是再蒐集網路上泛稱「六臂大黑天」的儀軌，而是進行<strong>版本校勘與傳承記錄重建</strong>：將 RTZ 卷 37 四件 Chokling 六臂文本逐頁與秋吉林巴《伏藏全集》（<em>Mchog gling gter gsar</em>）各版本比對；再把 RTZ 卷 38 的北伏藏灌頂本與《古伏藏北伏藏法集》（<em>sNga ’gyur byang gter chos skor phyogs bsgrigs</em>）以及多吉札寺法史對讀。其次應調查德格、宗薩、昔卿、尼泊爾 Ka‑Nying／Chokling 系與多吉札相關寺院所存的舊木刻、手抄本、壇城圖、tsakli 與護法殿實物，藉紙張、刻版、跋文與傳承題記判定不同儀軌的實際流通路線。現有數位資料已足以證明兩條寧瑪六臂線的存在，但<strong>完整的口傳次第、咒式異讀、手印序列與各寺院現行日課差異，仍需結合法本實頁及持法上師／寺院的田野訪談才能做出真正的「最完整版本」</strong>。<button aria-label="查看原研究來源代碼" class="citation" data-cite="turn20search8、turn21search4、turn27view2、turn19view2" type="button">來源</button></p>
+
+  </main>
+</div>
+<button class="icon-btn backtop" id="backTop" aria-label="回到頁首">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const root = document.documentElement;
+  const article = document.getElementById('article');
+  const toc = document.getElementById('toc');
+  const sidebar = document.getElementById('sidebar');
+  const menuBtn = document.getElementById('menuBtn');
+  const toast = document.getElementById('toast');
+
+  // TOC
+  const headings = [...article.querySelectorAll('h2')];
+  headings.forEach(h => {
+    const a = document.createElement('a'); a.href = '#' + h.id; a.textContent = h.textContent; a.dataset.target = h.id; toc.appendChild(a);
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        toc.querySelectorAll('a').forEach(a => a.classList.toggle('active', a.dataset.target === e.target.id));
+      }
+    });
+  }, {rootMargin:'-15% 0px -70% 0px', threshold:0});
+  headings.forEach(h => observer.observe(h));
+
+  // Reading progress + back to top.
+  const progressBar = document.getElementById('progressBar');
+  const backTop = document.getElementById('backTop');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = max > 0 ? scrollY / max * 100 : 0;
+    progressBar.style.width = p + '%';
+    backTop.classList.toggle('show', scrollY > 800);
+  };
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  backTop.addEventListener('click', () => scrollTo({top:0,behavior:'smooth'}));
+
+  // Theme.
+  const savedTheme = localStorage.getItem('research-theme');
+  if(savedTheme) root.dataset.theme = savedTheme;
+  else if(matchMedia('(prefers-color-scheme: dark)').matches) root.dataset.theme = 'dark';
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('research-theme', root.dataset.theme);
+  });
+
+  // Reader font size.
+  let fs = Number(localStorage.getItem('research-font-size') || 18);
+  const applyFont = () => { fs = Math.max(16, Math.min(22, fs)); root.style.setProperty('--article-size', fs + 'px'); localStorage.setItem('research-font-size', fs); };
+  applyFont();
+  document.getElementById('fontUp').addEventListener('click', () => {fs += 1; applyFont();});
+  document.getElementById('fontDown').addEventListener('click', () => {fs -= 1; applyFont();});
+
+  // Mobile TOC.
+  menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+  toc.addEventListener('click', () => sidebar.classList.remove('open'));
+
+  // Citation code popover.
+  let toastTimer;
+  article.addEventListener('click', e => {
+    const c = e.target.closest('.citation');
+    if(!c) return;
+    clearTimeout(toastTimer);
+    toast.textContent = '原研究來源代碼：' + c.dataset.cite;
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 4200);
+  });
+
+  // Lightweight contextual search: highlight matching reading blocks without rewriting text.
+  const searchInput = document.getElementById('searchInput');
+  const searchCount = document.getElementById('searchCount');
+  const blocks = [...article.querySelectorAll('p, li, td, blockquote, .node, .decision-card')];
+  const runSearch = () => {
+    const q = searchInput.value.trim().toLocaleLowerCase('zh-Hant');
+    let n = 0, first = null;
+    blocks.forEach(b => {
+      b.classList.remove('search-hit');
+      if(q && b.textContent.toLocaleLowerCase('zh-Hant').includes(q)) { b.classList.add('search-hit'); n++; if(!first) first=b; }
+    });
+    searchCount.textContent = q ? `找到 ${n} 個段落` : '按 / 可快速搜尋';
+    searchInput.dataset.first = first ? 'yes' : '';
+    searchInput._firstMatch = first;
+  };
+  searchInput.addEventListener('input', runSearch);
+  searchInput.addEventListener('keydown', e => { if(e.key==='Enter' && searchInput._firstMatch) searchInput._firstMatch.scrollIntoView({behavior:'smooth',block:'center'}); });
+  addEventListener('keydown', e => { if(e.key==='/' && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); if(innerWidth<920) sidebar.classList.add('open'); searchInput.focus(); } if(e.key==='Escape') { sidebar.classList.remove('open'); searchInput.blur(); } });
+})();
+</script>
+</body>
+</html>
