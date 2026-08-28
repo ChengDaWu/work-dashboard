@@ -837,6 +837,263 @@ h1 {
     width: 100%;
   }
 }
+
+
+/* =========================================================
+   TRUE FLUID / RESPONSIVE OVERRIDES
+   Fixes iOS Safari text inflation, fixed date-card sizing,
+   unwanted date wrapping, and title wrapping on narrow screens.
+   ========================================================= */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-width: 0;
+}
+
+.page {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline:
+    max(clamp(14px, 4vw, 42px), env(safe-area-inset-left))
+    max(clamp(14px, 4vw, 42px), env(safe-area-inset-right));
+}
+
+/* Header: fluid two-column on wide screens, naturally stacked on phones. */
+.archive-top {
+  width: 100%;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: clamp(18px, 4.5vw, 48px);
+}
+
+/* No hard width. The card follows its contents and available viewport. */
+.date-card {
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  padding:
+    clamp(14px, 2.2vw, 20px)
+    clamp(15px, 2.6vw, 22px)
+    clamp(13px, 2.2vw, 18px);
+}
+
+.date-card .year {
+  font-size: clamp(10px, 1.25vw, 12px);
+  letter-spacing: clamp(.12em, .5vw, .20em);
+  white-space: nowrap;
+}
+
+/* Critical: keep the whole date on one line. */
+.date-card .date {
+  font-size: clamp(22px, 3.2vw, 30px);
+  line-height: 1.15;
+  letter-spacing: clamp(.03em, .35vw, .08em);
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.date-card::after {
+  width: clamp(36px, 4vw, 44px);
+  height: clamp(36px, 4vw, 44px);
+  right: clamp(9px, 1.2vw, 12px);
+  top: clamp(8px, 1vw, 10px);
+}
+
+.title-wrap {
+  width: 100%;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: clamp(10px, 1.15vw, 11px);
+  line-height: 1.8;
+  letter-spacing: clamp(.14em, .65vw, .24em);
+}
+
+/* Keep four Chinese characters together; scale instead of wrapping. */
+h1 {
+  width: 100%;
+  max-width: 100%;
+  font-size: clamp(42px, 7vw, 78px);
+  line-height: 1.12;
+  letter-spacing: clamp(.045em, .55vw, .12em);
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.subtitle {
+  font-size: clamp(12px, 1.35vw, 14px);
+  letter-spacing: clamp(.08em, .45vw, .16em);
+}
+
+/* Content remains fluid instead of using a fixed column width. */
+.content-shell {
+  width: 100%;
+}
+
+.entry-block {
+  width: min(100%, 920px);
+  grid-template-columns: clamp(38px, 6vw, 74px) minmax(0, 1fr);
+  gap: clamp(12px, 3vw, 28px);
+}
+
+.section-body {
+  width: 100%;
+  max-width: none;
+}
+
+.section-body p {
+  font-size: clamp(16.5px, 1.65vw, 19px);
+  line-height: clamp(1.82, 1.2vw + 1.5, 2.05);
+}
+
+/* Photo scales with its actual container. */
+.inline-photo,
+.photo-frame {
+  width: 100%;
+  max-width: 620px;
+}
+
+.inline-photo {
+  margin-inline: auto;
+}
+
+.photo-frame img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Tablet / phone: stack the header and remove all old hard dimensions. */
+@media (max-width: 720px) {
+  .page {
+    padding-inline:
+      max(clamp(12px, 4.5vw, 24px), env(safe-area-inset-left))
+      max(clamp(12px, 4.5vw, 24px), env(safe-area-inset-right));
+  }
+
+  .archive-top {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(20px, 5vw, 28px);
+    padding-block: clamp(16px, 4vw, 24px);
+  }
+
+  .date-card {
+    /* Overrides previous width: 205px / 100% rules. */
+    width: fit-content !important;
+    max-width: 100%;
+  }
+
+  .date-card .date {
+    /* Responsive to phone width while staying one line. */
+    font-size: clamp(21px, 7vw, 28px);
+  }
+
+  .date-card .year {
+    font-size: clamp(10px, 3vw, 12px);
+  }
+
+  .title-wrap {
+    width: 100%;
+  }
+
+  h1 {
+    /*
+      15vw keeps the four-character title large but guarantees it fits.
+      The max prevents it becoming oversized on tablets.
+    */
+    font-size: clamp(38px, 15vw, 66px);
+    letter-spacing: clamp(.025em, 1vw, .075em);
+    white-space: nowrap;
+  }
+
+  .eyebrow {
+    font-size: clamp(9.5px, 2.8vw, 11px);
+    letter-spacing: clamp(.12em, 1.7vw, .22em);
+  }
+
+  .subtitle {
+    font-size: clamp(11.5px, 3.2vw, 13px);
+    line-height: 1.75;
+  }
+
+  .entry-block {
+    width: 100%;
+    display: block;
+    padding-block: clamp(27px, 7vw, 38px);
+  }
+
+  .section-mark {
+    margin-bottom: 7px;
+  }
+
+  .section-body h2 {
+    font-size: clamp(21px, 5.7vw, 24px);
+  }
+
+  .section-body p {
+    font-size: clamp(16px, 4.35vw, 18px);
+    line-height: 1.95;
+  }
+
+  #s4 .section-body,
+  #s6 .section-body {
+    padding:
+      clamp(18px, 5vw, 24px)
+      clamp(15px, 4.5vw, 22px);
+  }
+
+  #s6 .section-body {
+    padding-bottom: clamp(50px, 13vw, 64px);
+  }
+
+  .photo-frame {
+    padding:
+      clamp(8px, 2.4vw, 12px)
+      clamp(8px, 2.4vw, 12px)
+      clamp(36px, 10vw, 44px);
+  }
+
+  .closing {
+    width: 100%;
+  }
+}
+
+/* Very narrow phones: continue scaling, never force fixed widths. */
+@media (max-width: 390px) {
+  .date-card {
+    width: fit-content !important;
+  }
+
+  .date-card .date {
+    font-size: clamp(20px, 6.5vw, 25px);
+  }
+
+  h1 {
+    font-size: clamp(35px, 14.5vw, 56px);
+  }
+}
+
+/* Landscape phones should use available horizontal space efficiently. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .archive-top {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: end;
+  }
+
+  h1 {
+    font-size: clamp(38px, 8vw, 60px);
+  }
+}
 </style>
 </head>
 <body>
