@@ -1341,6 +1341,69 @@ body {
     display: none !important;
   }
 }
+
+
+/* =========================================================
+   Full-width paragraph reflow fix
+   The original `text-wrap: pretty` can intentionally wrap a line
+   before it reaches the right edge. For long-form Chinese reading,
+   use normal wrapping so each line fills the available width.
+   ========================================================= */
+
+.section-body,
+.section-body p {
+  box-sizing: border-box !important;
+}
+
+.section-body {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+.section-body p {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+
+  /* Critical fix: do not use "pretty" wrapping. */
+  text-wrap: wrap !important;
+  text-wrap-style: auto !important;
+
+  /* Natural Traditional-Chinese line breaking. */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  line-break: strict !important;
+
+  text-align: left !important;
+}
+
+/* On phones, let normal article sections use essentially the full page width. */
+@media (max-width: 720px) {
+  .content-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .entry-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Ordinary sections should not inherit any hidden reading-column cap. */
+  .entry-block:not(#s4):not(#s6) .section-body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .entry-block:not(#s4):not(#s6) .section-body p {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
 </style>
 </head>
 <body>
