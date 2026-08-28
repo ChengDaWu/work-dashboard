@@ -3,7 +3,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" name="viewport"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="2026/08/22 念佛法門・典藏日記" name="description"/>
 <title>2026/08/22｜念佛法門・典藏日記</title>
 <style>
@@ -1098,11 +1098,7 @@ h1 {
 
 /* ===== iPhone Safari zoom + narrow-screen corrections ===== */
 
-/* Allow normal browser pinch-zoom behavior. */
-html,
-body {
-  touch-action: pan-x pan-y;
-}
+
 
 /* Do not globally hide horizontal overflow: it can interfere with zoom/pan
    and can also make clipped content look "fixed". */
@@ -1175,6 +1171,51 @@ h1 {
 .date-card .date {
   white-space: nowrap !important;
   font-size: clamp(20px, 6.2vw, 28px) !important;
+}
+
+
+/* ===== iPhone / iOS Chrome pinch-zoom fix =====
+   Important: do NOT use touch-action: pan-x pan-y here;
+   that prevents two-finger pinch zoom on WebKit browsers.
+*/
+html,
+body,
+main,
+.page {
+  touch-action: auto !important;
+}
+
+/* Keep browser-native zoom behavior unrestricted. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Avoid layout clipping while zoomed. */
+body {
+  max-width: none !important;
+}
+
+.page {
+  min-width: 0 !important;
+}
+
+/* Prevent the decorative fixed controls from intercepting gestures
+   outside their actual button hit areas. */
+.tools {
+  pointer-events: none;
+}
+.tools .tool-btn {
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+/* Photo remains pinch-zoomable at page level; click-to-open still works. */
+.photo-frame,
+.photo-frame img,
+.lightbox,
+.lightbox img {
+  touch-action: auto !important;
 }
 </style>
 </head>
