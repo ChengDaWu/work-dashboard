@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#191712">
+<meta name="description" content="阿彌陀佛四十八大願：依《佛說無量壽經》四十八願系統整理，區分經文義旨、後世願名與導讀按語。">
+<title>阿彌陀佛四十八大願｜淨土經典圖文導讀</title>
+<link rel="preconnect" href="https://images.metmuseum.org">
+<style>
+:root{
+  --ink:#242019; --muted:#766e62; --paper:#f3efe6; --paper2:#eae3d6;
+  --cinnabar:#873e31; --gold:#aa8b57; --line:rgba(73,61,45,.20);
+  --serif:"Noto Serif TC","Songti TC","PMingLiU","MingLiU",serif;
+  --kai:"BiauKai","DFKai-SB","KaiTi TC","STKaiti",var(--serif);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{margin:0;color:var(--ink);font-family:var(--serif);line-height:1.9;letter-spacing:.025em;background:
+  radial-gradient(circle at 25% 5%,rgba(170,139,87,.08),transparent 28rem),
+  repeating-linear-gradient(0deg,rgba(73,61,45,.014) 0,rgba(73,61,45,.014) 1px,transparent 1px,transparent 4px),
+  var(--paper)}
+a{color:inherit} button,input{font:inherit}
+img{display:block;max-width:100%}
+::selection{background:rgba(135,62,49,.18)}
+
+/* Mobile-first hero */
+.hero{min-height:100svh;position:relative;background:#17140f;color:#f5efe4;overflow:hidden}
+.hero-media{position:absolute;inset:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:50% 34%;filter:saturate(.74) contrast(1.03) brightness(.72)}
+.hero-media::after{content:"";position:absolute;inset:0;background:
+ linear-gradient(180deg,rgba(15,12,9,.12) 0%,rgba(15,12,9,.10) 34%,rgba(15,12,9,.82) 83%,#17140f 100%),
+ linear-gradient(90deg,rgba(15,12,9,.28),transparent 52%,rgba(15,12,9,.08))}
+.hero-inner{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:calc(24px + env(safe-area-inset-top)) 22px calc(30px + env(safe-area-inset-bottom))}
+.kicker{display:flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.24em;color:#ded1bc;margin-bottom:22px}
+.kicker::before{content:"";width:28px;height:1px;background:var(--gold)}
+.hero-title{margin:0;font-family:var(--kai);font-size:clamp(3rem,14vw,5.2rem);font-weight:500;line-height:1.05;letter-spacing:.08em;text-wrap:balance}
+.hero-sub{max-width:31em;margin:18px 0 0;font-size:.96rem;color:#ddd2c2;line-height:1.9}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:24px;font-size:.74rem;color:#bfb2a0}
+.scroll-cue{position:absolute;right:18px;bottom:28px;z-index:3;writing-mode:vertical-rl;font-size:.68rem;letter-spacing:.24em;color:#cbbda8;display:flex;align-items:center;gap:9px}
+.scroll-cue::after{content:"";display:block;width:1px;height:44px;background:linear-gradient(var(--gold),transparent)}
+
+/* sticky top nav */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:54px;padding:0 16px;background:rgba(243,239,230,.90);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{font-family:var(--kai);font-size:.95rem;letter-spacing:.1em;text-decoration:none}
+.nav-actions{display:flex;gap:8px}
+.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.36);color:var(--ink);border-radius:999px;min-width:38px;height:38px;padding:0 12px;display:grid;place-items:center;cursor:pointer;font-size:.78rem}
+
+main{overflow:hidden}
+.shell{width:min(100% - 36px,780px);margin-inline:auto}
+
+/* editorial intro */
+.intro{padding:72px 0 76px}
+.eyebrow{font-size:.72rem;letter-spacing:.26em;color:var(--cinnabar);margin-bottom:14px}
+.display{font-family:var(--kai);font-size:clamp(2rem,8vw,3.4rem);line-height:1.38;font-weight:500;margin:0 0 24px;letter-spacing:.05em}
+.lede{font-size:1.04rem;line-height:2.05;margin:0;color:#3f3930}
+.lede::first-letter{font-family:var(--kai);font-size:3.3em;float:left;line-height:.76;margin:.16em .12em 0 0;color:var(--cinnabar)}
+.fine-note{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted);line-height:1.85}
+
+/* art plate */
+.plate{margin:0;background:#1b1812;color:#eee5d7}
+.plate-image{height:74svh;min-height:500px;max-height:820px;overflow:hidden}
+.plate-image img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:saturate(.72) brightness(.86)}
+.plate-caption{padding:17px 18px 22px;display:grid;gap:5px;font-size:.72rem;color:#bbb09f;border-top:1px solid rgba(255,255,255,.08)}
+.plate-caption strong{color:#eee4d6;font-weight:500;font-size:.86rem}
+
+/* structure section */
+.structure{padding:74px 0}
+.structure-grid{display:grid;gap:22px;margin-top:30px}
+.structure-item{position:relative;padding:0 0 22px 42px;border-bottom:1px solid var(--line)}
+.structure-no{position:absolute;left:0;top:-8px;font-family:var(--kai);font-size:1.65rem;color:var(--gold)}
+.structure-item h3{font-size:1.02rem;margin:0 0 7px;font-weight:650}
+.structure-item p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.8}
+
+/* chapter & vows */
+.vows-wrap{border-top:1px solid var(--line)}
+.chapter{padding:70px 0 20px;position:relative}
+.chapter-mark{font-family:var(--kai);font-size:6rem;line-height:.8;color:rgba(170,139,87,.14);position:absolute;right:-8px;top:48px;pointer-events:none}
+.chapter .eyebrow{margin-bottom:8px}
+.chapter h2{font-family:var(--kai);font-weight:500;font-size:clamp(2rem,9vw,3.2rem);line-height:1.3;margin:0 0 14px;letter-spacing:.06em}
+.chapter p{margin:0;max-width:36em;color:var(--muted);font-size:.9rem}
+
+.vow{border-top:1px solid var(--line);scroll-margin-top:70px}
+.vow:last-child{border-bottom:1px solid var(--line)}
+.vow summary{list-style:none;display:grid;grid-template-columns:44px 1fr 28px;gap:10px;align-items:start;padding:20px 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.vow summary::-webkit-details-marker{display:none}
+.vow-no{font-size:.72rem;color:var(--cinnabar);padding-top:5px;letter-spacing:.03em}
+.vow-head h3{font-size:1.12rem;line-height:1.5;margin:0 0 4px;font-weight:650;letter-spacing:.035em}
+.vow-head p{margin:0;color:var(--muted);font-size:.82rem;line-height:1.6}
+.vow-plus{width:26px;height:26px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:1rem;color:var(--gold);transition:.25s ease}
+.vow[open] .vow-plus{transform:rotate(45deg);border-color:rgba(135,62,49,.35);color:var(--cinnabar)}
+.vow-body{padding:0 0 27px 54px;animation:reveal .24s ease}
+@keyframes reveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.vow-body p{margin:.55em 0;font-size:.94rem;line-height:1.95}
+.vow-body strong{font-weight:650;color:var(--cinnabar)}
+.vow-body .scholia{color:#5f574c}
+.vow-body .names{font-size:.8rem;color:var(--muted);margin-top:12px}
+.vow.featured{position:relative}
+.vow.featured::before{content:"本願";position:absolute;left:-14px;top:20px;transform:translateX(-100%);writing-mode:vertical-rl;background:var(--cinnabar);color:#f6eee2;font-size:.63rem;letter-spacing:.18em;padding:7px 4px;display:none}
+
+/* quote interlude */
+.interlude{margin:72px 0;background:#272118;color:#eee5d8;padding:58px 0;position:relative;overflow:hidden}
+.interlude::before{content:"願";position:absolute;right:-.08em;top:-.12em;font-family:var(--kai);font-size:16rem;color:rgba(255,255,255,.035);line-height:1}
+.interlude blockquote{margin:0;font-family:var(--kai);font-size:clamp(1.5rem,7vw,2.2rem);line-height:1.8;letter-spacing:.06em;position:relative}
+.interlude cite{display:block;margin-top:18px;font-style:normal;color:#bfae95;font-size:.75rem;letter-spacing:.08em}
+
+/* sources */
+.sources{padding:78px 0 110px}
+.sources-list{margin:28px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.sources-list li{padding:17px 0;border-bottom:1px solid var(--line);font-size:.86rem;color:#4b443a}
+.sources-list a{color:var(--cinnabar);text-underline-offset:3px}
+.disclaimer{margin-top:30px;color:var(--muted);font-size:.78rem;line-height:1.9}
+
+/* drawer */
+.drawer{position:fixed;inset:0;z-index:50;pointer-events:none}
+.drawer.open{pointer-events:auto}
+.drawer-backdrop{position:absolute;inset:0;background:rgba(20,17,12,.54);opacity:0;transition:.28s}
+.drawer.open .drawer-backdrop{opacity:1}
+.drawer-panel{position:absolute;left:0;right:0;bottom:0;max-height:min(84svh,760px);background:#f5f0e6;border-radius:22px 22px 0 0;transform:translateY(102%);transition:.32s cubic-bezier(.2,.7,.2,1);box-shadow:0 -18px 60px rgba(0,0,0,.18);padding-bottom:env(safe-area-inset-bottom)}
+.drawer.open .drawer-panel{transform:none}
+.drawer-grip{width:42px;height:4px;border-radius:999px;background:#cfc5b5;margin:10px auto 4px}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 12px;border-bottom:1px solid var(--line)}
+.drawer-head h2{font-family:var(--kai);font-size:1.12rem;margin:0;font-weight:500}
+.drawer-body{padding:14px 18px 30px;overflow:auto;max-height:calc(84svh - 64px)}
+.search{position:relative;margin-bottom:15px}
+.search input{width:100%;height:44px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.45);padding:0 16px;outline:none;color:var(--ink)}
+.search input:focus{border-color:rgba(135,62,49,.45)}
+.index-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.index-grid a{background:#f5f0e6;text-decoration:none;padding:11px 10px;font-size:.76rem;line-height:1.45;min-height:58px;display:flex;align-items:center;gap:7px}
+.index-grid b{color:var(--cinnabar);font-size:.66rem;font-weight:500;min-width:21px}
+.index-grid a[hidden]{display:none}
+.drawer-tools{display:flex;gap:8px;margin-bottom:13px}
+.drawer-tools button{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:7px 11px;font-size:.72rem}
+
+/* footer */
+footer{background:#18150f;color:#c9bdab;text-align:center;padding:44px 22px calc(44px + env(safe-area-inset-bottom));font-size:.8rem}
+footer .nianfo{font-family:var(--kai);font-size:1.35rem;color:#eee5d8;letter-spacing:.16em;margin-bottom:8px}
+
+@media(min-width:720px){
+ .hero-inner{padding:50px 7vw 48px}.hero-title{max-width:8em;font-size:5.6rem}.hero-sub{font-size:1rem}
+ .shell{width:min(100% - 80px,820px)}
+ .plate{width:min(calc(100% - 80px),980px);margin-inline:auto}.plate-image{height:820px}
+ .structure-grid{grid-template-columns:repeat(3,1fr);gap:26px}.structure-item{padding-left:0;padding-top:48px}.structure-no{left:0;top:0}
+ .vow summary{grid-template-columns:64px 1fr 32px;padding:22px 0}.vow-body{padding-left:74px;max-width:44em}
+ .vow.featured::before{display:block}
+ .index-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(min-width:1060px){
+ .hero{min-height:92vh}.hero-media{left:42%;}.hero-media::after{background:linear-gradient(90deg,#17140f 0%,rgba(23,20,15,.92) 18%,rgba(23,20,15,.15) 64%),linear-gradient(180deg,transparent 65%,#17140f 100%)}
+ .hero-inner{justify-content:center;width:48%;padding-left:8vw}.scroll-cue{right:30px}
+ .topbar{padding-inline:30px}
+ .chapter-mark{right:-100px;font-size:9rem}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.drawer-panel,.drawer-backdrop,.vow-plus{transition:none}.vow-body{animation:none}}
+</style>
+</head>
+<body>
+<header class="hero" id="top">
+  <div class="hero-media">
+    <img src="https://images.metmuseum.org/CRDImages/as/web-large/DP-15580-029.jpg" alt="南宋晚期阿彌陀佛接引圖，絹本設色描金" fetchpriority="high">
+  </div>
+  <div class="hero-inner">
+    <div class="kicker">淨土經典・圖文導讀</div>
+    <h1 class="hero-title">阿彌陀佛<br>四十八大願</h1>
+    <p class="hero-sub">依《佛說無量壽經》四十八願系統整理。願名、經文義旨與後世詮釋分層閱讀，避免以方便說法取代經典本義。</p>
+    <div class="hero-meta"><span>主本：T12 no.360</span><span>手機優先 RWD</span><span>古畫：Public Domain</span></div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">向下閱讀</div>
+</header>
+
+<nav class="topbar" aria-label="頁面導覽">
+  <a class="brand" href="#top">四十八願</a>
+  <div class="nav-actions">
+    <button class="icon-btn" id="openIndex" aria-haspopup="dialog" aria-controls="drawer">願目</button>
+    <a class="icon-btn" href="#sources" style="text-decoration:none">典據</a>
+  </div>
+</nav>
+
+<main>
+<section class="intro shell" id="about">
+  <div class="eyebrow">卷首・何謂四十八大願</div>
+  <h2 class="display">法藏比丘，以願建立一個令眾生不退成佛的世界。</h2>
+  <p class="lede">所謂「四十八大願」，主要指《佛說無量壽經》卷上所載法藏比丘於世自在王佛前所發之誓願。法藏後成佛，即阿彌陀佛。四十八願不是四十八條孤立的神奇福利，而是一套完整的佛身、佛土與攝眾生之願行結構。</p>
+  <div class="fine-note">本頁使用的「無三惡趣願、念佛往生願、來迎引接願……」等願名，屬後世為方便研讀所立的通行名稱；《無量壽經》願文本身並沒有這四十八個小標題。不同祖師與工具書，願名亦可能略有差異。</div>
+</section>
+
+<figure class="plate">
+  <div class="plate-image"><img src="https://images.metmuseum.org/CRDImages/as/web-large/DP-15580-031.jpg" alt="十三世紀高麗阿彌陀三尊圖" loading="lazy"></div>
+  <figcaption class="plate-caption"><strong>阿彌陀三尊圖｜Amitabha triad</strong><span>高麗王朝，約十三世紀；絹本設色描金。The Metropolitan Museum of Art，Public Domain。</span></figcaption>
+</figure>
+
+<section class="structure shell">
+  <div class="eyebrow">讀法・先看結構，再讀願文</div>
+  <h2 class="display">四十八願，可以先理解為三個層次。</h2>
+  <div class="structure-grid">
+    <div class="structure-item"><span class="structure-no">一</span><h3>成就何等佛身</h3><p>光明、壽命、名號與諸佛稱揚，構成阿彌陀佛之佛身功德。</p></div>
+    <div class="structure-item"><span class="structure-no">二</span><h3>建立何等佛土</h3><p>國無惡趣、清淨莊嚴、自然聞法，使極樂成為菩薩修道之增上環境。</p></div>
+    <div class="structure-item"><span class="structure-no">三</span><h3>如何攝受眾生</h3><p>由聞名、信願、往生，到不退、法忍與成佛，形成完整的修道方向。</p></div>
+  </div>
+</section>
+
+<section class="vows-wrap" id="vows">
+  <div id="vowContent"></div>
+</section>
+
+<section class="interlude">
+  <div class="shell">
+    <blockquote>四十八願之所歸，不在逸樂，而在使眾生得離惡緣、常聞正法、住不退轉，終至佛果。</blockquote>
+    <cite>— 本頁依願文結構所作之導讀總結</cite>
+  </div>
+</section>
+
+<section class="sources shell" id="sources">
+  <div class="eyebrow">典據・版本與圖像來源</div>
+  <h2 class="display">把經文、願名與祖師判釋分開，是閱讀的第一步。</h2>
+  <ul class="sources-list">
+    <li><strong>主要經典：</strong>《佛說無量壽經》卷上，《大正新脩大藏經》T12, no.360。傳統題署「曹魏康僧鎧譯」；現代佛典學對實際譯者另有研究討論。</li>
+    <li><strong>電子佛典：</strong><a href="https://cbetaonline.dila.edu.tw/" target="_blank" rel="noopener">CBETA Online 電子佛典</a>（可檢索 T0360）。</li>
+    <li><strong>異譯參照：</strong>《大寶積經・無量壽如來會》等。不同漢譯、梵本與藏譯系統，願數與措辭並不完全一致，因此「四十八」不宜說成所有傳本共同且唯一的形式。</li>
+    <li><strong>古典註疏：</strong>淨影慧遠《無量壽經義疏》、吉藏《無量壽經義疏》、元曉《兩卷無量壽經宗要》等；涉及第十八願時，另須辨析善導等淨土祖師之宗派判釋。</li>
+    <li><strong>主視覺：</strong><a href="https://www.metmuseum.org/art/collection/search/40448" target="_blank" rel="noopener">Buddha Amitabha Descending from His Pure Land</a>，中國南宋晚期，The Met，Public Domain。</li>
+    <li><strong>章節圖像：</strong><a href="https://www.metmuseum.org/art/collection/search/39882" target="_blank" rel="noopener">Amitabha triad</a>，高麗王朝約十三世紀，The Met，Public Domain。</li>
+  </ul>
+  <p class="disclaimer">本頁屬佛典導讀而非校勘本。正式學術引用、講義出版或涉及「十念」「五逆誹謗正法」「三法忍」等爭議問題時，應進一步核對原典、異譯及歷代註疏，而不僅依通行願名或單一宗派解說。</p>
+</section>
+</main>
+
+<footer><div class="nianfo">南無阿彌陀佛</div><div>願以聞法因緣，正解其義，發菩提心。</div></footer>
+
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="四十八願目錄" aria-hidden="true">
+  <div class="drawer-backdrop" data-close></div>
+  <div class="drawer-panel">
+    <div class="drawer-grip"></div>
+    <div class="drawer-head"><h2>四十八願目錄</h2><button class="icon-btn" data-close aria-label="關閉目錄">關閉</button></div>
+    <div class="drawer-body">
+      <div class="search"><input id="searchInput" type="search" inputmode="search" placeholder="搜尋願名，例如：光明、往生、不退"></div>
+      <div class="drawer-tools"><button id="expandAll">全部展開</button><button id="collapseAll">全部收合</button></div>
+      <div class="index-grid" id="indexGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const chapters = [
+ {mark:'壹', range:'第一至第十一願', title:'佛土清淨與往生者之基本德相', desc:'從國無惡趣，到神通、離我執與住正定聚；先建立「不再退墮」的修道基礎。'},
+ {mark:'貳', range:'第十二至第二十願', title:'佛身功德、名號與往生要門', desc:'光明無量、壽命無量、諸佛稱名，以及最常被淨土教義討論的第十八、十九、二十願。'},
+ {mark:'參', range:'第二十一至第三十願', title:'菩薩相好、供佛、聞法與智慧', desc:'極樂菩薩不是停止修行，而是具足廣供諸佛、受持經法與說法辯才的條件。'},
+ {mark:'肆', range:'第三十一至第四十願', title:'淨土莊嚴與光明名號之利益', desc:'國土如鏡、眾寶妙香、觸光柔軟，並涉及聞名得忍及古代佛教性別語境等問題。'},
+ {mark:'伍', range:'第四十一至第四十八願', title:'他方菩薩之增上利益與不退', desc:'由諸根具足、三昧供佛，到隨意聞法、不退轉與法忍，以菩薩道的深入作結。'}
+];
+const vows = [
+[1,'無三惡趣願','極樂世界中，無地獄、餓鬼、畜生三惡趣。','若我成佛，國中不得有三惡道存在。','此願是佛國清淨最基本的陳述之一。它說的是「佛土中無惡趣」；與第二願「已往生者不再墮入惡趣」應分開理解。',''],
+[2,'不更惡趣願','往生彼國者，不再退墮三惡趣。','生彼國者，即使往詣他方，亦不再墮入惡趣。','第一願著重國土本身沒有惡道；第二願著重往生者的生命進程不再退墮。',''],
+[3,'悉皆金色願','國中人天，身皆金色。','往生彼國者，身色皆同金色。','「金色」是佛典中莊嚴身的宗教語彙，不能以現代膚色概念理解。',''],
+[4,'無有好醜願','形貌莊嚴平等，無尊卑美醜差別。','彼國眾生形色端嚴，不因天、人等差別而有高下。','其意義不只是「人人漂亮」，而在取消由形貌而生的尊卑比較。',''],
+[5,'宿命智通願','往生者得知宿世因緣。','彼國人天具宿命智，能知過去世。','宿命智屬傳統六神通脈絡，是修道智慧能力，不等於民間算命。',''],
+[6,'天眼智通願','能見廣大十方佛國。','往生者具足天眼，所見廣遠。','在菩薩道脈絡中，其功能與見佛國、觀眾生、修行佛道相連。',''],
+[7,'天耳智通願','能聞十方諸佛說法。','彼國眾生具天耳，得聞諸佛音聲與教法。','核心是「聞法無礙」，不是單純超常聽力。',''],
+[8,'他心智通願','能知他方眾生心念。','往生者具他心智，知諸眾生心之所念。','依大乘語境，主要可理解為應機教化眾生之德用。',''],
+[9,'神足自在願','能於極短時間遍至十方佛國。','往生者具神足自在，迅速遍詣諸佛世界。','此願與第二十三願「供養諸佛」相互呼應。',''],
+[10,'不貪計身願','不起我想，不貪著自身。','彼國眾生不起想念、貪計自身。','此願重點是離我執、身見。若直接稱「速得漏盡願」，屬較強的後世義釋，並非最貼近願文字面的名稱。','異名：無我想願；部分願名系統另作漏盡相關名稱。'],
+[11,'住正定聚願','往生者皆住正定聚，必至滅度。','國中人天住正定聚，決定趣向涅槃與佛果。','這一願顯示：往生不是終點，而是進入確定不退、必成佛道的修學狀態。',''],
+[12,'光明無量願','佛光無量，普照十方。','若我成佛，光明無量，照諸佛國。','「無量光」是阿彌陀佛名義與佛身功德的重要經典根據。',''],
+[13,'壽命無量願','佛壽無量，不可稱計。','若我成佛，壽命無量。','「無量壽」名號的重要經典根據之一。',''],
+[14,'聲聞無數願','彼國聲聞弟子不可計數。','國中聲聞眾多至不可稱計。','此處「聲聞」須配合全經菩薩、不退、成佛等脈絡理解，不宜孤立成小乘終極果位之爭。',''],
+[15,'國中人天壽命無量願','往生者壽命亦長遠無量。','彼國人天壽命無量；隨本願示現長短者除外。','第十三願說佛壽無量；第十五願說國中眾生壽命無量。','通行簡稱亦見「眷屬長壽願」。'],
+[16,'無諸不善願','彼國乃至不聞不善之名。','國中眾生不聞諸不善名。','語氣很強：極樂不只是「惡事少」，而是修行環境不提供增長惡法的條件。',''],
+[17,'諸佛稱揚願','十方諸佛皆稱揚阿彌陀佛名號。','十方世界無量諸佛，皆咨嗟稱我名。','由「佛成佛—諸佛稱名—眾生聞名」形成教化鏈；因此「聞名」本身被納入本願結構。',''],
+[18,'念佛往生願','至心信樂，欲生我國，乃至十念。','十方眾生至心信樂，欲生我國，乃至十念；願文並有「唯除五逆，誹謗正法」。','此願是淨土教義最重要的文本之一，但不可只截取「乃至十念」。願文還有「至心、信樂、欲生我國」。至於「十念」如何理解，以及排除語如何與其他淨土經典會通，歷代已有多種判釋。','異名：十念往生願；「本願、王本願、願王」等多屬後代宗派尊稱。'],
+[19,'來迎引接願','發菩提心、修諸功德、願生者，臨終佛與大眾現前。','十方眾生發菩提心、修諸功德，至心發願欲生我國，臨壽終時佛與大眾現其人前。','「來迎引接願」雖是後世願名，但確實準確抓到此願的臨終現前內容。',''],
+[20,'聞名繫念定生願','聞名、繫念、植德、迴向而願生彼國。','聞我名號，繫念我國，植眾德本，至心迴向，欲生我國。','第十八、十九、二十願不可視為完全重複：三者的語彙、條件與側重均不同。','亦見「繫念定生願」等名稱。'],
+[21,'具足三十二相願','往生者具足大人三十二相。','彼國人天具足大丈夫相。','是佛教「相好」傳統的宗教表述，不宜簡化為世俗美貌。',''],
+[22,'必至補處願','極樂菩薩終至一生補處。','國中菩薩究竟皆至一生補處；隨其本願教化他方者除外。','同時包含「必定成佛」與「菩薩可依願自在度生」兩層。',''],
+[23,'供養諸佛願','能於一食頃遍詣十方供佛。','彼國菩薩承佛威神，於短時遍至十方供養諸佛。','顯示極樂不是停止行動的享樂世界，而是廣修菩薩行的道場。',''],
+[24,'供具如意願','供佛所需資具，隨意自然具足。','菩薩供養諸佛所需諸物，隨念而現。','目的在成就供佛修福，而非物質享受本身。',''],
+[25,'說一切智願','菩薩說法，契入佛之一切智。','國中菩薩能演說法義，順入一切智。','較精確的理解是「所說契合佛智」，而非籠統說成「說法完全等同佛」。',''],
+[26,'那羅延身願','菩薩得堅固大力之身。','國中菩薩皆得那羅延身。','「那羅延」是古印度表堅固大力的文化語彙；後世也有「金剛身願」之稱。',''],
+[27,'所須嚴淨願','國中萬物嚴淨微妙，不可稱量。','彼國一切人、物、莊嚴清淨殊勝。','著重佛土莊嚴的不可思議與不可測量。',''],
+[28,'見道場樹願','國中菩薩皆能見道場樹。','乃至少功德者，亦得見彼道場樹。','道場樹即菩提樹象徵，與成道、覺悟密切相關。',''],
+[29,'得辯才智願','受持讀誦經法者，得智慧辯才。','國中菩薩受持讀誦經法，得辯才智慧。','說明極樂生活的重要內容仍是聞法、持法與弘法。',''],
+[30,'智辯無窮願','智慧辯才，無有限量。','彼國菩薩智慧辯才不可限量。','承接第二十九願，把修法所得的智慧弘化能力推至廣大無礙。',''],
+[31,'國土清淨願','佛土清淨如鏡，映現十方佛國。','國土清淨，能照見十方無量佛土。','古代註家常將此願列入「攝淨土」範疇。',''],
+[32,'國土嚴飾願','眾寶妙香莊嚴，香熏十方。','國中宮殿樓觀、池流花樹等眾寶莊嚴，妙香普熏。','莊嚴並非純裝飾；願文把聞香與修佛行連在一起，具有助道功能。',''],
+[33,'觸光柔軟願','十方眾生蒙佛光照觸，身心柔軟。','蒙阿彌陀佛光明照觸者，身心柔軟，超過人天之樂。','「柔軟」是佛教修道語，指離剛強、煩惱障礙，不只是身體觸感。',''],
+[34,'聞名得忍願','他方菩薩聞名，得無生法忍及總持。','十方世界菩薩聞我名者，得無生法忍、諸深總持。','「無生法忍」是甚深菩薩證悟語，不是一般意義的忍耐。',''],
+[35,'女人往生願','女人聞名信樂、發菩提心，厭女身者命終不復受女身。','十方世界女人聞我名字，歡喜信樂，發菩提心，厭惡女身，壽終之後不復為女。','原文確有古代佛教性別與修道身的表述。嚴謹閱讀應忠實承認文本，同時放回古印度及大乘佛教性別觀的歷史語境，而不是任意美化或現代化改寫。',''],
+[36,'常修梵行願','聞佛名之菩薩常修梵行，至成佛道。','十方菩薩聞我名後，常修梵行，至成佛道。','對象是他方菩薩，不能簡化為「所有往生者都必須出家」。',''],
+[37,'人天致敬願','聞名修菩薩行者，為諸天世人所敬。','聞名歡喜信樂、禮拜歸命、修菩薩行者，為人天致敬。','重點在聞名後的菩薩行與德行，不宜民俗化成求社會地位。',''],
+[38,'衣服隨念願','衣服隨念自然在身。','彼國人天欲得衣服，隨念即至。','此類「自然受用」意在免除維生勞苦，使修道人不受物質匱乏牽制。',''],
+[39,'受樂無染願','所受快樂清淨無染，如漏盡比丘。','國中人天所受快樂，如漏盡比丘。','經文拿「漏盡比丘」作比較，顯示極樂之樂不是感官刺激，而是離染著煩惱的清淨安樂。',''],
+[40,'見諸佛土願','菩薩於寶樹等莊嚴中隨意見十方佛國。','國中菩薩欲見十方佛土，皆於寶樹中照見。','與第三十一願相近，但三十一願偏國土本身的清淨映照，本願偏菩薩隨意觀見。',''],
+[41,'諸根具足願','聞名菩薩至成佛時，諸根具足。','他方菩薩聞我名者，至成佛道，諸根無缺。','「諸根」在古代佛教通常涉及眼耳鼻舌身等感官與修道根器。',''],
+[42,'住定供佛願','得清淨三昧，一念供養無量諸佛而不失定。','聞名菩薩得清淨解脫三昧，住定而供養無量諸佛。','將禪定與廣大菩薩行結合，並非只強調靜止入定。',''],
+[43,'生尊貴家願','聞名菩薩命終得生尊貴之家。','十方菩薩聞我名者，壽終之後生尊貴家。','應放回古代社會理解為有利於修道弘法的出生條件，不宜改寫成「保證投胎富豪家」。',''],
+[44,'具足德本願','聞名歡喜者，善根功德具足。','他方菩薩聞我名者，歡喜踊躍，修菩薩行，具足德本。','願文脈絡包含修菩薩行，不能把功德理解成脫離修行的自動獎賞。',''],
+[45,'住定見佛願','聞名菩薩得三昧，常見無量諸佛。','十方菩薩聞我名者，得普等三昧，住是定中至成佛常見諸佛。','屬他方菩薩聞名所得的深層修道利益。',''],
+[46,'隨意聞法願','國中菩薩欲聞何法，即自然得聞。','彼國菩薩隨其志願，所欲聞法自然得聞。','極樂的一項根本德相，就是不缺聞法與修道因緣。',''],
+[47,'得不退轉願','十方菩薩聞名，即得不退轉。','他方菩薩聞我名者，即得至不退轉。','「不退轉」是大乘菩薩道的重要位階概念，不只是「不改變信仰」。',''],
+[48,'得三法忍願','聞名菩薩得諸法忍，於佛法不退。','十方菩薩聞我名者，得第一、第二、第三法忍，於諸佛法不能即得不退轉者，不取正覺。','願文以深層菩薩證悟與不退作結。至於「第一、第二、第三法忍」如何配對具體修道階位，古代註疏並非只有一套說法。','異名：得諸法忍願；「三法忍」的具體判釋宜另查註疏。']
+];
+const chapterStarts=[1,12,21,31,41];
+const chapterEnds=[11,20,30,40,48];
+const content=document.getElementById('vowContent');
+chapters.forEach((c,ci)=>{
+ const sec=document.createElement('section'); sec.className='shell';
+ sec.innerHTML=`<header class="chapter" id="chapter-${ci+1}"><span class="chapter-mark">${c.mark}</span><div class="eyebrow">${c.range}</div><h2>${c.title}</h2><p>${c.desc}</p></header><div class="chapter-vows"></div>`;
+ const box=sec.querySelector('.chapter-vows');
+ vows.filter(v=>v[0]>=chapterStarts[ci]&&v[0]<=chapterEnds[ci]).forEach(v=>{
+   const d=document.createElement('details'); d.className='vow'+(v[0]===18?' featured':''); d.id='v'+v[0];
+   d.innerHTML=`<summary><span class="vow-no">${String(v[0]).padStart(2,'0')}</span><div class="vow-head"><h3>${v[1]}</h3><p>${v[2]}</p></div><span class="vow-plus">＋</span></summary><div class="vow-body"><p><strong>願義：</strong>${v[3]}</p><p class="scholia"><strong>導讀：</strong>${v[4]}</p>${v[5]?`<p class="names"><strong>願名備註：</strong>${v[5]}</p>`:''}</div>`;
+   box.appendChild(d);
+ });
+ content.appendChild(sec);
+});
+
+const grid=document.getElementById('indexGrid');
+vows.forEach(v=>{
+ const a=document.createElement('a');a.href='#v'+v[0];a.dataset.search=(v[0]+' '+v[1]+' '+v[2]).toLowerCase();a.innerHTML=`<b>${String(v[0]).padStart(2,'0')}</b><span>${v[1]}</span>`;
+ a.addEventListener('click',()=>closeDrawer());grid.appendChild(a);
+});
+const drawer=document.getElementById('drawer');
+function openDrawer(){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('searchInput').focus(),180)}
+function closeDrawer(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');document.body.style.overflow=''}
+document.getElementById('openIndex').addEventListener('click',openDrawer);
+drawer.querySelectorAll('[data-close]').forEach(x=>x.addEventListener('click',closeDrawer));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+document.getElementById('searchInput').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();grid.querySelectorAll('a').forEach(a=>a.hidden=q&&!a.dataset.search.includes(q))});
+document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('details.vow').forEach(d=>d.open=true));
+document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('details.vow').forEach(d=>d.open=false));
+</script>
+</body>
+</html>
