@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>健保優化提醒｜5–7 月各項目趨勢</title>
+<title>健保優化提醒｜8 月數據報告</title>
 <style>
 :root{
   --bg:#f5fafb;
@@ -56,151 +56,249 @@ h1{
   font-size:17px;
   line-height:1.75;
 }
-.items{
+.hero{
+  margin-top:36px;
   display:grid;
-  gap:24px;
-  margin-top:44px;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
 }
-.item{
+.hero-card{
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px 22px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.hero-card::before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:linear-gradient(180deg,var(--teal),var(--blue));
+}
+.hero-label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  letter-spacing:.06em;
+}
+.hero-value{
+  margin-top:8px;
+  font-size:34px;
+  font-weight:850;
+  letter-spacing:-.035em;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.hero-value em{
+  font-style:normal;
+  font-size:16px;
+  color:var(--muted);
+  font-weight:700;
+  margin-left:2px;
+}
+.hero-sub{
+  margin-top:8px;
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.group-title{
+  margin:52px 0 4px;
+  font-size:21px;
+  letter-spacing:-.02em;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.group-title::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+.group-tag{
+  font-size:11px;
+  font-weight:800;
+  color:var(--blue);
+  background:var(--soft-blue);
+  padding:5px 10px;
+  border-radius:999px;
+  letter-spacing:.06em;
+}
+.aug-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+  margin-top:20px;
+}
+.aug-card{
+  background:rgba(255,255,255,.96);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.aug-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 44px rgba(35,75,87,.12);
+}
+.aug-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+.aug-card h3{
+  margin:0;
+  font-size:17px;
+  line-height:1.4;
+  letter-spacing:-.01em;
+}
+.aug-rate{
+  flex:none;
+  text-align:right;
+  font-size:34px;
+  font-weight:850;
+  letter-spacing:-.035em;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.aug-rate small{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+  color:var(--muted);
+  font-weight:700;
+  letter-spacing:.08em;
+}
+.rate-hi{color:var(--teal-dark)}
+.rate-mid{color:var(--blue)}
+.rate-lo{color:var(--down)}
+.aug-nums{
+  display:flex;
+  gap:22px;
+  font-size:13px;
+  color:var(--muted);
+}
+.aug-nums strong{
+  color:var(--ink);
+  font-size:18px;
+  font-variant-numeric:tabular-nums;
+}
+.bar{
+  height:10px;
+  border-radius:999px;
+  background:var(--soft-gray);
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+.bar i{
+  display:block;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--teal),var(--blue));
+}
+.bar.lo i{background:linear-gradient(90deg,#c08a76,var(--down))}
+.trend-section{
+  margin-top:64px;
   background:rgba(255,255,255,.96);
   border:1px solid var(--line);
   border-radius:24px;
   padding:28px;
   box-shadow:var(--shadow);
 }
-.item-head{
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  align-items:flex-start;
-  margin-bottom:22px;
-}
-.item h2{
-  font-size:25px;
-  line-height:1.3;
+.trend-section h2{
+  font-size:22px;
   letter-spacing:-.02em;
+  margin-bottom:6px;
 }
-.badge{
-  flex:none;
-  font-size:12px;
-  font-weight:800;
-  color:var(--teal-dark);
-  background:var(--soft-teal);
-  padding:7px 10px;
-  border-radius:999px;
+.trend-note{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:20px;
 }
-.months{
+.tchart{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
-.month{
-  background:var(--soft-gray);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px 18px 16px;
+.trow{
+  display:grid;
+  grid-template-columns:210px 1fr 74px;
+  gap:14px;
+  align-items:center;
 }
-.month-label{
+.trow-name{
   font-size:13px;
-  color:var(--muted);
   font-weight:700;
-  margin-bottom:12px;
+  color:#4e6971;
+  line-height:1.4;
 }
-.total{
-  font-size:32px;
-  line-height:1;
-  font-weight:850;
-  letter-spacing:-.035em;
-}
-.total-label{
-  margin-top:6px;
-  font-size:11px;
-  color:var(--muted);
-}
-.month-bottom{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-end;
-  margin-top:18px;
-  padding-top:14px;
-  border-top:1px solid var(--line);
-}
-.agree{
-  font-size:13px;
-  color:var(--muted);
-  line-height:1.45;
-}
-.agree strong{
-  display:block;
-  color:var(--ink);
-  font-size:16px;
-}
-.rate{
+.tdelta{
   text-align:right;
-  color:var(--teal-dark);
-  font-size:22px;
-  font-weight:850;
-  letter-spacing:-.03em;
+  font-size:13px;
+  font-weight:800;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
 }
-.rate small{
+.tdelta small{
   display:block;
-  margin-top:3px;
   font-size:10px;
   color:var(--muted);
   font-weight:700;
-  letter-spacing:0;
 }
-.trend{
-  margin-top:18px;
-  padding:16px 18px;
-  border-radius:16px;
-  background:var(--soft-blue);
+.tdelta.up{color:var(--teal-dark)}
+.tdelta.down{color:var(--down)}
+.tdelta.flat{color:var(--blue)}
+.trow-bars{
   display:grid;
-  grid-template-columns:120px 1fr;
-  gap:16px;
-  align-items:center;
-}
-.trend-label{
-  font-size:12px;
-  color:var(--blue);
-  font-weight:800;
-  letter-spacing:.08em;
-}
-.trend-values{
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
+  grid-template-columns:repeat(4,1fr);
   gap:8px;
-  font-size:20px;
-  font-weight:800;
+  align-items:end;
+  height:96px;
 }
-.arrow{
-  color:#99adb3;
-  font-size:17px;
-  font-weight:600;
+.tbar{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:5px;
+  height:100%;
 }
-.up{color:var(--teal-dark)}
-.down{color:var(--down)}
-.flat{color:var(--blue)}
-.insight{
-  margin-top:16px;
-  padding:16px 18px;
-  border-left:4px solid var(--teal);
-  background:#f3faf8;
-  border-radius:0 14px 14px 0;
+.tbar i{
+  display:block;
+  border-radius:7px 7px 3px 3px;
+  background:var(--soft-teal);
+  border:1px solid #cfe6e1;
+  min-height:3px;
 }
-.insight-title{
+.tbar.aug i{
+  background:linear-gradient(180deg,var(--teal),var(--teal-dark));
+  border-color:var(--teal-dark);
+}
+.tbar span{
+  font-size:10px;
+  text-align:center;
+  color:var(--muted);
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+.tlegend{
+  display:flex;
+  gap:18px;
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
   font-size:12px;
-  font-weight:800;
-  color:var(--teal-dark);
-  letter-spacing:.08em;
-  margin-bottom:5px;
+  color:var(--muted);
 }
-.insight p{
-  font-size:14px;
-  line-height:1.75;
-  color:#5f777e;
+.tlegend b{
+  color:var(--teal-dark);
 }
 .raw{
   margin-top:18px;
@@ -243,9 +341,10 @@ td.num,th.num{
 }
 @media(max-width:760px){
   .page{width:min(100% - 24px,1120px);padding-top:42px}
-  .item{padding:22px}
-  .months{grid-template-columns:1fr}
-  .trend{grid-template-columns:1fr;gap:8px}
+  .hero{grid-template-columns:repeat(2,1fr)}
+  .aug-grid{grid-template-columns:1fr}
+  .trow{grid-template-columns:1fr;gap:6px}
+  .tdelta{text-align:left}
   .raw{overflow-x:auto}
   table{min-width:520px}
 }
@@ -253,170 +352,142 @@ td.num,th.num{
 </head>
 <body>
 <div class="page">
-  <div class="eyebrow">May–July Trend Review</div>
-  <h1>各提醒項目<br>3 個月趨勢</h1>
-  <p class="lead">每個項目獨立呈現 5–7 月原始數據與同意率變化，不使用傳統曲線圖或長條圖，改以數字卡與方向指標直接閱讀趨勢。</p>
+  <div class="eyebrow">August Report</div>
+  <h1>8 月健保優化提醒<br>數據報告</h1>
+  <p class="lead"></p>
 
-  <main class="items" id="items"></main>
+  <div class="hero" id="hero"></div>
 
-  <div class="footer">健保優化提醒｜5–7 月各項目趨勢</div>
+  <h2 class="group-title">健保優化提醒 <span class="group-tag">8 月</span></h2>
+  <div class="aug-grid" id="augNhi"></div>
+
+  <h2 class="group-title">高風險藥物監控 <span class="group-tag">8 月新增</span></h2>
+  <div class="aug-grid" id="augDrug"></div>
+
+  <section class="trend-section">
+    <h2>5–8 月同意率趨勢</h2>
+    <p class="trend-note">僅含 5–7 月已有歷史資料之項目；高風險藥物監控為 8 月新增，無前期資料。深色長條為 8 月。</p>
+    <div class="tchart" id="tchart"></div>
+    <div class="tlegend">
+      <span>淺色＝5–7 月</span>
+      <span><b>深色＝8 月</b></span>
+    </div>
+  </section>
+
+  <div class="footer">健保優化提醒｜8 月數據報告（附 5–7 月趨勢）</div>
 </div>
 
 <script>
-const data = [
-  {
-    name:"健保優化提醒：X光",
-    rows:[
-      {m:"5月",total:2261,agree:152},
-      {m:"6月",total:2402,agree:162},
-      {m:"7月",total:2520,agree:281}
-    ],
-    summary:"提醒量逐月小幅增加，7 月同意數明顯提升，同意率由約 6.7% 上升至 11.2%。整體呈現量體穩定成長、7 月轉換改善。"
-  },
-  {
-    name:"健保優化提醒：心超",
-    rows:[
-      {m:"5月",total:1410,agree:100},
-      {m:"6月",total:1725,agree:118},
-      {m:"7月",total:2260,agree:176}
-    ],
-    summary:"提醒量連續成長，7 月達 2,260 次；同意率大致維持在 7% 左右，7 月略升至 7.8%。屬於量體增加、轉換率相對穩定。"
-  },
-  {
-    name:"健保優化提醒：保險餘額",
-    rows:[
-      {m:"5月",total:1681,agree:395},
-      {m:"6月",total:1512,agree:324},
-      {m:"7月",total:1481,agree:363}
-    ],
-    summary:"提醒量連續小幅下降，但同意率在 7 月回升至 24.5%。整體量體略減，但轉換表現維持穩定。"
-  },
-  {
-    name:"健保優化提醒：腹超-BC肝",
-    rows:[
-      {m:"5月",total:98,agree:98},
-      {m:"6月",total:104,agree:104},
-      {m:"7月",total:149,agree:136}
-    ],
-    summary:"提醒量逐月增加，5、6 月同意率皆為 100%，7 月仍維持 91.3%。整體表現穩定，但提醒量相對較小。"
-  },
-  {
-    name:"健保優化提醒：膽固醇",
-    rows:[
-      {m:"5月",total:671,agree:313},
-      {m:"6月",total:592,agree:236},
-      {m:"7月",total:678,agree:274}
-    ],
-    summary:"提醒量在 6 月下降、7 月回升；同意率由 46.6% 降至約 40%，之後維持相近水準。整體量體持平，但轉換率較 5 月略低。"
-  },
-  {
-    name:"是否修改慢箋天數為30天",
-    rows:[
-      {m:"5月",total:3317,agree:351},
-      {m:"6月",total:2777,agree:201},
-      {m:"7月",total:7148,agree:425}
-    ],
-    summary:"5 月同意率約 10.6%，6 月降至 7.2%，7 月再降至 5.9%。雖然 7 月提醒量大幅增加，但同意率呈逐月下降。"
-  }
+// 8 月資料（total = Y + N，agree = Y）
+const augNhi = [
+  { name:"健保優化提醒：X光",      total:2089, agree:184 },
+  { name:"健保優化提醒：心超",      total:2080, agree:133 },
+  { name:"健保優化提醒：保險餘額",  total:1299, agree:338 },
+  { name:"健保優化提醒：腹超-BC肝", total:140,  agree:10  },
+  { name:"健保優化提醒：膽固醇",    total:479,  agree:212 },
+  { name:"是否修改慢箋天數為30天",  total:6276, agree:304 }
+];
+
+const augDrug = [
+  { name:"高風險藥物監控：Blopress plus加強錠",   total:28,  agree:7  },
+  { name:"高風險藥物監控：血管張力素受體阻斷劑+雙效", total:50,  agree:5  },
+  { name:"高風險藥物監控：利尿劑（保鉀型）",       total:343, agree:77 },
+  { name:"高風險藥物監控：利尿劑（Thiazide類）",   total:91,  agree:18 },
+  { name:"高風險藥物監控：利尿劑（Loop強效）",     total:548, agree:98 },
+  { name:"高風險藥物監控：合成抗利尿激素",         total:207, agree:32 }
+];
+
+// 5–7 月歷史資料（僅供頁尾趨勢圖）
+const history = [
+  { name:"健保優化提醒：X光",      rates:[6.7, 6.7, 11.2], aug: 184/2089*100 },
+  { name:"健保優化提醒：心超",      rates:[7.1, 6.8, 7.8],  aug: 133/2080*100 },
+  { name:"健保優化提醒：保險餘額",  rates:[23.5,21.4,24.5], aug: 338/1299*100 },
+  { name:"健保優化提醒：腹超-BC肝", rates:[100, 100, 91.3], aug: 10/140*100  },
+  { name:"健保優化提醒：膽固醇",    rates:[46.6,39.9,40.4], aug: 212/479*100 },
+  { name:"是否修改慢箋天數為30天",  rates:[10.6, 7.2, 5.9], aug: 304/6276*100 }
 ];
 
 const nf = new Intl.NumberFormat("zh-TW");
-
-function rate(r){ return r.agree / r.total * 100; }
 function pct(v){ return v.toFixed(1) + "%"; }
 
-function trendClass(rates){
-  const diff = rates[rates.length-1] - rates[0];
-  if(diff > 1) return "up";
-  if(diff < -1) return "down";
-  return "flat";
+// ---- Hero KPI 摘要 ----
+(function renderHero(){
+  const all = [...augNhi, ...augDrug];
+  const totalAll = all.reduce((s,x)=>s+x.total,0);
+  const agreeAll = all.reduce((s,x)=>s+x.agree,0);
+  const kpis = [
+    { label:"8 月提醒總數", value:nf.format(totalAll), sub:"涵蓋 12 個提醒項目" },
+    { label:"8 月同意總數", value:nf.format(agreeAll), sub:"醫師接受提醒之件數" },
+    { label:"整體同意率",   value:pct(agreeAll/totalAll*100), sub:"全部項目加權平均" },
+    { label:"高風險藥物監控", value:"6", unit:"項", sub:"8 月新增之監控項目" }
+  ];
+  const root = document.getElementById("hero");
+  kpis.forEach(k=>{
+    const el = document.createElement("div");
+    el.className = "hero-card";
+    el.innerHTML = `
+      <div class="hero-label">${k.label}</div>
+      <div class="hero-value">${k.value}${k.unit?`<em>${k.unit}</em>`:""}</div>
+      <div class="hero-sub">${k.sub}</div>
+    `;
+    root.appendChild(el);
+  });
+})();
+
+// ---- 8 月卡片 ----
+function rateTier(r){
+  if(r >= 20) return "rate-hi";
+  if(r >= 10) return "rate-mid";
+  return "rate-lo";
 }
-function trendSymbol(rates){
-  const diff = rates[rates.length-1] - rates[0];
-  if(diff > 1) return "↑";
-  if(diff < -1) return "↓";
-  return "→";
-}
-
-const root = document.getElementById("items");
-
-data.forEach(item=>{
-  const rates = item.rows.map(rate);
-  const cls = trendClass(rates);
-  const symbol = trendSymbol(rates);
-
-  const el = document.createElement("section");
-  el.className = "item";
-
-  const monthCards = item.rows.map((r,i)=>`
-    <div class="month">
-      <div class="month-label">${r.m}</div>
-      <div class="total">${nf.format(r.total)}</div>
-      <div class="total-label">提醒總數</div>
-      <div class="month-bottom">
-        <div class="agree">
-          同意數
-          <strong>${nf.format(r.agree)}</strong>
-        </div>
-        <div class="rate">
-          ${pct(rates[i])}
-          <small>同意率</small>
-        </div>
+function renderAug(list, targetId){
+  const root = document.getElementById(targetId);
+  list.forEach(item=>{
+    const r = item.agree / item.total * 100;
+    const tier = rateTier(r);
+    const el = document.createElement("section");
+    el.className = "aug-card";
+    el.innerHTML = `
+      <div class="aug-card-head">
+        <h3>${item.name}</h3>
+        <div class="aug-rate ${tier}">${pct(r)}<small>同意率</small></div>
       </div>
+      <div class="bar${tier==="rate-lo"?" lo":""}"><i style="width:${r.toFixed(1)}%"></i></div>
+      <div class="aug-nums">
+        <span>提醒總數 <strong>${nf.format(item.total)}</strong></span>
+        <span>同意數 <strong>${nf.format(item.agree)}</strong></span>
+      </div>
+    `;
+    root.appendChild(el);
+  });
+}
+renderAug(augNhi, "augNhi");
+renderAug(augDrug, "augDrug");
+
+// ---- 5–8 月趨勢圖 ----
+const months = ["5月","6月","7月","8月"];
+const troot = document.getElementById("tchart");
+history.forEach(item=>{
+  const all = [...item.rates, item.aug];
+  const max = Math.max(...all, 1);
+  const bars = all.map((v,i)=>`
+    <div class="tbar${i===3?" aug":""}">
+      <span>${pct(v)}</span>
+      <i style="height:${(v/max*100).toFixed(1)}%"></i>
+      <span>${months[i]}</span>
     </div>
   `).join("");
-
-  const rawRows = item.rows.map((r,i)=>`
-    <tr>
-      <td>${r.m}</td>
-      <td class="num">${nf.format(r.total)}</td>
-      <td class="num">${nf.format(r.agree)}</td>
-      <td class="num">${pct(rates[i])}</td>
-    </tr>
-  `).join("");
-
-  el.innerHTML = `
-    <div class="item-head">
-      <h2>${item.name}</h2>
-      <div class="badge">獨立趨勢</div>
-    </div>
-
-    <div class="months">${monthCards}</div>
-
-    <div class="trend">
-      <div class="trend-label">同意率變化</div>
-      <div class="trend-values ${cls}">
-        <span>${pct(rates[0])}</span>
-        <span class="arrow">→</span>
-        <span>${pct(rates[1])}</span>
-        <span class="arrow">→</span>
-        <span>${pct(rates[2])}</span>
-        <span>${symbol}</span>
-      </div>
-    </div>
-
-    <div class="insight">
-      <div class="insight-title">趨勢判讀</div>
-      <p>${item.summary}</p>
-    </div>
-
-    <div class="raw">
-      <div class="raw-title">原始數據</div>
-      <table>
-        <thead>
-          <tr>
-            <th>月份</th>
-            <th class="num">提醒總數</th>
-            <th class="num">同意數</th>
-            <th class="num">同意率</th>
-          </tr>
-        </thead>
-        <tbody>${rawRows}</tbody>
-      </table>
-    </div>
+  const diff = item.aug - item.rates[2];
+  const dCls = diff > 1 ? "up" : diff < -1 ? "down" : "flat";
+  const dSym = diff > 1 ? "▲" : diff < -1 ? "▼" : "―";
+  const row = document.createElement("div");
+  row.className = "trow";
+  row.innerHTML = `
+    <div class="trow-name">${item.name}</div>
+    <div class="trow-bars">${bars}</div>
+    <div class="tdelta ${dCls}">${dSym} ${Math.abs(diff).toFixed(1)}<small>較 7 月</small></div>
   `;
-
-  root.appendChild(el);
+  troot.appendChild(row);
 });
 </script>
 </body>
