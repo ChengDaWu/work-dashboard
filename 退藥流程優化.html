@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>住院病人給藥作業流程｜Mission-Control Redesign</title>
+<style>
+:root{
+  --bg:#282a2d;
+  --bg-deep:#202225;
+  --panel:#34373b;
+  --panel-2:#3d4146;
+  --panel-3:#454a50;
+  --line:#6fd7df;
+  --cyan:#86e7ef;
+  --green:#9be27b;
+  --amber:#ffc52f;
+  --red:#ff5238;
+  --white:#f6f1e9;
+  --muted:#c9c2ba;
+  --muted2:#9d9993;
+  --grid:rgba(255,255,255,.022);
+  --shadow:rgba(0,0,0,.22);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--white);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif;
+  background:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+    radial-gradient(circle at 12% 8%, rgba(255,197,47,.06), transparent 18%),
+    radial-gradient(circle at 86% 12%, rgba(134,231,239,.05), transparent 18%),
+    linear-gradient(180deg,#323438 0%,#292b2e 44%,#232528 100%);
+  background-size:32px 32px,32px 32px,auto,auto,auto;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:999;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.012) 0 1px,transparent 2px 4px);
+  opacity:.14;
+}
+body:after{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:998;
+  box-shadow:inset 0 0 80px rgba(0,0,0,.10);
+}
+a{color:inherit;text-decoration:none}
+
+.topbar{
+  position:sticky; top:0; z-index:100;
+  height:62px;
+  display:grid;
+  grid-template-columns:280px 1fr 280px;
+  align-items:center;
+  padding:0 18px;
+  background:rgba(31,33,36,.95);
+  border-bottom:1px solid rgba(134,231,239,.32);
+  backdrop-filter:blur(5px);
+}
+.topbar:before{
+  content:"";
+  position:absolute; left:0; top:0; width:220px; height:7px;
+  background:repeating-linear-gradient(135deg,var(--amber) 0 14px,#2a2c2f 14px 28px);
+}
+.topbar:after{
+  content:"";
+  position:absolute; right:0; top:0; width:180px; height:7px;
+  background:repeating-linear-gradient(135deg,var(--red) 0 14px,#2a2c2f 14px 28px);
+}
+.brand{
+  color:var(--cyan);
+  font:900 13px/1.15 Consolas,monospace;
+  letter-spacing:.16em;
+}
+.nav{
+  display:flex; justify-content:center; gap:10px;
+}
+.nav a{
+  padding:9px 12px;
+  border:1px solid rgba(134,231,239,.16);
+  font:800 11px/1 Consolas,monospace;
+  letter-spacing:.12em;
+  color:var(--muted);
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.nav a:hover{color:var(--white);border-color:rgba(134,231,239,.42)}
+.meta{
+  text-align:right;
+  color:var(--muted2);
+  font:700 11px/1.35 Consolas,monospace;
+  letter-spacing:.11em;
+}
+.progress{
+  position:fixed; left:0; top:62px; height:3px; width:0; z-index:101;
+  background:linear-gradient(90deg,var(--cyan),var(--amber),var(--red));
+}
+
+.page{max-width:1580px;margin:0 auto;padding:18px 18px 60px}
+.zone{
+  margin-top:18px;
+  position:relative;
+  border:1px solid rgba(134,231,239,.18);
+  background:rgba(38,40,44,.72);
+  padding:18px;
+}
+.zone:before{
+  content:"";
+  position:absolute; left:0; top:0; width:150px; height:7px;
+  background:var(--cyan);
+}
+.zone.warning:before{
+  width:220px;
+  background:repeating-linear-gradient(135deg,var(--amber) 0 14px,#2c2e31 14px 28px);
+}
+.zone.critical:before{
+  width:220px;
+  background:repeating-linear-gradient(135deg,var(--red) 0 14px,#2c2e31 14px 28px);
+}
+
+.hero{
+  min-height:74vh;
+  display:grid;
+  grid-template-columns:1.22fr .78fr;
+  gap:18px;
+  align-items:stretch;
+}
+.hero-main{
+  position:relative;
+  padding:34px 34px 28px;
+  background:linear-gradient(180deg,#464a4f,#393d41);
+  border:1px solid rgba(134,231,239,.26);
+  clip-path:polygon(0 0,calc(100% - 30px) 0,100% 30px,100% 100%,30px 100%,0 calc(100% - 30px));
+  overflow:hidden;
+}
+.hero-main:before{
+  content:"";
+  position:absolute; right:0; top:0; width:38%; height:14px;
+  background:repeating-linear-gradient(135deg,var(--amber) 0 14px,#3a3c40 14px 28px);
+}
+.hero-main:after{
+  content:"";
+  position:absolute; right:30px; bottom:26px; width:240px; height:50px;
+  border:1px solid rgba(255,197,47,.55);
+  border-left:8px solid var(--amber);
+  clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);
+}
+.kicker{
+  color:var(--cyan);
+  font:900 13px/1 Consolas,monospace;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.hero h1{
+  margin:16px 0 0;
+  font-size:clamp(52px,7vw,108px);
+  line-height:.89;
+  letter-spacing:-.055em;
+  font-weight:950;
+  max-width:1000px;
+}
+.hero h1 .accent{color:var(--amber)}
+.hero .lede{
+  margin-top:24px;
+  font-size:clamp(19px,1.8vw,27px);
+  line-height:1.55;
+  color:#e8ddd4;
+  max-width:980px;
+}
+.hero-aside{
+  display:grid;
+  grid-template-rows:1fr auto;
+  gap:18px;
+}
+.status-board{
+  position:relative;
+  padding:24px;
+  background:linear-gradient(180deg,#42464a,#35383c);
+  border:1px solid rgba(255,197,47,.24);
+  clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+}
+.status-title{
+  color:var(--muted);
+  font:800 11px/1 Consolas,monospace;
+  letter-spacing:.16em;
+}
+.bigtime{
+  margin-top:18px;
+  font:950 clamp(58px,6.2vw,100px)/.9 "Arial Narrow",Consolas,sans-serif;
+  color:var(--amber);
+}
+.biglabel{
+  margin-top:8px;
+  font-size:22px;
+  font-weight:950;
+}
+.state-row{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.state{
+  padding:11px 8px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.12);
+  font:900 11px/1 Consolas,monospace;
+  letter-spacing:.08em;
+}
+.state.nominal{color:var(--green)}
+.state.detect{color:var(--cyan)}
+.state.warn{color:var(--amber)}
+.micro{
+  padding:18px 20px;
+  background:#303337;
+  border-left:4px solid var(--cyan);
+  color:var(--muted);
+  font:700 11px/1.6 Consolas,monospace;
+  letter-spacing:.08em;
+}
+
+.section-head{
+  display:grid;
+  grid-template-columns:120px 1fr auto;
+  gap:16px;
+  align-items:end;
+  margin-bottom:16px;
+}
+.secnum{
+  color:var(--amber);
+  font:950 80px/.82 "Arial Narrow",sans-serif;
+  letter-spacing:-.03em;
+}
+.sectxt .tag{
+  color:var(--cyan);
+  font:900 11px/1 Consolas,monospace;
+  letter-spacing:.16em;
+}
+.sectxt h2{
+  margin:6px 0 0;
+  font-size:clamp(30px,3.7vw,56px);
+  line-height:1.02;
+  font-weight:950;
+}
+.sectxt p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.5;
+}
+.section-code{
+  color:var(--muted2);
+  font:700 11px/1.4 Consolas,monospace;
+  text-align:right;
+  letter-spacing:.1em;
+}
+
+.current-map{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:16px;
+}
+.timeline-panel{
+  position:relative;
+  padding:24px;
+  background:#3b3e42;
+  border:1px solid rgba(134,231,239,.20);
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+}
+.timeline{
+  position:relative;
+  margin-top:20px;
+  padding-top:22px;
+}
+.timeline-line{
+  position:absolute; left:5%; right:5%; top:79px; height:2px;
+  background:rgba(255,255,255,.28);
+}
+.timeline-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+.tnode{text-align:center;position:relative}
+.tnode .time{
+  font:950 38px/1 "Arial Narrow",Consolas,sans-serif;
+}
+.tnode .time.cyan{color:var(--cyan)}
+.tnode .time.amber{color:var(--amber)}
+.tnode .time.green{color:var(--green)}
+.tnode .dot{
+  width:16px;height:16px;border-radius:50%;
+  margin:18px auto 12px;position:relative;z-index:2;
+  background:var(--cyan);
+}
+.tnode.warn .dot{background:var(--amber)}
+.tnode.safe .dot{background:var(--green)}
+.tnode .label{font-size:16px;font-weight:950;line-height:1.35}
+.tnode .desc{margin-top:7px;color:var(--muted);font-size:13px;line-height:1.4}
+.return-strip{
+  margin-top:18px;
+  padding:12px 16px;
+  background:var(--red);
+  color:#2a1612;
+  font-weight:950;
+  text-align:center;
+  clip-path:polygon(15px 0,100% 0,calc(100% - 15px) 100%,0 100%);
+}
+.process-rail{
+  display:grid;
+  gap:10px;
+}
+.proc{
+  position:relative;
+  padding:16px 16px 16px 72px;
+  min-height:84px;
+  background:#393c40;
+  border:1px solid rgba(255,255,255,.10);
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+}
+.proc .n{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  background:#2c2f32;border:1px solid rgba(134,231,239,.18);
+  color:var(--cyan);font:950 22px/1 "Arial Narrow",sans-serif;
+}
+.proc h3{margin:0;font-size:18px}
+.proc p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
+.proc.warn{border-color:rgba(255,197,47,.32)}
+.proc.warn .n{color:var(--amber)}
+.proc.critical{border-color:rgba(255,82,56,.36)}
+.proc.critical .n{color:var(--red)}
+
+.calc-layout{
+  display:grid;
+  grid-template-columns:.72fr 1.28fr;
+  gap:16px;
+}
+.calc-hero{
+  position:relative;
+  min-height:440px;
+  padding:26px;
+  background:linear-gradient(180deg,#3f4246,#34373b);
+  border:1px solid rgba(255,197,47,.22);
+  clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+}
+.calc-hero .mini{
+  color:var(--cyan);
+  font:900 11px/1 Consolas,monospace;
+  letter-spacing:.16em;
+}
+.calc-hero .mega{
+  margin-top:14px;
+  font:950 clamp(68px,8vw,128px)/.88 "Arial Narrow",Consolas,sans-serif;
+  color:var(--amber);
+}
+.calc-hero .title{
+  margin-top:12px;
+  font-size:26px;
+  font-weight:950;
+}
+.calc-hero .desc{
+  margin-top:14px;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.55;
+}
+.scale{
+  margin-top:28px;
+}
+.scale-line{
+  position:relative;height:8px;
+  background:linear-gradient(90deg,var(--cyan) 0 32%,var(--amber) 32% 68%,var(--red) 68%);
+}
+.scale-ticks{
+  display:flex;justify-content:space-between;
+  margin-top:8px;color:var(--muted2);
+  font:700 10px/1 Consolas,monospace;
+}
+.calc-topology{
+  display:grid;
+  grid-template-columns:1fr 120px 1fr;
+  gap:16px;
+  align-items:center;
+}
+.hex{
+  min-height:245px;
+  padding:28px 24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+  background:#3b3e42;
+  border:1px solid rgba(134,231,239,.20);
+  clip-path:polygon(12% 0,88% 0,100% 25%,100% 75%,88% 100%,12% 100%,0 75%,0 25%);
+}
+.hex.old{border-color:rgba(255,82,56,.38)}
+.hex.new{border-color:rgba(155,226,123,.38)}
+.hex .code{
+  font:900 11px/1 Consolas,monospace;
+  letter-spacing:.15em;
+}
+.hex.old .code{color:var(--red)}
+.hex.new .code{color:var(--green)}
+.hex h3{margin:14px 0 0;font-size:25px}
+.hex .qty{
+  margin-top:14px;
+  font:950 64px/.9 "Arial Narrow",sans-serif;
+}
+.hex.old .qty{color:var(--red)}
+.hex.new .qty{color:var(--green)}
+.hex p{margin:12px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+.compare-core{
+  text-align:center;
+}
+.compare-core .symbol{
+  font:950 58px/1 "Arial Narrow",sans-serif;
+  color:var(--amber);
+}
+.compare-core .label{
+  margin-top:8px;
+  color:var(--muted);
+  font:900 10px/1.4 Consolas,monospace;
+  letter-spacing:.12em;
+}
+.formula{
+  margin-top:18px;
+  padding:18px 20px;
+  background:#2e3134;
+  border-left:6px solid var(--amber);
+  font:900 clamp(18px,2vw,30px)/1.5 Consolas,"Microsoft JhengHei",monospace;
+}
+.note{
+  margin-top:12px;
+  padding:14px 16px;
+  background:#34373a;
+  border-left:4px solid var(--cyan);
+  color:#e9ddd4;
+  font-size:15px;
+  line-height:1.55;
+}
+
+.opt-grid{
+  display:grid;
+  grid-template-columns:.82fr 1.18fr;
+  gap:16px;
+}
+.state-machine{
+  position:relative;
+  padding:22px;
+  background:#3c3f43;
+  border:1px solid rgba(134,231,239,.18);
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+}
+.state-machine .steps{
+  display:grid;
+  gap:9px;
+}
+.sm{
+  display:grid;
+  grid-template-columns:86px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:12px 14px;
+  background:#34373a;
+  border-left:4px solid var(--cyan);
+}
+.sm .status{
+  color:var(--cyan);
+  font:900 11px/1 Consolas,monospace;
+  letter-spacing:.12em;
+}
+.sm h3{margin:0;font-size:18px}
+.sm .sym{font-size:20px}
+.sm.warning{border-left-color:var(--amber)}
+.sm.warning .status{color:var(--amber)}
+.sm.action{border-left-color:var(--red)}
+.sm.action .status{color:var(--red)}
+.sm.recovery{border-left-color:var(--green)}
+.sm.recovery .status{color:var(--green)}
+.logic{
+  padding:22px;
+  background:#3c3f43;
+  border:1px solid rgba(255,197,47,.22);
+  clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+}
+.logic-row{
+  display:grid;
+  grid-template-columns:1fr 90px 1fr;
+  gap:14px;
+  align-items:stretch;
+}
+.logic-card{
+  min-height:210px;
+  padding:20px;
+  background:#34373a;
+  border:1px solid rgba(255,255,255,.10);
+}
+.logic-card.plus{border-color:rgba(255,197,47,.35)}
+.logic-card.minus{border-color:rgba(255,82,56,.40)}
+.logic-card .sign{
+  font:950 52px/1 "Arial Narrow",sans-serif;
+}
+.logic-card.plus .sign{color:var(--amber)}
+.logic-card.minus .sign{color:var(--red)}
+.logic-card h3{margin:8px 0 0;font-size:22px}
+.logic-card p{margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+.logic-card ul{margin:10px 0 0 18px;padding:0}
+.logic-card li{margin:6px 0;font-size:14px;line-height:1.4}
+.logic-mid{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--amber);
+  font:950 42px/1 "Arial Narrow",sans-serif;
+}
+.hazard{
+  margin-top:14px;height:10px;
+  background:repeating-linear-gradient(135deg,var(--amber) 0 12px,#2d2f32 12px 24px);
+}
+.logic-card.minus .hazard{
+  background:repeating-linear-gradient(135deg,var(--red) 0 12px,#2d2f32 12px 24px);
+}
+
+.action-layout{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:16px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:15px;
+}
+th,td{
+  border:1px solid rgba(255,255,255,.09);
+  padding:12px 13px;
+  vertical-align:top;
+}
+th{
+  background:#2e3134;
+  color:var(--cyan);
+  font:900 11px/1.2 Consolas,monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+td{line-height:1.45}
+tr.warning td:first-child{border-left:4px solid var(--amber)}
+tr.critical td:first-child{border-left:4px solid var(--red)}
+tr.nominal td:first-child{border-left:4px solid var(--green)}
+.audit{
+  display:grid;
+  gap:10px;
+}
+.audit-card{
+  padding:15px 16px;
+  background:#34373a;
+  border-left:4px solid var(--cyan);
+}
+.audit-card h3{margin:0;font-size:18px}
+.audit-card p{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.45}
+.audit-card.warn{border-left-color:var(--amber)}
+.audit-card.crit{border-left-color:var(--red)}
+
+.compare-layout{
+  display:grid;
+  grid-template-columns:1fr 96px 1fr;
+  gap:16px;
+  align-items:stretch;
+}
+.compare-box{
+  padding:22px;
+  background:#3b3e42;
+  border:1px solid rgba(255,255,255,.10);
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+}
+.compare-box.current{border-color:rgba(255,197,47,.30)}
+.compare-box.future{border-color:rgba(155,226,123,.34)}
+.compare-box .tag{
+  font:900 11px/1 Consolas,monospace;
+  letter-spacing:.14em;
+}
+.compare-box.current .tag{color:var(--amber)}
+.compare-box.future .tag{color:var(--green)}
+.compare-box h3{margin:10px 0 0;font-size:28px}
+.compare-box ul{margin:14px 0 0 18px;padding:0}
+.compare-box li{margin:9px 0;font-size:15px;line-height:1.45}
+.compare-arrow{
+  display:flex;align-items:center;justify-content:center;
+  color:var(--amber);
+  font:950 58px/1 "Arial Narrow",sans-serif;
+}
+
+.footer{
+  margin-top:18px;
+  padding:18px 8px 0;
+  display:flex;justify-content:space-between;gap:16px;
+  color:var(--muted2);
+  font:700 10px/1.5 Consolas,monospace;
+  letter-spacing:.08em;
+}
+
+@media(max-width:1180px){
+  .topbar{grid-template-columns:1fr auto}
+  .nav{display:none}
+  .hero,.current-map,.calc-layout,.opt-grid,.action-layout{grid-template-columns:1fr}
+  .calc-topology{grid-template-columns:1fr}
+  .compare-core{transform:rotate(90deg)}
+}
+@media(max-width:820px){
+  .page{padding-left:10px;padding-right:10px}
+  .topbar{padding:0 12px}
+  .meta{display:none}
+  .section-head{grid-template-columns:90px 1fr}
+  .section-code{display:none}
+  .timeline-grid,.logic-row,.compare-layout{grid-template-columns:1fr}
+  .timeline-line{display:none}
+  .compare-arrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header class="topbar">
+  <div class="brand">PHARMACY MISSION CONTROL<br>INPATIENT DISPENSE / FREQ CHANGE</div>
+  <nav class="nav">
+    <a href="#overview">01 / OVERVIEW</a>
+    <a href="#current">02 / CURRENT</a>
+    <a href="#calc">03 / CALC</a>
+    <a href="#opt">04 / CONTROL</a>
+  </nav>
+  <div class="meta">SYS.PHR.042<br>REV.B / UTC+08</div>
+</header>
+
+<main class="page">
+  <section class="hero" id="overview">
+    <div class="hero-main">
+      <div class="kicker">INPATIENT MEDICATION CONTROL SYSTEM</div>
+      <h1>頻率異動<br><span class="accent">藥量控制</span></h1>
+      <p class="lede">
+        將現行「停原醫囑 → 退藥 → 新增新醫囑 → 首日量補發」流程，
+        重構為可被系統即時計算與自動判斷的單一差額模型。
+      </p>
+    </div>
+
+    <div class="hero-aside">
+      <div class="status-board">
+        <div class="status-title">PRIMARY DISPENSING WINDOW</div>
+        <div class="bigtime">12:00</div>
+        <div class="biglabel">每日自動包藥</div>
+        <div class="state-row">
+          <div class="state nominal">○ NOMINAL</div>
+          <div class="state detect">◇ DETECT</div>
+          <div class="state warn">△ WARNING</div>
+        </div>
+      </div>
+      <div class="micro">
+        NODE / PHARMACY<br>
+        DELIVERY / 15:00<br>
+        FIRST-DAY CALC / ENABLED<br>
+        HOLIDAY CALENDAR / SYNCED
+      </div>
+    </div>
+  </section>
+
+  <section class="zone" id="current">
+    <div class="section-head">
+      <div class="secnum">02</div>
+      <div class="sectxt">
+        <div class="tag">CURRENT SYSTEM MAP</div>
+        <h2>現行流程：批次包藥＋即時首日量＋人工退藥</h2>
+        <p>將目前作業拆成時間軸與處理節點，先看清楚既有流程的複雜度。</p>
+      </div>
+      <div class="section-code">SYS.CURRENT.012<br>STATUS / ACTIVE</div>
+    </div>
+
+    <div class="current-map">
+      <div class="timeline-panel">
+        <div class="timeline">
+          <div class="timeline-line"></div>
+          <div class="timeline-grid">
+            <div class="tnode">
+              <div class="time cyan">ANY</div>
+              <div class="dot"></div>
+              <div class="label">醫師新增 / 異動</div>
+              <div class="desc">任何時間皆可能發生</div>
+            </div>
+            <div class="tnode warn">
+              <div class="time amber">NOW</div>
+              <div class="dot"></div>
+              <div class="label">首日量計算</div>
+              <div class="desc">依 take_times 即時計算</div>
+            </div>
+            <div class="tnode safe">
+              <div class="time green">NOW</div>
+              <div class="dot"></div>
+              <div class="label">即時包藥</div>
+              <div class="desc">直接送往護理站</div>
+            </div>
+            <div class="tnode safe">
+              <div class="time green">12:00</div>
+              <div class="dot"></div>
+              <div class="label">每日批次包藥</div>
+              <div class="desc">包 24 小時用量</div>
+            </div>
+            <div class="tnode">
+              <div class="time cyan">15:00</div>
+              <div class="dot"></div>
+              <div class="label">送達護理站</div>
+              <div class="desc">約 3 小時配送差</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="return-strip">■ 原醫囑若有餘藥 → 護理站退藥 → 書記輸入負數 → 藥品放回藥車</div>
+      </div>
+
+      <div class="process-rail">
+        <div class="proc critical">
+          <div class="n">01</div>
+          <h3>停掉原醫囑</h3>
+          <p>原頻率醫囑結束。</p>
+        </div>
+        <div class="proc warn">
+          <div class="n">02</div>
+          <h3>人工退藥</h3>
+          <p>護理站處理餘藥與負數帳。</p>
+        </div>
+        <div class="proc">
+          <div class="n">03</div>
+          <h3>新增新醫囑</h3>
+          <p>重新開立新頻率。</p>
+        </div>
+        <div class="proc warn">
+          <div class="n">04</div>
+          <h3>重新跑首日量</h3>
+          <p>依新頻率計算即時需求。</p>
+        </div>
+        <div class="proc">
+          <div class="n">05</div>
+          <h3>回到每日批次</h3>
+          <p>下一個 12:00 依新頻率包藥。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone warning" id="calc">
+    <div class="section-head">
+      <div class="secnum">03</div>
+      <div class="sectxt">
+        <div class="tag">FIRST-DAY RECALCULATION</div>
+        <h2>真正的核心：同一時間點，比較兩個「首日量」</h2>
+        <p>上一次實際發藥只是來源；真正比對的是變更當下的新需求與舊餘量。</p>
+      </div>
+      <div class="section-code">SYS.CALC.031<br>MODE / ANALYZE</div>
+    </div>
+
+    <div class="calc-layout">
+      <div class="calc-hero">
+        <div class="mini">CHANGE EVENT / T = 10:35</div>
+        <div class="mega">−1</div>
+        <div class="title">PRE-DEDUCT / RETURN</div>
+        <div class="desc">
+          若新頻率此時應發量比舊頻率此時應剩餘量少 1，
+          則系統判定多餘 1 顆，產生預扣 / 回收。
+        </div>
+        <div class="scale">
+          <div class="scale-line"></div>
+          <div class="scale-ticks"><span>補藥</span><span>平衡</span><span>預扣</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="calc-topology">
+          <div class="hex old">
+            <div class="code">OLD ORDER / SAME TIME T</div>
+            <h3>舊頻率首日量</h3>
+            <div class="qty">3</div>
+            <p>代表醫師變更頻率當下，依舊頻率推算至下一次包藥時間，理論上應還留在護理站的餘藥量。</p>
+          </div>
+
+          <div class="compare-core">
+            <div class="symbol">⇄</div>
+            <div class="label">SAME TIME RANGE<br>CHANGE T → NEXT DISPENSE</div>
+          </div>
+
+          <div class="hex new">
+            <div class="code">NEW ORDER / SAME TIME T</div>
+            <h3>新頻率首日量</h3>
+            <div class="qty">2</div>
+            <p>代表從醫師變更頻率當下開始，依新頻率到下一次包藥時間，實際應發給護理站的量。</p>
+          </div>
+        </div>
+
+        <div class="formula">Diff = New First-Day Qty − Old Remaining Qty</div>
+        <div class="note">
+          上一次實際發藥量是基準來源；系統需搭配舊頻率 take_times，換算成「變更當下應剩餘量」後，再與新頻率首日量比較。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone" id="opt">
+    <div class="section-head">
+      <div class="secnum">04</div>
+      <div class="sectxt">
+        <div class="tag">PROPOSED CONTROL LOGIC</div>
+        <h2>優化流程：DETECT → ANALYZE → ACTION → RECOVERY</h2>
+        <p>不再分印藥袋前後，改用單一決策模型，自動產生補藥或預扣動作。</p>
+      </div>
+      <div class="section-code">SYS.OPT.042<br>STATUS / PROPOSED</div>
+    </div>
+
+    <div class="opt-grid">
+      <div class="state-machine">
+        <div class="steps">
+          <div class="sm">
+            <div class="status">NORMAL</div>
+            <h3>日常批次包藥</h3>
+            <div class="sym">○</div>
+          </div>
+          <div class="sm">
+            <div class="status">DETECT</div>
+            <h3>醫師異動頻率 / 劑量 / 途徑</h3>
+            <div class="sym">◇</div>
+          </div>
+          <div class="sm warning">
+            <div class="status">ANALYZE</div>
+            <h3>同時間點計算新舊首日量</h3>
+            <div class="sym">△</div>
+          </div>
+          <div class="sm action">
+            <div class="status">ACTION</div>
+            <h3>依 Diff 自動補藥 / 預扣</h3>
+            <div class="sym">■</div>
+          </div>
+          <div class="sm recovery">
+            <div class="status">RECOVERY</div>
+            <h3>完成帳務、通知、實際補退藥</h3>
+            <div class="sym">○</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="logic">
+        <div class="logic-row">
+          <div class="logic-card plus">
+            <div class="sign">&gt; 0</div>
+            <h3>不足 → 補藥</h3>
+            <p>新頻率此時應發量，大於舊頻率此時應剩餘量。</p>
+            <ul>
+              <li>產生補藥帳（+Diff）</li>
+              <li>列印補藥單</li>
+              <li>藥師覆核</li>
+              <li>通知護理站並實際補藥</li>
+            </ul>
+            <div class="hazard"></div>
+          </div>
+
+          <div class="logic-mid">DIFF</div>
+
+          <div class="logic-card minus">
+            <div class="sign">&lt; 0</div>
+            <h3>多餘 → 預扣</h3>
+            <p>舊頻率此時應剩餘量，大於新頻率此時應發量。</p>
+            <ul>
+              <li>產生預扣帳（-Diff）</li>
+              <li>列印預扣 / 回藥單</li>
+              <li>藥師覆核</li>
+              <li>通知護理站並實際回藥</li>
+            </ul>
+            <div class="hazard"></div>
+          </div>
+        </div>
+
+        <div class="note">Diff = 0 → 不需補退藥，只更新醫囑與稽核紀錄。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone">
+    <div class="section-head">
+      <div class="secnum">05</div>
+      <div class="sectxt">
+        <div class="tag">CURRENT → OPTIMIZED</div>
+        <h2>真正的差異：從多條作業路徑，收斂成單一決策模型</h2>
+      </div>
+      <div class="section-code">SYS.COMPARE.050<br>FINAL STATE</div>
+    </div>
+
+    <div class="compare-layout">
+      <div class="compare-box current">
+        <div class="tag">CURRENT STATE</div>
+        <h3>現行流程</h3>
+        <ul>
+          <li>停原醫囑、人工退藥、新增新醫囑分開處理。</li>
+          <li>原餘藥與新首日量由不同操作路徑處理。</li>
+          <li>帳務與實體藥品狀態容易分離。</li>
+          <li>流程節點多，人工介入較高。</li>
+        </ul>
+      </div>
+
+      <div class="compare-arrow">→</div>
+
+      <div class="compare-box future">
+        <div class="tag">OPTIMIZED STATE</div>
+        <h3>優化流程</h3>
+        <ul>
+          <li>同一變更時間點，同時計算舊餘量與新需求。</li>
+          <li>Diff 直接決定補藥 / 預扣 / 不動作。</li>
+          <li>帳務、單據、通知與實際補退藥形成閉環。</li>
+          <li>決策規則單一，較容易自動化與稽核。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div>PHARMACY CONTROL SYSTEM // INPATIENT MEDICATION SAFETY</div>
+    <div>PRECISION ENGINEERING UNDER HIGH OPERATIONAL PRESSURE</div>
+  </div>
+</main>
+
+<script>
+const p=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  p.style.width=(max>0?(window.scrollY/max)*100:0)+'%';
+});
+</script>
+</body>
+</html>
