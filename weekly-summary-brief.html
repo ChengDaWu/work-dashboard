@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>住院 Weekly Summary 自動產生作業｜資料來源範圍與 AI 提示詞說明</title>
+<title>住院週報採用成效統計｜Weekly Summary 自動產生作業</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@ body{
 h1,h2,h3,h4{color:var(--ink);line-height:1.4;margin:0}
 p{margin:0}
 .num{font-variant-numeric:tabular-nums}
-a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+a:focus-visible,.table-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
 
 /* ===== 導覽列 ===== */
 .nav{
@@ -48,7 +48,7 @@ a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius
   border-bottom:1px solid var(--rule);
 }
 .nav-inner{
-  width:min(960px, calc(100% - 40px));
+  width:min(1040px, calc(100% - 40px));
   margin:0 auto;
   min-height:64px;
   display:flex;
@@ -70,17 +70,17 @@ a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius
 .nav-links a:hover{background:var(--accent-soft)}
 
 /* ===== 版面 ===== */
-.wrap{width:min(960px, calc(100% - 40px));margin:0 auto}
+.wrap{width:min(1040px, calc(100% - 40px));margin:0 auto}
 .doc{
   background:var(--paper);
   border:1px solid var(--rule);
   border-radius:10px;
-  margin:32px auto 48px;
-  padding:48px 56px 56px;
+  margin:24px auto 48px;
+  padding:32px 40px 40px;
 }
 
 /* ===== 標題區 ===== */
-.title-block{padding-bottom:28px;border-bottom:3px solid var(--ink)}
+.title-block{padding-bottom:24px;border-bottom:3px solid var(--accent)}
 .title-block h1{font-size:36px;font-weight:700;letter-spacing:.01em}
 .title-block .subtitle{margin-top:6px;font-size:22px;color:var(--muted)}
 .facts{
@@ -92,8 +92,32 @@ a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius
 .facts dt{color:var(--muted);font-weight:500}
 .facts dd{margin:0;color:var(--ink)}
 
+/* ===== 統計成果 ===== */
+.statistics{padding-top:24px}
+.stats-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.stats-heading h2{font-size:24px}
+.stats-meta{font-size:17px;color:var(--muted)}
+.stats-meta strong{color:var(--ink)}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:16px 0 0}
+.metric{padding:18px 24px;background:var(--soft);border:1px solid var(--rule);border-radius:8px}
+.metric dt{font-size:17px;font-weight:500;color:var(--muted)}
+.metric dd{margin:4px 0 0;color:var(--ink);font-size:44px;font-weight:700;line-height:1.3}
+.metric .unit{font-size:18px;font-weight:500;margin-left:8px}
+.metric-rate{background:var(--accent);border-color:var(--accent)}
+.metric-rate dt,.metric-rate dd{color:#fff}
+.statistics h3{font-size:22px;margin:24px 0 0}
+.stats-table{min-width:720px}
+.stats-table td:first-child,.stats-table td:nth-child(2){white-space:nowrap}
+.stats-table tr.latest td{background:var(--accent-soft)}
+.stats-table tr.latest td:first-child{font-weight:700;color:var(--accent)}
+.latest-label{display:inline-block;margin-left:8px;font-size:13px;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:0 5px}
+.support-header{margin-top:40px;padding-top:28px;border-top:2px solid var(--rule)}
+.support-header h2{font-size:28px}
+.support-header > p{margin-top:8px;color:var(--muted)}
+.support-header .toolbar{margin-top:16px}
+
 /* ===== 章節 ===== */
-.section{padding-top:36px}
+.section{padding-top:24px}
 .panel > summary{
   list-style:none;
   cursor:pointer;
@@ -106,7 +130,7 @@ a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius
 }
 .panel > summary::-webkit-details-marker{display:none}
 .panel > summary::marker{content:""}
-.panel > summary h2{font-size:28px;font-weight:700}
+.panel > summary h2{font-size:24px;font-weight:700}
 .panel > summary:hover h2{color:var(--accent)}
 .panel > summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:4px}
 .panel[open] > summary{border-bottom-color:var(--accent)}
@@ -123,6 +147,7 @@ a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius
 .panel > summary:hover .toggle{background:var(--accent-soft)}
 .panel[open] .t-open,.panel:not([open]) .t-close{display:none}
 .panel-body{padding-top:20px}
+.panel-body > .facts{margin:0 0 24px}
 
 .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:28px;color:var(--muted)}
 .toolbar button{
@@ -307,6 +332,11 @@ td.r,th.r{text-align:right}
   .report{padding:20px}
   .call-block{padding:20px}
   .nav-title{display:none}
+  .metrics{grid-template-columns:1fr;gap:10px}
+  .metric{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px}
+  .metric dd{margin:0;font-size:36px;white-space:nowrap}
+  .stats-heading{gap:4px}
+  .stats-meta{width:100%}
 }
 @media print{
   body{background:#fff;font-size:14pt}
@@ -314,6 +344,16 @@ td.r,th.r{text-align:right}
   .doc{border:0;margin:0;padding:0;width:100%}
   .section{break-inside:auto}
   .call-block,.report,.table-wrap,.flow{break-inside:avoid}
+  .metrics{grid-template-columns:repeat(3,minmax(0,1fr));break-inside:avoid}
+  .metric{display:block;padding:12px}
+  .metric dd{font-size:30pt}
+  .metric-rate{background:#fff}
+  .metric-rate dt,.metric-rate dd{color:var(--ink)}
+  .table-wrap{overflow:visible}
+  .stats-table{min-width:0;font-size:11pt}
+  .stats-table th,.stats-table td{padding:8px}
+  .stats-table .rate{gap:8px}
+  .stats-table .rate .track{width:70px}
 }
 </style>
 </head>
@@ -321,11 +361,10 @@ td.r,th.r{text-align:right}
 
 <nav class="nav" aria-label="章節導覽">
   <div class="nav-inner">
-    <span class="nav-title">住院 Weekly Summary 自動產生作業</span>
+    <span class="nav-title">住院 Weekly Summary</span>
     <div class="nav-links">
-      <a href="#scope">一、分析範圍</a>
-      <a href="#calls">二、AI 呼叫與提示詞</a>
-      <a href="#pilot">三、試辦成果</a>
+      <a href="#pilot">統計成果</a>
+      <a href="#supplement">補充資料</a>
     </div>
   </div>
 </nav>
@@ -333,29 +372,104 @@ td.r,th.r{text-align:right}
 <main class="wrap doc">
 
   <header class="title-block" id="top">
-    <h1>住院 Weekly Summary 自動產生作業</h1>
-    <p class="subtitle">資料來源範圍與 AI 提示詞說明</p>
+    <h1>住院週報採用成效統計</h1>
+    <p class="subtitle">Weekly Summary 自動產生作業</p>
+  </header>
+
+  <!-- ===== 統計成果：主要內容，固定顯示 ===== -->
+  <section class="statistics" id="pilot" aria-labelledby="stats-title">
+    <div class="stats-heading">
+      <h2 id="stats-title">最新統計</h2>
+      <p class="stats-meta">統計日期 <strong class="num">10/16</strong>　｜　試辦護理站 <strong>ALL</strong></p>
+    </div>
+    <dl class="metrics" aria-label="10/16 最新統計">
+      <div class="metric">
+        <dt>AI 生成筆數</dt>
+        <dd><span class="num">338</span><span class="unit">筆</span></dd>
+      </div>
+      <div class="metric">
+        <dt>護理人員採用筆數</dt>
+        <dd><span class="num">45</span><span class="unit">筆</span></dd>
+      </div>
+      <div class="metric metric-rate">
+        <dt>採用率</dt>
+        <dd><span class="num">13.3</span><span class="unit">%</span></dd>
+      </div>
+    </dl>
+
+    <h3 id="history-title">歷次統計</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-labelledby="history-title" aria-describedby="stats-note">
+      <table class="stats-table" aria-labelledby="history-title">
+        <thead>
+          <tr>
+            <th scope="col">統計日期</th>
+            <th scope="col">試辦護理站</th>
+            <th class="r" scope="col">AI 生成筆數</th>
+            <th class="r" scope="col">護理人員採用筆數</th>
+            <th class="r" scope="col">採用率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">8/28</td><td>5A、5C</td>
+            <td class="r num">73</td><td class="r num">20</td>
+            <td class="r"><span class="rate"><strong class="num">27.4%</strong><span class="track" aria-hidden="true"><i style="width:27.4%"></i></span></span></td>
+          </tr>
+          <tr>
+            <td class="num">9/11</td><td>5A、5C、MI、SI</td>
+            <td class="r num">116</td><td class="r num">40</td>
+            <td class="r"><span class="rate"><strong class="num">34.5%</strong><span class="track" aria-hidden="true"><i style="width:34.5%"></i></span></span></td>
+          </tr>
+          <tr>
+            <td class="num">9/25</td><td>5A、5C、MI、SI</td>
+            <td class="r num">115</td><td class="r num">16</td>
+            <td class="r"><span class="rate"><strong class="num">13.9%</strong><span class="track" aria-hidden="true"><i style="width:13.9%"></i></span></span></td>
+          </tr>
+          <tr>
+            <td class="num">10/2</td><td>5A、5C、MI、SI</td>
+            <td class="r num">124</td><td class="r num">22</td>
+            <td class="r"><span class="rate"><strong class="num">17.7%</strong><span class="track" aria-hidden="true"><i style="width:17.7%"></i></span></span></td>
+          </tr>
+          <tr>
+            <td class="num">10/9</td><td>ALL</td>
+            <td class="r num">339</td><td class="r num">53</td>
+            <td class="r"><span class="rate"><strong class="num">15.6%</strong><span class="track" aria-hidden="true"><i style="width:15.6%"></i></span></span></td>
+          </tr>
+          <tr class="latest">
+            <td><span class="num">10/16</span><span class="latest-label">最新</span></td><td>ALL</td>
+            <td class="r num">338</td><td class="r num">45</td>
+            <td class="r"><span class="rate"><strong class="num">13.3%</strong><span class="track" aria-hidden="true"><i style="width:13.3%"></i></span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note" id="stats-note">採用率＝護理人員採用筆數 ÷ AI 生成筆數，四捨五入至小數一位。</p>
+    <p class="table-note">各次試辦護理站範圍不同，請併同護理站範圍解讀統計結果。</p>
+  </section>
+
+  <div class="support-header" id="supplement">
+    <h2>補充資料</h2>
+    <p>分析範圍、AI 處理流程與實際輸出範例，需要進一步說明時可展開下方主題。</p>
+    <div class="toolbar" role="group" aria-label="補充資料顯示控制">
+      <button type="button" id="openAll">全部展開</button>
+      <button type="button" id="closeAll">全部收合</button>
+    </div>
+  </div>
+
+  <!-- ===== 一、分析範圍 ===== -->
+  <section class="section" id="scope">
+    <details class="panel">
+    <summary>
+      <h2>補充一、分析範圍：對象與期間</h2>
+      <span class="toggle" aria-hidden="true"><span class="t-open">展開 ▾</span><span class="t-close">收合 ▴</span></span>
+    </summary>
+    <div class="panel-body">
     <dl class="facts">
       <dt>適用範圍</dt><dd>住院中病人之每週病情摘要</dd>
       <dt>產出內容</dt><dd>三段式住院週報（1000 字以內）</dd>
       <dt>相關文件</dt><dd>住院週報自動產生作業說明書.md（技術與維護細節）</dd>
       <dt>製作日期</dt><dd class="num">2026-09-29</dd>
     </dl>
-    <div class="toolbar">
-      <span>三大主題可點擊標題展開或收合：</span>
-      <button type="button" id="openAll">全部展開</button>
-      <button type="button" id="closeAll">全部收合</button>
-    </div>
-  </header>
-
-  <!-- ===== 一、分析範圍 ===== -->
-  <section class="section" id="scope">
-    <details class="panel">
-    <summary>
-      <h2>一、分析範圍：對象與期間</h2>
-      <span class="toggle" aria-hidden="true"><span class="t-open">展開 ▾</span><span class="t-close">收合 ▴</span></span>
-    </summary>
-    <div class="panel-body">
     <p class="lead">在送進任何提示詞之前，程式先決定「要分析誰」與「分析哪一段期間」，這兩項條件會固定套用在後續兩次 AI 呼叫上。</p>
 
     <div class="pairs">
@@ -386,7 +500,7 @@ td.r,th.r{text-align:right}
   <section class="section" id="calls">
     <details class="panel">
     <summary>
-      <h2>二、兩次 AI 呼叫：資料來源與提示詞</h2>
+      <h2>補充二、AI 呼叫：資料來源與提示詞</h2>
       <span class="toggle" aria-hidden="true"><span class="t-open">展開 ▾</span><span class="t-close">收合 ▴</span></span>
     </summary>
     <div class="panel-body">
@@ -502,21 +616,21 @@ td.r,th.r{text-align:right}
         <li>本週主要處置與治療</li>
         <li>下週建議與注意事項</li>
       </ol>
-      <p class="table-note">實際輸出範例請見「三、上線試辦成果」。</p>
+      <p class="table-note">實際輸出範例請見「補充三、實際輸出範例」。</p>
     </div>
     </div>
     </details>
   </section>
 
-  <!-- ===== 三、上線試辦成果 ===== -->
-  <section class="section" id="pilot">
+  <!-- ===== 補充三、實際輸出範例 ===== -->
+  <section class="section" id="example">
     <details class="panel">
     <summary>
-      <h2>三、上線試辦成果</h2>
+      <h2>補充三、實際輸出範例</h2>
       <span class="toggle" aria-hidden="true"><span class="t-open">展開 ▾</span><span class="t-close">收合 ▴</span></span>
     </summary>
     <div class="panel-body">
-    <p class="lead">本作業已於指定護理站實際上線試辦，由護理人員於日常照護中使用。以下為試辦期間的實際輸出範例與三次統計。</p>
+    <p class="lead">本作業已於指定護理站實際上線試辦，由護理人員於日常照護中使用。以下為試辦期間的實際輸出範例。</p>
 
     <h3>輸出風格：中英混合表達</h3>
     <p>生成內容以中文為骨架，專業術語保持英文（如 Left THR、Cefazoline、Hb、LR-RBC、Foley、PT、ROM exercise、non-weight bearing 等），符合臨床溝通習慣。</p>
@@ -548,44 +662,13 @@ td.r,th.r{text-align:right}
       <p>持續執行PT復健計畫，嚴格遵守患肢non-weight bearing限制。</p>
     </article>
 
-    <h3>試辦統計</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">統計日期</th>
-            <th scope="col">試辦護理站</th>
-            <th class="r" scope="col">AI 生成筆數</th>
-            <th class="r" scope="col">護理人員採用筆數</th>
-            <th class="r" scope="col">採用率</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="num">8/28</td><td>5A、5C</td>
-            <td class="r num">73</td><td class="r num">20</td>
-            <td class="r"><span class="rate"><strong class="num">27.4%</strong><span class="track"><i style="width:27.4%"></i></span></span></td>
-          </tr>
-          <tr>
-            <td class="num">9/11</td><td>5A、5C、MI、SI</td>
-            <td class="r num">116</td><td class="r num">40</td>
-            <td class="r"><span class="rate"><strong class="num">34.5%</strong><span class="track"><i style="width:34.5%"></i></span></span></td>
-          </tr>
-          <tr>
-            <td class="num">9/25</td><td>5A、5C、MI、SI</td>
-            <td class="r num">115</td><td class="r num">16</td>
-            <td class="r"><span class="rate"><strong class="num">13.9%</strong><span class="track"><i style="width:13.9%"></i></span></span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="table-note">採用率＝護理人員採用筆數 ÷ AI 生成筆數。</p>
     </div>
     </details>
   </section>
 
   <footer class="footer">
-    <p>住院 Weekly Summary 自動產生作業：資料來源範圍與 AI 提示詞說明　｜　製作日期：2026-09-29</p>
+    <p>住院 Weekly Summary 自動產生作業｜採用成效統計與補充資料</p>
+    <p>製作日期：<span class="num">2026-09-29</span>　｜　更新日期：<span class="num">2026-10-21</span></p>
     <p>本文件僅供院內主管單位簡報說明用途，內容涉及之技術細節請參照《住院週報自動產生作業說明書.md》。</p>
   </footer>
 </main>
